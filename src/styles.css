@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@import './assets/css/reset.css';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+
+md-error {
+    font-size: 10px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+  }
