@@ -1,0 +1,20 @@
+<md-card>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"
+  *ngIf="errors.length < 1">
+    <md-input-container>
+        <input mdInput formControlName="email" type="text"
+        placeholder="E-mail">
+    </md-input-container>
+
+    <md-input-container>
+      <input mdInput formControlName="password" type="password"
+      placeholder="Password">
+    </md-input-container>
+
+    <button md-raised-button type="submit">Login</button>
+  </form>
+
+  <div *ngFor="let error of errors">
+    <md-error>{{ error.cod }} - {{ error.message }}</md-error>
+  </div>
+</md-card>
