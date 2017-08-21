@@ -3,6 +3,9 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+a {
+    cursor: pointer;
+}
 
 md-error {
     font-size: 10px;
@@ -10,4 +13,4 @@ md-error {
 
 .spacer {
     flex: 1 1 auto;
-  }
+}

@@ -15,6 +15,12 @@ export class MainComponent implements OnInit {
       menuSettings: [{
         description: "Teste 1",
         route: ''
+      }, {
+        description: "Teste 2",
+        route: ''
+      }, {
+        description: "Teste 3",
+        route: ''
       }]
     }
   }
