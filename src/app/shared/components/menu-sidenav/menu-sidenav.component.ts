@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, trigger, transition, style, animate, state } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ntm-menu-sidenav',
@@ -35,7 +36,9 @@ export class MenuSidenavComponent implements OnInit {
   menuTopPosition = "0px";
   toggle: boolean = false;
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
     if(this.params) {
@@ -61,6 +64,11 @@ export class MenuSidenavComponent implements OnInit {
     }
   }
 
+  onMenuRoute = (route) => {
+    this.router.navigate(route);
+    this.toggle = !this.toggle;
+  }
+
   onToggle = (event) => {
     this.toggle = !this.toggle;
 
@@ -69,7 +77,6 @@ export class MenuSidenavComponent implements OnInit {
       this.iconTopPosition = event.offsetY+"px";
       this.menuLeftPosition = event.offsetX+20;
       this.menuTopPosition = event.offsetY+20;
-      console.log(event);
     }
   }
 }

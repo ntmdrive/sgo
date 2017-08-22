@@ -13,14 +13,14 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.paramsToMenuSideNav = {
       menuSettings: [{
-        description: "Teste 1",
-        route: ''
+        description: "Competições",
+        route: ['/main/competition']
       }, {
-        description: "Teste 2",
-        route: ''
+        description: "Delegações",
+        route: ['/main/delegation']
       }, {
-        description: "Teste 3",
-        route: ''
+        description: "Grupos de Ocupações",
+        route: ['/main/occupation-group']
       }]
     }
   }

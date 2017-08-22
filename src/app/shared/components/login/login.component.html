@@ -1,17 +1,30 @@
 <md-card>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"
   *ngIf="errors.length < 1">
-    <md-input-container>
-        <input mdInput formControlName="email" type="text"
-        placeholder="E-mail">
-    </md-input-container>
+    <md-card-content>
+      <md-input-container>
+          <input mdInput formControlName="email" type="text"
+          placeholder="E-mail">
+      </md-input-container>
 
-    <md-input-container>
-      <input mdInput formControlName="password" type="password"
-      placeholder="Password">
-    </md-input-container>
+      <hr>
 
-    <button md-raised-button type="submit">Login</button>
+      <md-input-container>
+        <input mdInput formControlName="password" type="password"
+        placeholder="Password">
+      </md-input-container>
+    </md-card-content>
+
+    <md-card-actions>
+      <button md-raised-button type="submit"
+      color="primary">
+        Entrar
+      </button>
+
+      <a md-raised-button (click)="onForgotPassword()"
+      color="warn"
+      *ngIf="params.forgotPasswordRoute">Esqueci a senha</a>
+    </md-card-actions>
   </form>
 
   <div *ngFor="let error of errors">

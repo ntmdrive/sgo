@@ -1,8 +1,14 @@
-<md-toolbar>
-  <ntm-menu-sidenav [params]="paramsToMenuSideNav"></ntm-menu-sidenav>
-  <span>Title</span>
-  <span class="spacer"></span>
-  <ntm-logout [params]="{route: ['/login']}"></ntm-logout>
+<md-toolbar color="accent">
+  <div class="w70p">
+    <div class="float-left"><ntm-menu-sidenav [params]="paramsToMenuSideNav"></ntm-menu-sidenav></div>
+    <div class="float-left">SGO</div>
+    <div class="clear-both"></div>
+  </div>
+
+  <div class="w30p">
+    <div class="float-right"><ntm-logout [params]="{route: ['/login']}"></ntm-logout></div>
+    <div class="clear-both"></div>
+  </div>
 </md-toolbar>
 
 <router-outlet></router-outlet>

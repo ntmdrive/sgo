@@ -45,6 +45,10 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  onForgotPassword = () => {
+    this.router.navigate(this.params.forgotPasswordRoute);
+  }
+
   onSubmit = () => {
     this.params.email = this.loginForm.get('email');
     this.params.password = this.loginForm.get('password');

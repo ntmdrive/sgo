@@ -10,7 +10,7 @@
   <div 
   *ngFor="let menu of params.menuSettings; let i = index;"
   [ngStyle]="{ 'position': 'absolute', 'margin': '1px', 'padding' : '0', 'top': menuTopPosition+40*i+'px', 'left': menuLeftPosition+'px' }">
-    <div>{{menu.description}}</div>
+    <a (click)="onMenuRoute(menu.route)">{{menu.description}}</a>
   </div>
 </div>
 
