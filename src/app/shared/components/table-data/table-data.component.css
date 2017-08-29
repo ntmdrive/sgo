@@ -56,10 +56,14 @@ th {
     text-align: right;
 }
 
+.spacer {
+    flex: 1 1 auto;
+}
+
 #list-controllers {
     font-size: 16px;
-    margin-left: 50%;
-    width: 50%;
+    margin: 0;
+    width: 100%;
 }
 
 #list-controllers md-icon {
@@ -70,6 +74,18 @@ th {
     left: 0;
     text-align: left;
     width: 10px;
+}
+
+#page-area {
+    float: left;
+    padding-left: 40%;
+    width: 50%;
+}
+
+#row-area {
+    float: left;
+    margin-left: -10px;
+    width: 50%;
 }
 
 #toolbar-action {

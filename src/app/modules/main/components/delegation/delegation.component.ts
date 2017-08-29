@@ -14,16 +14,21 @@ export class DelegationComponent implements OnInit {
   ngOnInit() {
     this.paramsToTableData = {
       toolbar: {
-        title: "Lista de delegações"
+        title: "Lista de delegações",
+        delete: "id",
+        search: true
       },
       list: {
-        route: "users",
+        route: "students",
         show: ['name', "cpf_number"],
         header: ['Nome', 'CPF'],
-        colorByData: [{field: 'unit_id', fieldValue: '13', backgroundColor: '#3f51b5', color: '#fff'}]
+        order: ['name', 'asc'],
+        colorByData: [{field: 'unit_id', fieldValue: '13', backgroundColor: '#3f51b5', color: '#fff'}],
+        edit: {route: '/main/delegation/', param: 'id'},
+        source: true
       },
       actionToolbar: {
-
+        language: 'pt-br'
       }
     }
   }

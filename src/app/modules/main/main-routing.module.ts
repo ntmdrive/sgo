@@ -28,6 +28,9 @@ const routes: Routes = [{
     }, {
       path: 'occupation-group',
       component: OccupationGroupComponent
+    }, {
+      path: 'delegation/:id',
+      component: DelegationComponent
     }
   ]
 }];

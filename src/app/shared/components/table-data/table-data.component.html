@@ -1,89 +1,93 @@
-<h3 style="color:red">
-    Quando apertar checkbox de item de listagem, desmarcar o checkbox geral, caso esteja marcado. (F-)
-  </h3>
-  
-  <h3 style="color:red">
-    Determinar item que servirá de :id na rora do edit. E pensar numa maneira de escolher se esse item aparece ou não na lista. (MD-5)
-  </h3>
-  <div *ngIf="error.length < 1">
-    <md-card>
-      <md-toolbar>
-        <div id="toolbar-title">{{this.params.toolbar.title}}</div> 
-        
-        <div id="toolbar-spacer"></div>
-  
-        <div id="toolbar-action">
-          <form [formGroup]="searchForm">
-            <md-icon *ngIf="this.params.toolbar.delete && (checkAllController || checkedItem)">delete</md-icon>
-  
-            <md-icon *ngIf="this.params.toolbar.search" (click)="searchInputToggle()">search</md-icon>
-  
-            <md-input-container *ngIf="searchInput">
-              <input type="text" mdInput placeholder="Pesquisar" formControlName="search" (keyup)="search()">
-            </md-input-container>
-            
-            <md-icon *ngIf="this.params.toolbar.more">more_vert</md-icon>
-          </form>
-        </div>
-      </md-toolbar>
+<div *ngIf="error.length < 1">
+
+  <!--Toolbar area: start -->
+  <md-card>
+    <md-toolbar>
+      <div id="toolbar-title">{{params.toolbar.title}}</div> 
       
+      <div id="toolbar-spacer"></div>
+
+      <div id="toolbar-action">
+        <form [formGroup]="searchForm">
+          <md-icon *ngIf="params.toolbar.delete && (checkAllController || checkedItem)" (click)="delete(params.toolbar.delete)">delete</md-icon>
+
+          <md-icon *ngIf="params.toolbar.search" (click)="searchInputToggle()">search</md-icon>
+
+          <md-input-container *ngIf="searchInput">
+            <input type="text" mdInput placeholder="Pesquisar" formControlName="search" (keyup)="search()">
+          </md-input-container>
+          
+          <md-icon *ngIf="params.toolbar.more">more_vert</md-icon>
+        </form>
+      </div>
+    </md-toolbar>
+    <!--Toolbar end -->
+
+    <!--List area: start -->
+    <form [formGroup]="listForm"> 
       <md-progress-bar mode="indeterminate" *ngIf="isLoadingList"></md-progress-bar>
-  
+
       <table *ngIf="!isLoadingList">
         <tr>
-          <th id="list-item-checkbox" *ngIf="this.params.toolbar.delete">
-            <md-checkbox [checked]="checkAllController" (change)="checkAllToggle()"></md-checkbox>
+          <th id="list-item-checkbox" *ngIf="params.toolbar.delete">
+            <md-checkbox (change)="checkAllToggle($event)" [checked]="checkAllController" ></md-checkbox>
           </th>
-  
-          <th *ngFor="let header of arrayHeader">
-            {{ header }}
+
+          <th *ngFor="let header of arrayHeader; let i = index;">
+            {{ header }} <a><md-icon class="md-18" *ngIf="params.list.order" (click)="onClickOrder(i)">sort</md-icon></a>
           </th>
-  
-          <th class="list-item-actions" *ngIf="this.params.list.edit || this.params.list.delete">
+
+          <th class="list-item-actions" *ngIf="params.list.edit || params.list.delete">
           </th>
         </tr>
-  
+
         <tr class="list-item" *ngFor="let data of arraySourceSearch; let i = index">
-          <td *ngIf="this.params.toolbar.delete" [ngStyle]="{'background-color': arraySource[i].backgroundColor, 'color': arraySource[i].color}">
-            <md-checkbox (change)="checkItem($event)" [checked]="checkAllController"></md-checkbox>
+          <td *ngIf="params.toolbar.delete" [ngStyle]="{'background-color': arraySource[i].backgroundColor, 'color': arraySource[i].color}">
+            <md-checkbox class="list-item" [checked]="checkAllItens" (change)="checkItem(i, $event)" formControlName="deleteField"></md-checkbox> {{testingThisShit}}
           </td>
-  
+
           <td *ngFor="let item of data; let j = index" [ngStyle]="{'background-color': arraySource[i].backgroundColor, 'color': arraySource[i].color}">
             <span> {{ item }} </span>
           </td>
-  
-          <td class="list-item-actions" *ngIf="this.params.list.edit" [ngStyle]="{'background-color': arraySource[i].backgroundColor, 'color': arraySource[i].color}">
-            <a *ngIf="this.params.list.edit" routerLink=""><md-icon>edit</md-icon></a>
+
+          <td class="list-item-actions" *ngIf="params.list.edit" [ngStyle]="{'background-color': arraySource[i].backgroundColor, 'color': arraySource[i].color}">
+            <a *ngIf="params.list.edit" (click)="onClickEdit(params.list.edit.route, arraySource[i][params.list.edit.param])"><md-icon>edit</md-icon></a>
           </td>
         </tr>
       </table>
-  
-      <md-toolbar *ngIf="!isLoadingList && params.actionToolbar">
-        <form [formGroup]="listController">
-          <div id="list-controllers">
-            <span>
-              <md-select placeholder="Rows per page" formControlName="row"
-              (change)="onChangeLimit($event)">
-                <md-option *ngFor="let row of params.actionToolbar.rows" [value]="row">
-                  {{row}}
-                </md-option>
-              </md-select>
-            </span>
-    
-            <span>
-              <md-icon>keyboard_arrow_left</md-icon>
-              <md-icon>keyboard_arrow_right</md-icon>
+    </form>
+    <!--List area: end -->
 
-              <span>{{pageCurrent}} of {{pageTotal}}</span>
-            </span>
+    <!--Action toolbar area: start -->
+    <md-toolbar *ngIf="!isLoadingList && params.actionToolbar">
+      <form [formGroup]="listController" class="w100p">
+        <div id="list-controllers">
+          <div id="row-area">
+            <md-select placeholder="{{placeholderToRowsPerPage}}" formControlName="row"
+            (change)="onChangeLimit($event)">
+              <md-option *ngFor="let row of params.actionToolbar.rows" [value]="row">
+                {{row}}
+              </md-option>
+            </md-select>
           </div>
-        </form>
-      </md-toolbar>
-    </md-card>
-  </div>
+
+          <div id="page-area">
+            <a><md-icon (click)="onClickPage('subtract')" *ngIf="pageCurrent != 1">keyboard_arrow_left</md-icon></a>
+            <a><md-icon (click)="onClickPage('add')" *ngIf="pageCurrent < pageTotal">keyboard_arrow_right</md-icon></a>
+
+            <span>{{pageCurrent}} {{placeholderToPage}} {{pageTotal}}</span>
+          </div>
+
+          <div class="clear-both"></div>
+        </div>
+      </form>
+    </md-toolbar>
+    <!--Action toolbar area: end -->
+  </md-card>
+</div>
   
-  <div *ngIf="error.length > 0">
-    <md-error>
-      Checar requisitos para o components table-list ({{ error }})
-    </md-error>
-  </div>
+<div *ngIf="error.length > 0">
+  <md-error>
+    Checar requisitos para o components table-list ({{ error }})
+  </md-error>
+</div>

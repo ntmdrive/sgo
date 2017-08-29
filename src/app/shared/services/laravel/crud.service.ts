@@ -19,7 +19,7 @@ export class CrudService {
   }
 
   read = (params) => new Promise ((resolve, reject) => {
-    let hide = "", obj, objFiltered, objFilteredTemp, objKeys, setGet = "", show = "", limit = "", page;
+    let hide = "", limit = "", obj, objFiltered, objFilteredTemp, objKeys, order = "", page, setGet = "", show = "";
 
     if(params) {
       if(!params.route) {
@@ -38,7 +38,7 @@ export class CrudService {
 
       if(params.show) {
         setGet = "?";
-        show = "show=[";
+        show = "&show=[";
         
         for(let lim = params.show.length, i =0; i < lim; i++) {
           show += params.show[i]+",";            
@@ -49,7 +49,7 @@ export class CrudService {
 
       if(params.hide) {
         setGet = "?";
-        hide = "hide=";
+        hide = "&hide=";
         
         for(let lim = params.hide.length, i =0; i < lim; i++) {
           hide += params.hide[i]+",";            
@@ -60,7 +60,13 @@ export class CrudService {
 
       if(params.limit) {
         setGet = "?";
-        limit = "limit="+params.limit;
+        limit = "&limit="+params.limit;
+        console.log(limit);
+      }
+
+      if(params.order.length == 2) {
+        setGet = "?";
+        order = "&order="+params.order[0]+","+params.order[1];
       }
 
       if(!params.page) {
@@ -80,10 +86,11 @@ export class CrudService {
       })
 
       this.http.get(
-        environment.urlToApi + params.route + setGet + show + hide + limit,
+        environment.urlToApi + params.route + setGet + page +  show + hide + limit + order,
         this.optionsToAuth
       )
       .subscribe(res => {
+        console.log(res);
         obj = JSON.parse(res['_body']);
         objFiltered = obj.data;
         objKeys = Object.keys(objFiltered);
