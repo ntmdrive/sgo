@@ -26,9 +26,10 @@ export class TableDataComponent implements OnInit {
   checkAllItens: boolean = false;
   checkedItem: boolean = false;
   color: string;
+  colorByData: any;
   colorIndex: number;
   editRoute: string;
-  error: any = [];
+  errors: any = [];
   isLoadingList: boolean = true;
   listController: FormGroup;
   listForm: FormGroup;
@@ -37,17 +38,19 @@ export class TableDataComponent implements OnInit {
   pageTotal: number;
   placeholderToRowsPerPage: string;
   placeholderToPage: string;
+  placeholderToSearch: string;
   searchForm: FormGroup;
   searchInput: boolean = false;
-  colorByData: any;
-  testingThisShit: any;
+  searchString: any;
+  searchValue: any = [];
   
   constructor(
     private crud: CrudService,
     private router: Router
   ) {
     this.searchForm = new FormGroup({
-      'search': new FormControl(null)
+      'search': new FormControl(null),
+      'searchSelect': new FormControl(null)
     })
 
     this.listController = new FormGroup({
@@ -60,9 +63,19 @@ export class TableDataComponent implements OnInit {
   }
 
   ngOnChanges() {
+    /**
+     * Parameters validation: start
+     */
     if(this.params.list) {
+      if(!this.params.list.route) {
+        this.errors.push({
+          cod: "td-01",
+          message: "É preciso definir a rota de busca no banco. (params.list.route: any - ex.:['route'])"
+        });
+      }
+
       if(!this.params.list.limit) {
-        this.params.list.limit = 10;
+        this.params.list.limit = 5;
       }
 
       if(!this.params.list.order) {
@@ -72,16 +85,40 @@ export class TableDataComponent implements OnInit {
       if(this.params.list.header) {
         this.arrayHeader = this.params.list.header;
       } else {
-        this.error = ['list.header']  
+        this.errors.push({
+          cod: "td-02",
+          message: "É preciso definir o cabeçalho dos campos que serão mostrados na lista. (params.list.header: any - ex.:['Nome', 'CPF'])"
+        });
+      }
+
+      if(!this.params.list.show) {
+        if(!this.params.list.hide) {
+          this.errors.push({
+            cod: "td-03",
+            message: "É preciso definir que campos do banco serão mostrados (show) OU (exclusivo) não mostrados (hide). (params.list.show: any - ex.:['name', 'cpf_number'] XOR params.list.hide: any - ex.:['name', 'cpf_number'])"
+          });
+        }
+      }
+
+      if(this.params.list.show) {
+        if(this.params.list.hide) {
+          this.errors.push({
+            cod: "td-04",
+            message: "Se definir parâmetro show, não pode definir parâmetro hide."
+          });
+        }
       }
     } else {
       setTimeout(() => {
         if(this.params.list == undefined) {
-          this.error = ['list', 'time exceeded'];
+          this.errors.push({
+            cod: "td-05",
+            message: "É preciso definir list e seus parâmetros."
+          });
         }
       }, 20000)
     }
-
+    
     if(this.params.actionToolbar) {
       this.pageTotal = this.arrayNoFilter.length;
       
@@ -107,25 +144,26 @@ export class TableDataComponent implements OnInit {
 
       if(this.params.actionToolbar.language == 'en') {
         this.placeholderToRowsPerPage = "Rows per page";
-        this.placeholderToPage = "of"
+        this.placeholderToPage = "of";
+        this.placeholderToSearch = "Field to search";
       }
 
       if(this.params.actionToolbar.language == 'pt-br') {
         this.placeholderToRowsPerPage = "Linhas por página";
-        this.placeholderToPage = "de"
+        this.placeholderToPage = "de";
+        this.placeholderToSearch = "Campo para pesquisar";
       }
     } 
-
-    let readParams = {
-      route: this.params.list.route,
-      limit: this.params.list.limit,
-      order: this.params.list.order,
-      page: this.params.actionToolbar.page
-    }
     
-    this.pageCurrent = this.params.actionToolbar.page;
+    /**
+     * Parameters validation: end
+     */
+    
+    if(this.params.actionToolbar) {
+      this.pageCurrent = this.params.actionToolbar.page;
+    } 
 
-    this.readData(readParams);
+    this.readData();
   }
 
   ngOnInit() { 
@@ -198,6 +236,9 @@ export class TableDataComponent implements OnInit {
    * List area
    */
   filterArrayKey = (data) => {
+    if(data['obj']) {
+      data = data['obj'];
+    }
     //Everything from array, ignoring property show from list object
     let noFilter = data.map((data) => {
       let backgroundColor;
@@ -223,13 +264,6 @@ export class TableDataComponent implements OnInit {
                 temp.push(data['backgroundColor'] = "#fff");
                 temp.push(data['color'] = "#000");
               }
-
-              if(this.params.list.edit) {
-              }
-
-              /**
-               * {{list.edit.route}}/{{}}
-               */
             }
           }
         }
@@ -276,14 +310,7 @@ export class TableDataComponent implements OnInit {
 
     this.params.list.order.push(this.params.list.show[index], sort);
 
-    let readParams = {
-      route: this.params.list.route,
-      limit: this.params.list.limit,
-      order: this.params.list.order,
-      page: this.params.list.page
-    }
-
-    this.readData(readParams);
+    this.readData();
   }
   /**
    * Action area
@@ -291,14 +318,7 @@ export class TableDataComponent implements OnInit {
   onChangeLimit = (event) => {
     this.params.list.limit = event.value;
 
-    let readParams = {
-      route: this.params.list.route,
-      limit: this.params.list.limit,
-      order: this.params.list.order,
-      page: this.params.list.page
-    }
-
-    this.readData(readParams);
+    this.readData();
   }
 
   onClickPage = (operation) => {
@@ -310,24 +330,31 @@ export class TableDataComponent implements OnInit {
     if(operation == 'subtract') {
       this.pageCurrent -= 1;
     }
+    
+    this.readData();
+  }  
 
+  readData = () => {
     let readParams = {
       route: this.params.list.route,
       limit: this.params.list.limit,
       order: this.params.list.order,
-      page: this.pageCurrent
+      page: this.pageCurrent,
+      search: this.searchValue
     }
 
-    this.readData(readParams);
-  }  
-
-  readData = (readParams) => {
     this.isLoadingList = true;
 
     this.crud.read(readParams)
     .then(res => {
       this.isLoadingList = false;
-      this.arraySource = res['obj'];
+      
+      if(res['obj']) {
+        this.arraySource = res['obj']; 
+      } else {
+        this.arraySource = res;
+      }
+      
       this.filterArrayKey(this.arraySource);
 
       this.pageTotal = Math.ceil(this.arraySource.total/this.params.list.limit);
@@ -339,30 +366,45 @@ export class TableDataComponent implements OnInit {
   }
 
   search = () => {
-    let checkLoop = -1;
-    let count;
-    let data = this.arraySourceFinal;
-    let dataAny;
-    let dataString;
-    let search;
-    let temp = [];
-    let test;
+    this.searchValue = [];
+    
+    this.clearSearch();
 
-    if(this.searchForm.get('search').value) {
-      search = this.searchForm.get('search').value;
-    } else {
-      search = "";
-    }
+    this.searchString = setTimeout(() => {
+      let checkLoop = -1;
+      let count;
+      let data = this.arraySourceFinal;
+      let dataAny;
+      let dataString;
+      let temp = [];
+      let test;
 
-    let readParams = {
-      route: this.params.list.route,
-      limit: this.params.list.limit,
-      order: this.params.list.order,
-      page: this.pageCurrent,
-      search: search
-    }
+      if(this.searchForm.get('search').value) {
+        if(this.searchForm.get('searchSelect').value) {
+          this.searchValue.push({
+            where: this.searchForm.get('searchSelect').value,
+            value: this.searchForm.get('search').value
+          })
+        } else {
+          for(let lim = this.params.list.show.length, i = 0; i < lim; i++) {
+            this.searchValue.push({
+              where: this.params.list.show[i],
+              value: this.searchForm.get('search').value
+            })
+          }
+        }
+      } else {
+        this.searchValue = [];
+      }
 
-    this.readData(readParams);
+      console.log(this.searchValue);
+
+      this.readData();
+    }, 500)
+  }
+
+  clearSearch = () => {
+    clearTimeout(this.searchString);
   }
 
   searchInputToggle = () => {
@@ -372,5 +414,5 @@ export class TableDataComponent implements OnInit {
     if(!this.searchInput) {
       this.search();
     }
-  }
+  }  
 }

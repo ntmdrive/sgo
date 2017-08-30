@@ -1,23 +1,26 @@
-<div *ngIf="error.length < 1">
-
+<div *ngIf="errors.length < 1">
   <!--Toolbar area: start -->
   <md-card>
-    <md-toolbar>
+    <md-toolbar *ngIf="params.toolbar">
       <div id="toolbar-title">{{params.toolbar.title}}</div> 
       
       <div id="toolbar-spacer"></div>
 
       <div id="toolbar-action">
         <form [formGroup]="searchForm">
-          <md-icon *ngIf="params.toolbar.delete && (checkAllController || checkedItem)" (click)="delete(params.toolbar.delete)">delete</md-icon>
+          <md-icon *ngIf="params.toolbar && params.toolbar.delete && (checkAllController || checkedItem)" (click)="delete(params.toolbar.delete)">delete</md-icon>
 
-          <md-icon *ngIf="params.toolbar.search" (click)="searchInputToggle()">search</md-icon>
+          <md-icon *ngIf="params.toolbar && params.toolbar.search" (click)="searchInputToggle()">search</md-icon>
 
+          <md-select placeholder="{{placeholderToSearch}}" formControlName="searchSelect" *ngIf="searchInput">
+            <md-option *ngFor="let header of arrayHeader; let i = index;" [value]="params.list.show[i]">{{header}}</md-option>
+          </md-select>
+          
           <md-input-container *ngIf="searchInput">
             <input type="text" mdInput placeholder="Pesquisar" formControlName="search" (keyup)="search()">
           </md-input-container>
           
-          <md-icon *ngIf="params.toolbar.more">more_vert</md-icon>
+          <md-icon *ngIf="params.toolbar && params.toolbar.more">more_vert</md-icon>
         </form>
       </div>
     </md-toolbar>
@@ -29,7 +32,7 @@
 
       <table *ngIf="!isLoadingList">
         <tr>
-          <th id="list-item-checkbox" *ngIf="params.toolbar.delete">
+          <th id="list-item-checkbox" *ngIf="params.toolbar && params.toolbar.delete">
             <md-checkbox (change)="checkAllToggle($event)" [checked]="checkAllController" ></md-checkbox>
           </th>
 
@@ -42,7 +45,7 @@
         </tr>
 
         <tr class="list-item" *ngFor="let data of arraySourceSearch; let i = index">
-          <td *ngIf="params.toolbar.delete" [ngStyle]="{'background-color': arraySource[i].backgroundColor, 'color': arraySource[i].color}">
+          <td *ngIf="params.toolbar && params.toolbar.delete" [ngStyle]="{'background-color': arraySource[i].backgroundColor, 'color': arraySource[i].color}">
             <md-checkbox class="list-item" [checked]="checkAllItens" (change)="checkItem(i, $event)" formControlName="deleteField"></md-checkbox> {{testingThisShit}}
           </td>
 
@@ -86,8 +89,10 @@
   </md-card>
 </div>
   
-<div *ngIf="error.length > 0">
-  <md-error>
-    Checar requisitos para o components table-list ({{ error }})
-  </md-error>
+<div *ngIf="errors.length > 0">
+  <div *ngFor="let error of errors">
+    <md-error>
+      {{error.message}}
+    </md-error>
+  </div>
 </div>

@@ -19,7 +19,7 @@ export class CrudService {
   }
 
   read = (params) => new Promise ((resolve, reject) => {
-    let hide = "", limit = "", obj, objFiltered, objFilteredTemp, objKeys, order = "", page, setGet = "", show = "";
+    let hide = "", limit = "", obj, objFiltered, objFilteredTemp, objKeys, order = "", page, setGet = "", search = "", show = "";
 
     if(params) {
       if(!params.route) {
@@ -61,12 +61,24 @@ export class CrudService {
       if(params.limit) {
         setGet = "?";
         limit = "&limit="+params.limit;
-        console.log(limit);
       }
 
       if(params.order.length == 2) {
         setGet = "?";
         order = "&order="+params.order[0]+","+params.order[1];
+      }
+
+      if(params.search) {
+        setGet = "?";
+
+        if(params.search.length == 1) {
+          search = "&search["+params.search[0].where+"]="+params.search[0].value;
+        }
+
+        if(params.search.length > 1) {
+          search = "&search";
+        }
+        console.log(search);
       }
 
       if(!params.page) {
@@ -86,11 +98,10 @@ export class CrudService {
       })
 
       this.http.get(
-        environment.urlToApi + params.route + setGet + page +  show + hide + limit + order,
+        environment.urlToApi + params.route + setGet + page +  show + hide + limit + order + search,
         this.optionsToAuth
       )
       .subscribe(res => {
-        console.log(res);
         obj = JSON.parse(res['_body']);
         objFiltered = obj.data;
         objKeys = Object.keys(objFiltered);
