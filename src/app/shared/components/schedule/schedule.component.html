@@ -1,0 +1,73 @@
+<md-card class="mt10">
+  <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="dates">
+      <div class="div-form-pattern" *ngIf="!chooseSortOfDate">
+        <button md-raised-button type="button" color="primary" (click)="onNewSchedule()">Adicionar agendamento</button>
+      </div>
+
+      <div class="div-form-pattern" *ngIf="chooseSortOfDate">
+        <div class="float-left mr10 div-form-pattern">
+          <button md-raised-button type="button" color="primary" (click)="onAddDate()">Adicionar dia</button>
+        </div>
+
+        <div class="float-left mr10 div-form-pattern">
+          <button md-raised-button type="button" color="primary" (click)="onAddInterval()">Adicionar intervalo</button>
+        </div>
+
+        <div class="clear-both"></div>
+      </div>
+      
+      <div *ngFor="let dateControl of scheduleForm.get('dates').controls; let i = index;">
+        <div class="float-left mr10 div-form-pattern">
+          <md-form-field>
+            <input mdInput [mdDatepicker]="picker" placeholder="Escolha uma data" [formControlName]="i">
+            <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+            <md-datepicker #picker></md-datepicker>
+          </md-form-field>  
+        </div>
+
+        <div class="float-left mr10 div-form-pattern">
+          <md-input-container>
+            <input mdInput [formControlName]="i" type="text"
+            [textMask]="{mask: mask.time}"
+            placeholder="Hora de início">
+          </md-input-container>
+        </div>
+
+        <div class="float-left div-form-pattern"><md-icon (click)="onRemoveSchedule(i)">clear</md-icon></div>
+
+        <div class="clear-both"></div>
+      </div>
+
+      <div *ngFor="let intervalControl of scheduleForm.get('intervals').controls; let i = index;">
+        <div class="float-left mr10 div-form-pattern">
+          <md-form-field>
+            <input mdInput [mdDatepicker]="picker" placeholder="Escolha a data de início" [formControlName]="i">
+            <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+            <md-datepicker #picker></md-datepicker>
+          </md-form-field>  
+        </div>
+
+        <div class="float-left mr10 div-form-pattern">
+            <md-form-field>
+              <input mdInput [mdDatepicker]="picker" placeholder="Escolha a data de término" [formControlName]="i">
+              <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+              <md-datepicker #picker></md-datepicker>
+            </md-form-field>  
+          </div>
+
+        <div class="float-left mr10 div-form-pattern">
+          <md-input-container>
+            <input mdInput [formControlName]="i" type="text"
+            [textMask]="{mask: mask.time}"
+            placeholder="Hora de início">
+          </md-input-container>
+        </div>
+
+        <div class="float-left div-form-pattern"><md-icon (click)="onRemoveSchedule(i)">clear</md-icon></div>
+
+        <div class="clear-both"></div>
+      </div>
+    </div>
+  </form>    
+</md-card>

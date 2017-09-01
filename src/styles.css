@@ -19,6 +19,21 @@ md-error {
     clear: both;
 }
 
+.div-form-pattern {
+    background-color: transparent;
+    font-size: 14px; 
+    height: 40px;    
+    vertical-align: middle;
+}
+
+.div-form-pattern md-icon {
+    padding-top: 12px;
+}
+
+.div-form-pattern md-form-field md-icon {
+    padding-top: 0;
+}
+
 .float-left {
     float: left;
 }
