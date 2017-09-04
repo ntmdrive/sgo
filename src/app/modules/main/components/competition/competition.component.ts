@@ -23,12 +23,21 @@ export class CompetitionComponent implements OnInit {
     })
   }
 
-  onAddSchedule() {
+  handleScheduleOutput = (event) => {
+    console.log(event);
+  }
+
+  onAddSchedule = () => {
     const control = new FormControl(null, Validators.required);
     (<FormArray>this.competitionForm.get('dates')).push(control);
   }
 
-  onRemoveSchedule(index) {
+  onCompetitionSubmit = () => {
+    console.log(32);
+    console.log(this.competitionForm);
+  }
+
+  onRemoveSchedule = (index) => {
     (<FormArray>this.competitionForm.get('dates')).removeAt(index);
   }
 }

@@ -1,3 +1,9 @@
-<div>
-  <ntm-schedule></ntm-schedule>
-</div>
+<md-card>
+  <form (ngSubmit)="onCompetitionSubmit()" [formGroup]="competitionForm">
+    <ntm-schedule (scheduleOutput)="handleScheduleOutput($event)"></ntm-schedule>
+
+    <md-card-actions>
+      <button type="submit" md-raised-button color="primary" *ngIf="competitionForm.valid || !disabled">Cadastrar</button>
+    </md-card-actions>
+  </form>
+</md-card>
