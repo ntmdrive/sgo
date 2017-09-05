@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-delegation',
@@ -7,11 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DelegationComponent implements OnInit {
   array: any;
+  delegationForm: FormGroup;
   paramsToTableData: any;
 
   constructor() { }
 
   ngOnInit() {
+    this.delegationForm = new FormGroup({
+      'initials': new FormControl(null),
+      'delegationName': new FormControl(null),
+      'foreignDelegation': new FormControl(false)
+    });
+
     this.paramsToTableData = {
       toolbar: {
         title: "Lista de delegações",
@@ -30,6 +38,14 @@ export class DelegationComponent implements OnInit {
       actionToolbar: {
         language: 'pt-br'
       }
-    }
+    };
+  }
+
+  onChangeForeignDelegation = (events) => {
+    this.delegationForm.get('foreignDelegation').setValue(events.checked);
+  }
+
+  onDelegationSubmit = () => {
+    console.log(this.delegationForm.value);
   }
 }

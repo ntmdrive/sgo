@@ -10,8 +10,10 @@ import { DateAdapter, NativeDateAdapter, MdSnackBar } from '@angular/material';
 export class CompetitionComponent implements OnInit {
   competitionForm: FormGroup;
   mask: any = {
-    time: [/\d/, /\d/, ':', /\d/, /\d/]
+    time: [/\d/, /\d/, ':', /\d/, /\d/],
+    date: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]
   };
+  paramsToTableData: any;
   
   constructor(dateAdapter: DateAdapter<NativeDateAdapter>) {
     dateAdapter.setLocale('pt-BR');
@@ -19,25 +21,53 @@ export class CompetitionComponent implements OnInit {
 
   ngOnInit() {
     this.competitionForm = new FormGroup({
-      'dates': new FormArray([])
+      'competitionName': new FormControl(null, Validators.required),
+      'dateStart': new FormControl(null, Validators.required),
+      'dateEnd': new FormControl(null, Validators.required),
+      'countDown': new FormControl(false),
+      'multipleTeamsOverOccupation': new FormControl(false),
+      'cities': new FormArray([])
     })
+
+    this.paramsToTableData = {
+      toolbar: {
+        title: "Lista de competições",
+        delete: "id",
+        search: true
+      },
+      list: {
+        route: "students",
+        show: ['name', "cpf_number"],
+        header: ['Nome', 'CPF'],
+        order: ['name', 'asc'],
+        colorByData: [{field: 'unit_id', fieldValue: '13', backgroundColor: '#3f51b5', color: '#fff'}],
+        edit: {route: '/main/delegation/', param: 'id'},
+        source: true
+      },
+      actionToolbar: {
+        language: 'pt-br'
+      }
+    }
   }
 
-  handleScheduleOutput = (event) => {
-    console.log(event);
-  }
-
-  onAddSchedule = () => {
+  onAddCity = () => {
     const control = new FormControl(null, Validators.required);
-    (<FormArray>this.competitionForm.get('dates')).push(control);
+    (<FormArray>this.competitionForm.get('cities')).push(control);
   }
 
   onCompetitionSubmit = () => {
-    console.log(32);
-    console.log(this.competitionForm);
+    console.log(this.competitionForm.value);
   }
 
-  onRemoveSchedule = (index) => {
-    (<FormArray>this.competitionForm.get('dates')).removeAt(index);
+  onEnableCountDown = (event) => {
+    this.competitionForm.get('countDown').setValue(event.checked);
+  }
+
+  onAllowMultipleTeams = (event) => {
+    this.competitionForm.get('multipleTeamsOverOccupation').setValue(event.checked);
+  }
+
+  onRemoveCity = (index) => {
+    (<FormArray>this.competitionForm.get('cities')).removeAt(index);
   }
 }

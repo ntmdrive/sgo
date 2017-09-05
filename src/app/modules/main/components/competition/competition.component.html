@@ -1,9 +1,71 @@
-<md-card>
+<md-card class="mt10">
   <form (ngSubmit)="onCompetitionSubmit()" [formGroup]="competitionForm">
-    <ntm-schedule (scheduleOutput)="handleScheduleOutput($event)"></ntm-schedule>
+    <div class="float-left mr10 div-form-pattern">
+      <md-input-container>
+        <input mdInput type="text" placeholder="Nome da Competição"
+        formControlName="competitionName">
+      </md-input-container>
+    </div>
+
+    <div class="float-left mr10 div-form-pattern">
+      <md-form-field>
+        <input mdInput [mdDatepicker]="dateStartPicker" 
+        placeholder="Data Inicial" 
+        formControlName="dateStart">
+        <md-datepicker-toggle mdSuffix [for]="dateStartPicker"></md-datepicker-toggle>
+        <md-datepicker #dateStartPicker></md-datepicker>
+      </md-form-field>
+    </div>
+
+    <div class="float-left mr10 div-form-pattern">
+      <md-form-field>
+        <input mdInput [mdDatepicker]="dateEndPicker" 
+        placeholder="Data de Término" 
+        formControlName="dateEnd">
+        <md-datepicker-toggle mdSuffix [for]="dateEndPicker"></md-datepicker-toggle>
+        <md-datepicker #dateEndPicker></md-datepicker>
+      </md-form-field>
+    </div>
+
+    <div class="clear-both"></div>
+
+    <div class="float-left mr10 div-form-pattern">
+      <button md-raised-button type="button" color="accent"
+      (click)="onAddCity()">Adicionar Cidade Sede</button>
+    </div>
+
+    <div class="float-left mr10 div-form-pattern">
+      <md-slide-toggle (change)="onEnableCountDown($event)">Habilitar Contador Regressivo</md-slide-toggle>
+    </div>
+
+    <div class="float-left mr10 div-form-pattern">
+      <md-slide-toggle (change)="onAllowMultipleTeams($event)">Permitir Múltiplas Equipes da Mesma Delegação nas Ocupações</md-slide-toggle>
+    </div>
+
+    <div class="clear-both"></div>
+
+    <div formArrayName="cities">
+      <div *ngFor="let city of competitionForm.get('cities')?.controls; let i = index;">
+        <div class="float-left div-form-pattern">
+          <md-input-container>
+            <input mdInput type="text" placeholder="Nome da Cidade Sede" [formControlName]="i">
+          </md-input-container>
+        </div>
+
+        <a class="float-left mr10 div-form-pattern">
+          <md-icon (click)="onRemoveCity(i)">clear</md-icon>
+        </a>
+
+        <div class="clear-both"></div>
+      </div>
+    </div>
 
     <md-card-actions>
-      <button type="submit" md-raised-button color="primary" *ngIf="competitionForm.valid || !disabled">Cadastrar</button>
+      <button type="submit" md-raised-button color="primary" [disabled]="competitionForm.invalid || !competitionForm.touched">Salvar</button>
     </md-card-actions>
   </form>
+</md-card>
+
+<md-card class="list mt10">
+  <ntm-table-data [params]="paramsToTableData"></ntm-table-data>
 </md-card>

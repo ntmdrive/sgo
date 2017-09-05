@@ -22,7 +22,7 @@ md-error {
 .div-form-pattern {
     background-color: transparent;
     font-size: 14px; 
-    height: 40px;    
+    padding: 10px 0 10px 0; 
     vertical-align: middle;
 }
 
@@ -32,6 +32,10 @@ md-error {
 
 .div-form-pattern md-form-field md-icon {
     padding-top: 0;
+}
+
+.div-form-pattern md-slide-toggle {
+    padding-top: 16px;
 }
 
 .float-left {

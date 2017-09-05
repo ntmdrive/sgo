@@ -1,26 +1,28 @@
 <md-card class="mt10">
-  <form>
-    <div class="float-left mr5 w10p">
+  <form (ngSubmit)="onDelegationSubmit()" [formGroup]="delegationForm">
+    <div class="float-left mr10 div-form-pattern">
       <md-input-container>
-        <input mdInput type="text" placeholder="Sigla">
+        <input mdInput type="text" placeholder="Sigla"
+        formControlName="initials">
       </md-input-container>
     </div>
 
-    <div  class="float-left mr5 w40p">
+    <div class="float-left mr10 div-form-pattern">
       <md-input-container>
-        <input mdInput type="text" placeholder="Nome">
+        <input mdInput type="text" placeholder="Nome"
+        formControlName="delegationName">
       </md-input-container>
     </div>
 
-    <div  class="float-left mr5 w20p mt20">
-      <md-slide-toggle>Delegação Estrangeira</md-slide-toggle>
+    <div class="float-left mr10 div-form-pattern">
+      <md-slide-toggle (change)="onChangeForeignDelegation($event)">Delegação Estrangeira</md-slide-toggle>
     </div>
     
-    <div class="float-left mr5 w10p mt15">
-      <a md-raised-button color="primary">Salvar</a>
-    </div>
-
     <div class="clear-both"></div>
+
+    <md-card-actions>
+      <button md-raised-button type="submit" color="primary">Salvar</button>
+    </md-card-actions>    
   </form>
 </md-card>
 
