@@ -8,10 +8,12 @@ import { DateAdapter, NativeDateAdapter, MdSnackBar } from '@angular/material';
   styleUrls: ['./competition.component.css']
 })
 export class CompetitionComponent implements OnInit {
+  cityCounting: any = [];
+  cityObject: any = [];
   competitionForm: FormGroup;
   mask: any = {
     time: [/\d/, /\d/, ':', /\d/, /\d/],
-    date: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]
+    date: [/[0-3]/, /\d/, '/', /[0-1]/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/]
   };
   paramsToTableData: any;
   
@@ -21,12 +23,15 @@ export class CompetitionComponent implements OnInit {
 
   ngOnInit() {
     this.competitionForm = new FormGroup({
+      'cities': new FormControl(null),
+      'cityDateEnd': new FormControl(null),
+      'cityDateStart': new FormControl(null),
+      'cityName': new FormControl(null),
       'competitionName': new FormControl(null, Validators.required),
-      'dateStart': new FormControl(null, Validators.required),
-      'dateEnd': new FormControl(null, Validators.required),
+      'competitionDateStart': new FormControl(null),
+      'competitionDateEnd': new FormControl(null),
       'countDown': new FormControl(false),
-      'multipleTeamsOverOccupation': new FormControl(false),
-      'cities': new FormArray([])
+      'multipleTeamsOverOccupation': new FormControl(false)
     })
 
     this.paramsToTableData = {
@@ -51,11 +56,35 @@ export class CompetitionComponent implements OnInit {
   }
 
   onAddCity = () => {
-    const control = new FormControl(null, Validators.required);
-    (<FormArray>this.competitionForm.get('cities')).push(control);
+    let index;
+
+    this.cityObject.push({
+      cityName: this.competitionForm.get('cityName').value,
+      cityDateStart: this.competitionForm.get('cityDateStart').value,
+      cityDateEnd: this.competitionForm.get('cityDateEnd').value
+    })
+
+    index = this.cityObject.length - 1;
+    console.log(this.cityObject[index]);
+    if((this.cityObject.length % 2 != 0)) {
+      this.cityObject[index]._backgroundColor = '#cfd8dc';
+    } else {
+      this.cityObject[index]._backgroundColor = '#fff';
+    }
+    
+
+    this.competitionForm.get('cityName').setValue(null);
+    this.competitionForm.get('cityDateStart').setValue(null);
+    this.competitionForm.get('cityDateEnd').setValue(null);
+    /*const control = new FormControl(null, Validators.required);
+    (<FormArray>this.competitionForm.get('cities')).push(control);*/
   }
 
   onCompetitionSubmit = () => {
+    if(this.cityObject.length > 0) {
+      this.competitionForm.get('cities').setValue(this.cityObject);
+    }
+
     console.log(this.competitionForm.value);
   }
 
@@ -68,6 +97,14 @@ export class CompetitionComponent implements OnInit {
   }
 
   onRemoveCity = (index) => {
-    (<FormArray>this.competitionForm.get('cities')).removeAt(index);
+    this.cityObject.splice(index, 1);
+
+    for(let lim = this.cityObject.length, i =0; i < lim; i++) {
+      if((i % 2 == 0)) {
+        this.cityObject[i]._backgroundColor = '#cfd8dc';
+      } else {
+        this.cityObject[i]._backgroundColor = '#fff';
+      }
+    }
   }
 }

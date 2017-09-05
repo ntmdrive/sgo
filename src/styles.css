@@ -11,6 +11,22 @@ body {
     background: #e0f2f1;
 }
 
+fieldset {
+    display: block;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    border: 2px groove;
+    z-index: 999;
+}
+
+h2 {
+    font-size: 20px;
+}
+
 md-error {
     font-size: 10px;
 }
@@ -28,6 +44,14 @@ md-error {
 
 .div-form-pattern md-icon {
     padding-top: 12px;
+}
+
+.div-form-pattern button[md-mini-fab] {
+    margin-top: 0;
+}
+
+.div-form-pattern button[md-mini-fab] md-icon {
+    margin-top: -10px;
 }
 
 .div-form-pattern md-form-field md-icon {
@@ -50,8 +74,16 @@ md-error {
 
 .mt5 { margin-top: 5px; } .mt10 { margin-top: 10px; } .mt15 { margin-top: 15px; } .mt20 { margin-top: 20px; }
 
+.pr5 { margin-right: 5px; } .pr10 { margin-right: 10px; } .pr15 { margin-right: 15px; } .pr20 { margin-right: 20px; }
+
+.pt5 { margin-top: 5px; } .pt10 { margin-top: 10px; } .pt15 { margin-top: 15px; } .pt20 { margin-top: 20px; }
+
 .spacer {
     flex: 1 1 auto;
+}
+
+.table-list {
+    border-bottom: 1px solid;
 }
 
 .w50 { width: 50px; } .w100 { width: 100px; } .w200 { width: 200px; } .w300 { width: 300px; } 

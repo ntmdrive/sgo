@@ -1,64 +1,148 @@
 <md-card class="mt10">
+  <h2><b>Nova Competição</b></h2>
+  
+  <hr>
+
   <form (ngSubmit)="onCompetitionSubmit()" [formGroup]="competitionForm">
-    <div class="float-left mr10 div-form-pattern">
-      <md-input-container>
-        <input mdInput type="text" placeholder="Nome da Competição"
-        formControlName="competitionName">
-      </md-input-container>
-    </div>
-
-    <div class="float-left mr10 div-form-pattern">
-      <md-form-field>
-        <input mdInput [mdDatepicker]="dateStartPicker" 
-        placeholder="Data Inicial" 
-        formControlName="dateStart">
-        <md-datepicker-toggle mdSuffix [for]="dateStartPicker"></md-datepicker-toggle>
-        <md-datepicker #dateStartPicker></md-datepicker>
-      </md-form-field>
-    </div>
-
-    <div class="float-left mr10 div-form-pattern">
-      <md-form-field>
-        <input mdInput [mdDatepicker]="dateEndPicker" 
-        placeholder="Data de Término" 
-        formControlName="dateEnd">
-        <md-datepicker-toggle mdSuffix [for]="dateEndPicker"></md-datepicker-toggle>
-        <md-datepicker #dateEndPicker></md-datepicker>
-      </md-form-field>
-    </div>
-
-    <div class="clear-both"></div>
-
-    <div class="float-left mr10 div-form-pattern">
-      <button md-raised-button type="button" color="accent"
-      (click)="onAddCity()">Adicionar Cidade Sede</button>
-    </div>
-
-    <div class="float-left mr10 div-form-pattern">
-      <md-slide-toggle (change)="onEnableCountDown($event)">Habilitar Contador Regressivo</md-slide-toggle>
-    </div>
-
-    <div class="float-left mr10 div-form-pattern">
-      <md-slide-toggle (change)="onAllowMultipleTeams($event)">Permitir Múltiplas Equipes da Mesma Delegação nas Ocupações</md-slide-toggle>
-    </div>
-
-    <div class="clear-both"></div>
-
-    <div formArrayName="cities">
-      <div *ngFor="let city of competitionForm.get('cities')?.controls; let i = index;">
-        <div class="float-left div-form-pattern">
-          <md-input-container>
-            <input mdInput type="text" placeholder="Nome da Cidade Sede" [formControlName]="i">
-          </md-input-container>
-        </div>
-
-        <a class="float-left mr10 div-form-pattern">
-          <md-icon (click)="onRemoveCity(i)">clear</md-icon>
-        </a>
-
-        <div class="clear-both"></div>
+    <div class="float-left">
+      <div class="float-left div-form-pattern">
+        <md-icon class="md-18">stars</md-icon>
+      </div>
+      <div class="float-left mr10 div-form-pattern">
+        <md-input-container>
+          <input mdInput type="text" placeholder="Nome da Competição"
+          formControlName="competitionName">
+        </md-input-container>
       </div>
     </div>
+
+    <div class="clear-both"></div>
+
+    <div class="float-left">
+      <div class="float-left div-form-pattern">
+        <md-icon class="md-18">av_timer</md-icon>
+      </div>
+      <div class="float-left mr10 div-form-pattern">
+        <md-slide-toggle (change)="onEnableCountDown($event)"></md-slide-toggle>
+        Habilitar Contador Regressivo
+      </div>
+    </div>
+
+    <div class="float-left">
+      <div class="float-left div-form-pattern">
+          <md-icon class="md-18">group</md-icon>
+        </div>
+      <div class="float-left mr10 div-form-pattern">
+        <md-slide-toggle (change)="onAllowMultipleTeams($event)"></md-slide-toggle>
+        Permitir Múltiplas Equipes da Mesma Delegação nas Ocupações
+      </div>
+    </div>
+
+    <div class="clear-both"></div>
+
+    <fieldset>
+      <legend>Cidades Sede</legend>
+
+      <div class="float-left">
+        <div class="float-left div-form-pattern">
+          <md-icon class="md-18">location_on</md-icon>
+        </div>
+        <div class="float-left mr10 div-form-pattern">
+          <md-input-container>
+            <input mdInput type="text" placeholder="Nome da Cidade Sede" formControlName="cityName">
+          </md-input-container>
+        </div>
+      </div>
+
+      <div class="float-left">
+        <div class="float-left div-form-pattern">
+          <md-icon class="md-18">date_range</md-icon>
+        </div>
+        <div class="float-left mr10 div-form-pattern">
+          <md-form-field>
+            <input mdInput [mdDatepicker]="cityDateStartPicker" 
+            placeholder="Data Inicial" 
+            formControlName="cityDateStart">
+            <md-datepicker-toggle mdSuffix [for]="cityDateStartPicker"></md-datepicker-toggle>
+            <md-datepicker #cityDateStartPicker></md-datepicker>
+          </md-form-field>
+        </div>
+      </div>
+
+      <div class="float-left">
+        <div class="float-left div-form-pattern">
+          <md-icon class="md-18">date_range</md-icon>
+        </div>
+        <div class="float-left mr10 div-form-pattern">
+          <md-form-field>
+            <input mdInput [mdDatepicker]="cityDateEndPicker" 
+            placeholder="Data de Término" 
+            formControlName="cityDateEnd">
+            <md-datepicker-toggle mdSuffix [for]="cityDateEndPicker"></md-datepicker-toggle>
+            <md-datepicker #cityDateEndPicker></md-datepicker>
+          </md-form-field>
+        </div>
+      </div>
+      
+      <div class="float-right mr10 div-form-pattern">
+        <button md-mini-fab type="button" color="primary"
+        (click)="onAddCity()"
+        [disabled]="competitionForm.get('cityName').value == null"><md-icon class="md-18">add</md-icon></button>
+      </div>
+
+      <div class="clear-both"></div>
+
+      <div *ngFor="let city of cityObject; let i = index;">
+        <div [ngStyle]="{'background-color': city._backgroundColor}">
+          <div class="float-left">
+            <div class="float-left div-form-pattern">
+              <md-icon class="md-18">location_on</md-icon>
+            </div>
+            <div class="float-left mr10 div-form-pattern">
+              <md-input-container>
+                <input mdInput type="text" placeholder="Nome da Cidade Sede" 
+                value="{{city.cityName}}">
+              </md-input-container>
+            </div>
+          </div>
+    
+          <div class="float-left">
+            <div class="float-left div-form-pattern">
+              <md-icon class="md-18">date_range</md-icon>
+            </div>
+            <div class="float-left mr10 div-form-pattern">
+              <md-input-container>
+                <input mdInput type="text" placeholder="Data Inicial"
+                [textMask]="{mask: mask.date}"
+                value="{{city.cityDateStart| date: 'dd/MM/yyyy'}}">
+              </md-input-container>
+            </div>
+          </div>
+    
+          <div class="float-left">
+            <div class="float-left div-form-pattern">
+              <md-icon class="md-18">date_range</md-icon>
+            </div>
+            <div class="float-left mr10 div-form-pattern">
+              <md-input-container>
+                <input mdInput type="text" placeholder="Data de Término" 
+                [textMask]="{mask: mask.date}"
+                value="{{city.cityDateEnd | date: 'dd/MM/yyyy'}}">
+              </md-input-container>
+            </div>
+          </div>
+
+          <div class="float-right mr10 div-form-pattern">
+              <button md-mini-fab type="button" color="warn"
+              (click)="onRemoveCity(i)">
+                <md-icon>remove</md-icon>
+              </button>
+          </div>
+
+          <div class="clear-both"></div>
+        </div>
+      </div>
+    </fieldset>
 
     <md-card-actions>
       <button type="submit" md-raised-button color="primary" [disabled]="competitionForm.invalid || !competitionForm.touched">Salvar</button>
