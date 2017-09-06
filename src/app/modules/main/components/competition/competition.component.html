@@ -49,7 +49,8 @@
         </div>
         <div class="float-left mr10 div-form-pattern">
           <md-input-container>
-            <input mdInput type="text" placeholder="Nome da Cidade Sede" formControlName="cityName">
+            <input mdInput type="text" placeholder="Nome da Cidade Sede" 
+            formControlName="cityName">
           </md-input-container>
         </div>
       </div>
@@ -92,7 +93,54 @@
 
       <div class="clear-both"></div>
 
-      <div *ngFor="let city of cityObject; let i = index;">
+      <div formArrayName="cities">
+        <div *ngFor="let city of competitionForm.get('cities').controls; let i = index;">
+          <div [formGroupName]="i">
+            <div class="float-left">
+              <div class="float-left div-form-pattern">
+                <md-icon class="md-18">location_on</md-icon>
+              </div>
+              <div class="float-left mr10 div-form-pattern">
+                <md-input-container>
+                  <input mdInput type="text" placeholder="Nome da Cidade Sede" 
+                  [formControlName]="cityName">
+                </md-input-container>
+              </div>
+            </div>
+      
+            <!--<div class="float-left">
+              <div class="float-left div-form-pattern">
+                <md-icon class="md-18">date_range</md-icon>
+              </div>
+              <div class="float-left mr10 div-form-pattern">
+                <md-form-field>
+                  <input mdInput [mdDatepicker]="i" 
+                  placeholder="Data Inicial" 
+                  [formControlName]="i">
+                  <md-datepicker-toggle mdSuffix [for]="i"></md-datepicker-toggle>
+                  <md-datepicker #i></md-datepicker>
+                </md-form-field>
+              </div>
+            </div>
+      
+            <div class="float-left">
+              <div class="float-left div-form-pattern">
+                <md-icon class="md-18">date_range</md-icon>
+              </div>
+              <div class="float-left mr10 div-form-pattern">
+                <md-form-field>
+                  <input mdInput [mdDatepicker]="cityDateEndPicker" 
+                  placeholder="Data de Término" 
+                  [formControlName]="i">
+                  <md-datepicker-toggle mdSuffix [for]="cityDateEndPicker"></md-datepicker-toggle>
+                  <md-datepicker #cityDateEndPicker></md-datepicker>
+                </md-form-field>
+              </div>
+            </div>-->
+          </div>
+        </div>
+      </div>
+      <!--<div *ngFor="let city of cityObject; let i = index;">
         <div [ngStyle]="{'background-color': city._backgroundColor}">
           <div class="float-left">
             <div class="float-left div-form-pattern">
@@ -141,7 +189,7 @@
 
           <div class="clear-both"></div>
         </div>
-      </div>
+      </div>-->
     </fieldset>
 
     <md-card-actions>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, NativeDateAdapter, MdSnackBar } from '@angular/material';
 
@@ -8,6 +8,10 @@ import { DateAdapter, NativeDateAdapter, MdSnackBar } from '@angular/material';
   styleUrls: ['./competition.component.css']
 })
 export class CompetitionComponent implements OnInit {
+  @ViewChild('cityDateEndInput') cityDateEndInput; 
+  @ViewChild('cityDateStartInput') cityDateStartInput; 
+  @ViewChild('cityNameInput') cityNameInput; 
+
   cityCounting: any = [];
   cityObject: any = [];
   competitionForm: FormGroup;
@@ -16,6 +20,7 @@ export class CompetitionComponent implements OnInit {
     date: [/[0-3]/, /\d/, '/', /[0-1]/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/]
   };
   paramsToTableData: any;
+  updatedCity: any;
   
   constructor(dateAdapter: DateAdapter<NativeDateAdapter>) {
     dateAdapter.setLocale('pt-BR');
@@ -23,7 +28,7 @@ export class CompetitionComponent implements OnInit {
 
   ngOnInit() {
     this.competitionForm = new FormGroup({
-      'cities': new FormControl(null),
+      'cities': new FormArray([]),
       'cityDateEnd': new FormControl(null),
       'cityDateStart': new FormControl(null),
       'cityName': new FormControl(null),
@@ -55,8 +60,12 @@ export class CompetitionComponent implements OnInit {
     }
   }
 
+  clearSetTimeout = (element) => {
+    clearTimeout(element);
+  }
+
   onAddCity = () => {
-    let index;
+    /*let index;
 
     this.cityObject.push({
       cityName: this.competitionForm.get('cityName').value,
@@ -65,7 +74,7 @@ export class CompetitionComponent implements OnInit {
     })
 
     index = this.cityObject.length - 1;
-    console.log(this.cityObject[index]);
+    
     if((this.cityObject.length % 2 != 0)) {
       this.cityObject[index]._backgroundColor = '#cfd8dc';
     } else {
@@ -75,9 +84,24 @@ export class CompetitionComponent implements OnInit {
 
     this.competitionForm.get('cityName').setValue(null);
     this.competitionForm.get('cityDateStart').setValue(null);
+    this.competitionForm.get('cityDateEnd').setValue(null);*/
+    let control = new FormGroup({
+      'cityName': new FormControl(this.competitionForm.get('cityName').value),
+      'cityDateEnd': new FormControl(this.competitionForm.get('cityDateEnd').value), 
+      'cityDateStart': new FormControl(this.competitionForm.get('cityDateStart').value)
+    });
+    console.log(control);
+    (<FormArray>this.competitionForm.get('cities')).push(control);
+
+    this.competitionForm.get('cityName').setValue(null);
+    this.competitionForm.get('cityDateStart').setValue(null);
     this.competitionForm.get('cityDateEnd').setValue(null);
-    /*const control = new FormControl(null, Validators.required);
-    (<FormArray>this.competitionForm.get('cities')).push(control);*/
+
+    console.log(this.competitionForm.get('cities'));
+  }
+
+  onAllowMultipleTeams = (event) => {
+    this.competitionForm.get('multipleTeamsOverOccupation').setValue(event.checked);
   }
 
   onCompetitionSubmit = () => {
@@ -92,10 +116,6 @@ export class CompetitionComponent implements OnInit {
     this.competitionForm.get('countDown').setValue(event.checked);
   }
 
-  onAllowMultipleTeams = (event) => {
-    this.competitionForm.get('multipleTeamsOverOccupation').setValue(event.checked);
-  }
-
   onRemoveCity = (index) => {
     this.cityObject.splice(index, 1);
 
@@ -106,5 +126,15 @@ export class CompetitionComponent implements OnInit {
         this.cityObject[i]._backgroundColor = '#fff';
       }
     }
+  }
+
+  onUpdateCity = (index) => {
+    this.clearSetTimeout(this.updatedCity);
+
+    this.updatedCity = setTimeout(() => {
+      this.cityObject[index].cityName = this.cityNameInput.nativeElement.value;
+      this.cityObject[index].cityDateEnd = this.cityDateEndInput.nativeElement.value;
+      this.cityObject[index].cityDateStart = this.cityDateStartInput.nativeElement.value;
+    }, 500);
   }
 }
