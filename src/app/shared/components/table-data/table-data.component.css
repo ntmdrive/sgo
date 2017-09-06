@@ -21,26 +21,24 @@ th md-icon {
     color: #BDBDBD;
 }
 
+th a md-icon {
+    vertical-align: middle;
+}
+
 th {
     border: none;
     color: #BDBDBD;
     padding: 15px;
 }
 
-.clear-both {
-    clear: both;
+.search-pattern{
+    vertical-align: middle;
+    font-size: 18px;
+    font-weight: normal;
 }
-
-.float-left {
-    float: left;
-}
-
-.float-right {
-    float: right;
-}
-
-.header {
-    margin-right: 15px;
+.font-pattern{
+    font-size: 20px;
+    font-weight: normal;
 }
 
 .list-item:hover {
@@ -62,7 +60,6 @@ th {
 
 #list-controllers {
     font-size: 16px;
-    margin: 0;
     width: 100%;
 }
 
@@ -84,8 +81,9 @@ th {
 
 #row-area {
     float: left;
-    margin-left: -10px;
+    /*margin-left: -10px;*/
     width: 50%;
+    height: 64px;
 }
 
 #toolbar-action {

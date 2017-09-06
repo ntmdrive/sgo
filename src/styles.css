@@ -46,6 +46,14 @@ md-error {
     float: right;
 }
 
+.vertical-align-m{
+   vertical-align: middle; 
+}
+
+.lk{
+    border: 1px solid red;
+}
+
 .mr5 { margin-right: 5px; } .mr10 { margin-right: 10px; } .mr15 { margin-right: 15px; } .mr20 { margin-right: 20px; }
 
 .mt5 { margin-top: 5px; } .mt10 { margin-top: 10px; } .mt15 { margin-top: 15px; } .mt20 { margin-top: 20px; }

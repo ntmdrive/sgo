@@ -31,6 +31,7 @@ export class TableDataComponent implements OnInit {
   editRoute: string;
   errors: any = [];
   isLoadingList: boolean = true;
+  isMobile: boolean;
   listController: FormGroup;
   listForm: FormGroup;
   msg: string;
@@ -167,6 +168,11 @@ export class TableDataComponent implements OnInit {
   }
 
   ngOnInit() { 
+    if (screen.width < 1024 || screen.height < 768) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
   }
   //Over delete
   checkAllToggle = (event) => {
@@ -415,4 +421,6 @@ export class TableDataComponent implements OnInit {
       this.search();
     }
   }  
+  
+
 }
