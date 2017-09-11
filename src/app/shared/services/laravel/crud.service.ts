@@ -11,12 +11,32 @@ export class CrudService {
   errors: any = [];
   headersToAuth: any;
   optionsToAuth: any;
+  url = environment.urlToApi;
 
   constructor(private http: Http) {}
 
-  create = () => {
-    
-  }
+  create = (params) => new Promise((resolve, reject) => {
+    let route: string = params.route;
+    let objectToCreate: any = params.objectToCreate;
+
+    if(!route) { // Verifica se pelo menos uma child foi definida
+      reject({
+        cod: "c-01",
+        message: "Informar erro c-01 ao administrador"
+      });
+    }
+
+    this.http
+    .post(
+      this.url+route,
+      objectToCreate
+    ).subscribe(res => {
+      resolve({
+        cod: "c-02",
+        message: "Cadastro feito com sucesso"//Cadastro feito com sucesso
+      });
+    })
+  })
 
   read = (params) => new Promise ((resolve, reject) => {
     let hide = "", limit = "", obj, objFiltered, objFilteredTemp, objKeys, order = "", page, setGet = "", search = "", show = "";
