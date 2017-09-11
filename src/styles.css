@@ -70,12 +70,17 @@ md-error {
     float: right;
 }
 
-.vertical-align-m{
+.vertical-align-m {
    vertical-align: middle; 
 }
 
-.lk{
+.lk {
     border: 1px solid red;
+}
+.overflow::after {
+    content: "";
+    clear: both;
+    display: table;
 }
 
 .mr5 { margin-right: 5px; } .mr10 { margin-right: 10px; } .mr15 { margin-right: 15px; } .mr20 { margin-right: 20px; }

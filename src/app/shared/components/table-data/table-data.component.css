@@ -31,6 +31,11 @@ th {
     padding: 15px;
 }
 
+.dropdown-table-pattern{
+    height: 698;
+    width: 320;
+}
+
 .search-pattern{
     vertical-align: middle;
     font-size: 18px;

@@ -27,7 +27,7 @@
     <!--Toolbar end -->
 
     <!--List area: start -->
-    <form [formGroup]="listForm"> 
+    <form [formGroup]="listForm" class=""> 
       <md-progress-bar mode="indeterminate" *ngIf="isLoadingList"></md-progress-bar>
 
       <table *ngIf="!isLoadingList">
@@ -51,8 +51,7 @@
           <td *ngFor="let item of data; let j = index" [ngStyle]="{'background-color': arraySource[i].backgroundColor, 'color': arraySource[i].color}">
             <span> {{ item }} </span>
           </td>
-
-          <td class="list-item-actions" *ngIf="params.list.edit" [ngStyle]="{'background-color': arraySource[i].backgroundColor, 'color': arraySource[i].color}">
+          <td class="list-item-actions" *ngIf="params.list.edit" [ngStyle]="{'background-color': arraySource[i].backgroundColor, 'color': arraySource[i].color}" class="lk">
             <a *ngIf="params.list.edit" (click)="onClickEdit(params.list.edit.route, arraySource[i][params.list.edit.param])"><md-icon>edit</md-icon></a>
           </td>
         </tr>
