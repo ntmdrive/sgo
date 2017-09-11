@@ -8,13 +8,13 @@ import { MdSnackBar } from '@angular/material';
 import { CrudService } from './../../../../shared/services/laravel/crud.service';
 
 @Component({
-  selector: 'app-delegation',
-  templateUrl: './delegation.component.html',
-  styleUrls: ['./delegation.component.css']
+  selector: 'app-institution',
+  templateUrl: './institution.component.html',
+  styleUrls: ['./institution.component.css']
 })
-export class DelegationComponent implements OnInit {
+export class InstitutionComponent implements OnInit {
   array: any;
-  delegationForm: FormGroup;
+  institutionForm: FormGroup;
   paramsToTableData: any;
 
   constructor(
@@ -23,25 +23,27 @@ export class DelegationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.delegationForm = new FormGroup({
+    this.institutionForm = new FormGroup({
       'competition_id': new FormControl(1),
-      'initials': new FormControl(null),
-      'delegation_name': new FormControl(null),
-      'is_foreign': new FormControl(false)
+      'institution_name': new FormControl(null)
     });
 
+    this.makeList();
+  }
+
+  makeList = () => {
     this.paramsToTableData = {
       toolbar: {
-        title: "Lista de delegações",
+        title: "Lista de instituições",
         delete: "id",
         search: true
       },
       list: {
-        route: "delegations",
-        show: ['delegation_name', 'initials'],
-        header: ['Delegação', 'Iniciais'],
+        route: "institutions",
+        show: ['institution_name'],
+        header: ['Grupo de ocupação'],
         order: ['id', 'desc'],
-        edit: {route: '/main/delegation/', param: 'id'},
+        edit: {route: '/main/institution/', param: 'id'},
         source: true
       },
       actionToolbar: {
@@ -51,15 +53,15 @@ export class DelegationComponent implements OnInit {
   }
 
   onChangeForeignDelegation = (events) => {
-    this.delegationForm.get('is_foreign').setValue(events.checked);
+    this.institutionForm.get('foreignDelegation').setValue(events.checked);
   }
 
-  onDelegationSubmit = () => {
+  onInstitutionSubmit = () => {
     let params = {
-      route: 'delegations',
-      objectToCreate: this.delegationForm.value
+      route: 'institutions',
+      objectToCreate: this.institutionForm.value
     };
-
+    
     this.crud.create(params)
     .then(res => {
       this.mdsnackbar.open(res['message'], '', {
@@ -71,8 +73,8 @@ export class DelegationComponent implements OnInit {
       })
     })
 
-    this.delegationForm.get('initials').setValue(null);
-    this.delegationForm.get('delegation_name').setValue(null);
-    this.delegationForm.get('is_foreign').setValue(false);
+    this.institutionForm.get('institution_name').setValue(null);
+
+    this.makeList();
   }
 }

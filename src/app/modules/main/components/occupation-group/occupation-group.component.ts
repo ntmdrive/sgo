@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MdSnackBar } from '@angular/material';
 
 /**
  * Services
@@ -13,23 +14,27 @@ import { CrudService } from './../../../../shared/services/laravel/crud.service'
 })
 export class OccupationGroupComponent implements OnInit {
   array: any;
-  delegationForm: FormGroup;
+  occupationsGroupsForm: FormGroup;
   paramsToTableData: any;
 
   constructor(
-    private crud: CrudService
+    private crud: CrudService,
+    private mdsnackbar: MdSnackBar
   ) { }
 
   ngOnInit() {
-    this.delegationForm = new FormGroup({
-      'initials': new FormControl(null),
-      'delegationName': new FormControl(null),
-      'foreignDelegation': new FormControl(false)
+    this.occupationsGroupsForm = new FormGroup({
+      'competition_id': new FormControl(1),
+      'occupation_group_name': new FormControl(null)
     });
 
+    this.makeList();
+  }
+
+  makeList = () => {
     this.paramsToTableData = {
       toolbar: {
-        title: "Lista de delegações",
+        title: "Lista de grupos de ocupações",
         delete: "id",
         search: true
       },
@@ -37,7 +42,7 @@ export class OccupationGroupComponent implements OnInit {
         route: "occupations-groups",
         show: ['occupation_group_name'],
         header: ['Grupo de ocupação'],
-        order: ['occupation_group_name', 'asc'],
+        order: ['id', 'desc'],
         edit: {route: '/main/occupation-group/', param: 'id'},
         source: true
       },
@@ -48,15 +53,28 @@ export class OccupationGroupComponent implements OnInit {
   }
 
   onChangeForeignDelegation = (events) => {
-    this.delegationForm.get('foreignDelegation').setValue(events.checked);
+    this.occupationsGroupsForm.get('foreignDelegation').setValue(events.checked);
   }
 
-  onDelegationSubmit = () => {
+  onOccupationsGroupsSubmit = () => {
     let params = {
       route: 'occupations-groups',
-      objectToCreate: this.delegationForm.value
+      objectToCreate: this.occupationsGroupsForm.value
     };
+    
     this.crud.create(params)
-    console.log(this.delegationForm.value);
+    .then(res => {
+      this.mdsnackbar.open(res['message'], '', {
+        duration: 2000
+      })
+    }, rej => {
+      this.mdsnackbar.open(rej['message'], '', {
+        duration: 3000
+      })
+    })
+
+    this.occupationsGroupsForm.get('occupation_group_name').setValue(null);
+
+    this.makeList();
   }
 }
