@@ -30,7 +30,8 @@
     <form [formGroup]="listForm" class=""> 
       <md-progress-bar mode="indeterminate" *ngIf="isLoadingList"></md-progress-bar>
 
-      <table *ngIf="!isLoadingList">
+      <table *ngIf="!isLoadingList && arraySourceSearch.length>=1">
+        
         <tr>
           <th id="list-item-checkbox" *ngIf="params.toolbar && params.toolbar.delete">
             <md-checkbox (change)="checkAllToggle($event)" [checked]="checkAllController" ></md-checkbox>
@@ -51,11 +52,13 @@
           <td *ngFor="let item of data; let j = index" [ngStyle]="{'background-color': arraySource[i].backgroundColor, 'color': arraySource[i].color}">
             <span> {{ item }} </span>
           </td>
-          <td class="list-item-actions" *ngIf="params.list.edit" [ngStyle]="{'background-color': arraySource[i].backgroundColor, 'color': arraySource[i].color}" class="lk">
+          <td class="list-item-actions" *ngIf="params.list.edit" [ngStyle]="{'background-color': arraySource[i].backgroundColor, 'color': arraySource[i].color}">
             <a *ngIf="params.list.edit" (click)="onClickEdit(params.list.edit.route, arraySource[i][params.list.edit.param])"><md-icon>edit</md-icon></a>
           </td>
         </tr>
+        
       </table>
+       <div *ngIf="arraySourceSearch.length < 1"> <br> <p class="text-fix">Não existe dados na lista.</p> <br> </div> 
     </form>
     <!--List area: end -->
 
@@ -66,7 +69,7 @@
         <div class="div-form-pattern float-left">
           <!-- Select the limit view page -->
           <md-select placeholder="{{placeholderToRowsPerPage}}" formControlName="row"
-          (change)="onChangeLimit($event)">
+          (change)="onChangeLimit($event)" *ngIf="arraySourceSearch.length > 0">
             <md-option *ngFor="let row of params.actionToolbar.rows" [value]="row">
               {{row}}
             </md-option>
@@ -82,7 +85,7 @@
             <a><md-icon (click)="onClickPage('add')" *ngIf="pageCurrent < pageTotal">keyboard_arrow_right</md-icon></a>
           </div>
 
-          <div class="div-form-pattern float-left mt10">
+          <div class="div-form-pattern float-left mt10" *ngIf="arraySourceSearch.length > 0">
             <span *ngIf="!isMobile">{{pageCurrent}} {{placeholderToPage}} {{pageTotal}}</span>
           </div>
         </div>

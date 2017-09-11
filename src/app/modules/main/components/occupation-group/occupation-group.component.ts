@@ -29,7 +29,7 @@ export class OccupationGroupComponent implements OnInit {
 
     this.paramsToTableData = {
       toolbar: {
-        title: "Lista de delegações",
+        title: "Lista de grupos de ocupacão",
         delete: "id",
         search: true
       },
