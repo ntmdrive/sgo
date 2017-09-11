@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
+/**
+ * Services
+ */
+import { CrudService } from './../../../../shared/services/laravel/crud.service';
+
 @Component({
   selector: 'app-delegation',
   templateUrl: './delegation.component.html',
@@ -11,7 +16,9 @@ export class DelegationComponent implements OnInit {
   delegationForm: FormGroup;
   paramsToTableData: any;
 
-  constructor() { }
+  constructor(
+    private crud: CrudService
+  ) { }
 
   ngOnInit() {
     this.delegationForm = new FormGroup({
@@ -27,11 +34,10 @@ export class DelegationComponent implements OnInit {
         search: true
       },
       list: {
-        route: "students",
-        show: ['name', "cpf_number"],
-        header: ['Nome', 'CPF'],
-        order: ['name', 'asc'],
-        colorByData: [{field: 'unit_id', fieldValue: '13', backgroundColor: '#3f51b5', color: '#fff'}],
+        route: "delegations",
+        show: ['delegation_name', "initials"],
+        header: ['Delegação', 'Iniciais'],
+        order: ['delegation_name', 'asc'],
         edit: {route: '/main/delegation/', param: 'id'},
         source: true
       },
@@ -46,6 +52,11 @@ export class DelegationComponent implements OnInit {
   }
 
   onDelegationSubmit = () => {
+    let params = {
+      route: 'delegations',
+      objectToCreate: this.delegationForm.value
+    };
+    this.crud.create(params)
     console.log(this.delegationForm.value);
   }
 }

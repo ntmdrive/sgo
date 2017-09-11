@@ -32,7 +32,7 @@ export class CompetitionComponent implements OnInit {
       'cityDateEnd': new FormControl(null),
       'cityDateStart': new FormControl(null),
       'cityName': new FormControl(null),
-      'competitionName': new FormControl(null, Validators.required),
+      'name': new FormControl(null, Validators.required),
       'competitionDateStart': new FormControl(null),
       'competitionDateEnd': new FormControl(null),
       'countDown': new FormControl(false),
@@ -46,18 +46,18 @@ export class CompetitionComponent implements OnInit {
         search: true
       },
       list: {
-        route: "students",
-        show: ['name', "cpf_number"],
-        header: ['Nome', 'CPF'],
+        route: "competitions",
+        show: ['name'],
+        header: ['Nome'],
         order: ['name', 'asc'],
-        colorByData: [{field: 'unit_id', fieldValue: '13', backgroundColor: '#3f51b5', color: '#fff'}],
-        edit: {route: '/main/delegation/', param: 'id'},
+        edit: {route: '/main/competition/', param: 'id'},
         source: true
       },
       actionToolbar: {
         language: 'pt-br'
       }
     }
+    console.log(this.competitionForm);
   }
 
   clearSetTimeout = (element) => {
@@ -65,39 +65,31 @@ export class CompetitionComponent implements OnInit {
   }
 
   onAddCity = () => {
-    /*let index;
+    let backgroundColor;
+    let mdDatePickerId1 = this.competitionForm.get('cities').value.length + "id1";
+    let mdDatePickerId2 = this.competitionForm.get('cities').value.length + "id2";
 
-    this.cityObject.push({
-      cityName: this.competitionForm.get('cityName').value,
-      cityDateStart: this.competitionForm.get('cityDateStart').value,
-      cityDateEnd: this.competitionForm.get('cityDateEnd').value
-    })
-
-    index = this.cityObject.length - 1;
-    
-    if((this.cityObject.length % 2 != 0)) {
-      this.cityObject[index]._backgroundColor = '#cfd8dc';
+    if((this.competitionForm.get('cities').value.length % 2 == 0)) {
+      backgroundColor = '#cfd8dc';
     } else {
-      this.cityObject[index]._backgroundColor = '#fff';
+      backgroundColor = '#fff';
     }
-    
 
-    this.competitionForm.get('cityName').setValue(null);
-    this.competitionForm.get('cityDateStart').setValue(null);
-    this.competitionForm.get('cityDateEnd').setValue(null);*/
     let control = new FormGroup({
       'cityName': new FormControl(this.competitionForm.get('cityName').value),
       'cityDateEnd': new FormControl(this.competitionForm.get('cityDateEnd').value), 
-      'cityDateStart': new FormControl(this.competitionForm.get('cityDateStart').value)
+      'cityDateStart': new FormControl(this.competitionForm.get('cityDateStart').value),
+      '_backgroundColor': new FormControl(backgroundColor),
+      '_mdDatePickerId1': new FormControl(mdDatePickerId1),
+      '_mdDatePickerId2': new FormControl(mdDatePickerId2)
     });
-    console.log(control);
+    
     (<FormArray>this.competitionForm.get('cities')).push(control);
+    console.log(this.competitionForm);
 
     this.competitionForm.get('cityName').setValue(null);
     this.competitionForm.get('cityDateStart').setValue(null);
     this.competitionForm.get('cityDateEnd').setValue(null);
-
-    console.log(this.competitionForm.get('cities'));
   }
 
   onAllowMultipleTeams = (event) => {
@@ -105,10 +97,6 @@ export class CompetitionComponent implements OnInit {
   }
 
   onCompetitionSubmit = () => {
-    if(this.cityObject.length > 0) {
-      this.competitionForm.get('cities').setValue(this.cityObject);
-    }
-
     console.log(this.competitionForm.value);
   }
 
@@ -117,13 +105,14 @@ export class CompetitionComponent implements OnInit {
   }
 
   onRemoveCity = (index) => {
-    this.cityObject.splice(index, 1);
+    const control = <FormArray>this.competitionForm.controls['cities'];
+    control.removeAt(index);
 
-    for(let lim = this.cityObject.length, i =0; i < lim; i++) {
+    for(let lim = this.competitionForm.get('cities').value.length, i =0; i < lim; i++) {
       if((i % 2 == 0)) {
-        this.cityObject[i]._backgroundColor = '#cfd8dc';
+        control.controls[i].patchValue({_backgroundColor: '#cfd8dc'})
       } else {
-        this.cityObject[i]._backgroundColor = '#fff';
+        control.controls[i].patchValue({_backgroundColor: '#fff'})
       }
     }
   }
@@ -136,5 +125,9 @@ export class CompetitionComponent implements OnInit {
       this.cityObject[index].cityDateEnd = this.cityDateEndInput.nativeElement.value;
       this.cityObject[index].cityDateStart = this.cityDateStartInput.nativeElement.value;
     }, 500);
+  }
+
+  test(e) {
+    console.log(e)
   }
 }
