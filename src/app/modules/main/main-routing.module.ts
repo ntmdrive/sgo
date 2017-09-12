@@ -7,7 +7,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { CompetitionComponent } from './components/competition/competition.component';
 import { DelegationComponent } from './components/delegation/delegation.component';
 import { HomeComponent } from './components/home/home.component';
+import { InstitutionComponent } from './components/institution/institution.component';
 import { MainComponent } from './main.component';
+import { OccupationComponent } from './components/occupation/occupation.component';
 import { OccupationGroupComponent } from './components/occupation-group/occupation-group.component';
 
 const routes: Routes = [{
@@ -31,6 +33,12 @@ const routes: Routes = [{
     }, {
       path: 'delegation/:id',
       component: DelegationComponent
+    }, {
+      path: 'institution',
+      component: InstitutionComponent
+    }, {
+      path: 'occupation',
+      component: OccupationComponent
     }
   ]
 }];

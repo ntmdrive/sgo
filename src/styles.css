@@ -46,6 +46,15 @@ md-error {
     padding-top: 12px;
 }
 
+.div-form-pattern md-select {
+    padding-top: 8px;
+}
+
+.div-form-pattern md-select .mat-select-placeholder {
+    font-size: 14px;
+    padding-top: 2px;
+}
+
 .div-form-pattern button[md-mini-fab] {
     margin-top: 0;
 }

@@ -21,6 +21,12 @@ export class MainComponent implements OnInit {
       }, {
         description: "Grupos de Ocupações",
         route: ['/main/occupation-group']
+      }, {
+        description: "Instituições",
+        route: ['/main/institution']
+      }, {
+        description: "Ocupações",
+        route: ['/main/occupation']
       }]
     }
   }
