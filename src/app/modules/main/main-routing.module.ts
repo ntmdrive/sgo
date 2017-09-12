@@ -25,6 +25,9 @@ const routes: Routes = [{
       path: 'competition',
       component: CompetitionComponent
     }, {
+      path: 'competition/:id',
+      component: CompetitionComponent
+    }, {
       path: 'delegation',
       component: DelegationComponent
     }, {

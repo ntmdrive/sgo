@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, NativeDateAdapter, MdSnackBar } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Services
@@ -20,30 +21,52 @@ export class CompetitionComponent implements OnInit {
   cityCounting: any = [];
   cityObject: any = [];
   competitionForm: FormGroup;
+  competitionToUpdate: any;
   mask: any = {
     time: [/\d/, /\d/, ':', /\d/, /\d/],
     date: [/[0-3]/, /\d/, '/', /[0-1]/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/]
   };
   paramsToTableData: any;
+  title: string = "Nova Competição";
   updatedCity: any;
   
   constructor(
     dateAdapter: DateAdapter<NativeDateAdapter>,
     private crud: CrudService,
-    private mdsnackbar: MdSnackBar
+    private mdsnackbar: MdSnackBar,
+    private route: ActivatedRoute
   ) {
     dateAdapter.setLocale('pt-BR');
   }
 
   ngOnInit() {
-    this.competitionForm = new FormGroup({
-      'hosts': new FormArray([]),
-      'endDate': new FormControl(null),
-      'initialDate': new FormControl(null),
-      'host_name': new FormControl(null),
-      'name': new FormControl(null, Validators.required),
-      'hasCountDownTimer': new FormControl(false),
-      'hasMultipleTeams': new FormControl(false)
+    this.route.params.subscribe(params => {
+      if(params.id) {
+        this.title = "Alterar Dados de Competição";
+
+        this.crud.read({
+          route: 'competitions',
+          order: ['id', 'desc'],
+          search: {
+            where: 'id',
+            value: params.id
+          }
+        }).then(res => {
+          this.competitionToUpdate = res['obj'][0];
+
+          this.fillUpdatedForm();
+        })
+      }
+
+      this.competitionForm = new FormGroup({
+        'hosts': new FormArray([]),
+        'endDate': new FormControl(null),
+        'initialDate': new FormControl(null),
+        'host_name': new FormControl(null),
+        'name': new FormControl(null, Validators.required),
+        'hasCountDownTimer': new FormControl(false),
+        'hasMultipleTeams': new FormControl(false)
+      });
     })
 
     this.makeList();
@@ -51,6 +74,10 @@ export class CompetitionComponent implements OnInit {
 
   clearSetTimeout = (element) => {
     clearTimeout(element);
+  }
+
+  fillUpdatedForm = () => {
+    this.competitionForm.get('name').setValue(this.competitionToUpdate.name);
   }
 
   onAddCity = () => {
