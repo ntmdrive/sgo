@@ -57,6 +57,7 @@ export class InstitutionComponent implements OnInit {
   }
 
   onInstitutionSubmit = () => {
+    console.log(this.institutionForm.value);
     let params = {
       route: 'institutions',
       objectToCreate: this.institutionForm.value

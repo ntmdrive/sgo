@@ -1,0 +1,69 @@
+<md-card class="mt10">
+  <form (ngSubmit)="onOccupationSubmit()" [formGroup]="occupationForm">
+    <div class="float-left mr10 div-form-pattern">
+      <md-input-container>
+        <input mdInput type="text" placeholder="Nome"
+        formControlName="occupation_name">
+      </md-input-container>
+    </div>
+
+    <div class="float-left mr10 div-form-pattern">
+      <md-input-container>
+        <input mdInput type="text"
+        placeholder="Número da Ocupação"
+        formControlName="occupation_number"
+        maxlength="3">
+      </md-input-container>
+    </div>
+
+    <div class="float-left mr10 div-form-pattern">
+      <md-input-container>
+        <input mdInput type="text"
+        placeholder="Nº da Participantes por Equipe"
+        formControlName="number_paticipants"
+        maxlength="3">
+      </md-input-container>
+    </div>
+
+    <div class="float-left mr10 div-form-pattern">
+      <md-input-container>
+        <input mdInput type="text"
+        placeholder="Idade Limite"
+        formControlName="age_limit"
+        maxlength="2">
+      </md-input-container>
+    </div>
+
+    <div class="float-left mr10 div-form-pattern">
+      <md-select class="font-pattern" placeholder="Grupo de Ocupação" formControlName="occupation_group_id">
+        <md-option *ngFor="let occupationGroup of occupationGroupToSelect" [value]="occupationGroup.id">{{occupationGroup.occupation_group_name}}</md-option>
+      </md-select>
+    </div>
+
+    <div class="float-left mr10 div-form-pattern">
+      <md-input-container>
+        <input mdInput type="text"
+        placeholder="Apelido"
+        formControlName="nickname">
+      </md-input-container>
+    </div>
+
+    <div class="float-left mr10 div-form-pattern">
+      <md-slide-toggle (change)="onChangeDemonstrationOccupation($event)">Ocupação de Demonstração</md-slide-toggle>
+    </div>
+
+    <div class="float-left mr10 div-form-pattern">
+      <md-slide-toggle (change)="onChangePCDOccupation($event)">Ocupação de PCD</md-slide-toggle>
+    </div>
+
+    <div class="clear-both"></div>
+
+    <md-card-actions>
+      <button md-raised-button type="submit" color="primary">Salvar</button>
+    </md-card-actions> 
+  </form>
+</md-card>
+
+<md-card class="list mt10">
+  <ntm-table-data [params]="paramsToTableData"></ntm-table-data>
+</md-card>
