@@ -58,7 +58,7 @@
         </tr>
         
       </table>
-       <div *ngIf="arraySourceSearch.length < 1"> <br> <p class="text-fix">Não existe dados na lista.</p> <br> </div> 
+       <div *ngIf="arraySourceSearch.length < 1"> <br> <p class="text-fix" *ngIf="!isLoadingList">Não existe dados na lista.</p> <br> </div> 
     </form>
     <!--List area: end -->
 

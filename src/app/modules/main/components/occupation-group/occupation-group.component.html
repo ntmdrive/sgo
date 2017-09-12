@@ -1,6 +1,9 @@
 <md-card class="mt10">
   <form (ngSubmit)="onOccupationsGroupsSubmit()" [formGroup]="occupationsGroupsForm">
     <div class="float-left mr10 div-form-pattern">
+        <div class="float-left mr10">
+          <md-icon class="md-18">person</md-icon>
+        </div>
       <md-input-container>
         <input mdInput type="text" placeholder="Nome"
         formControlName="occupation_group_name">
