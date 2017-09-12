@@ -8,7 +8,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompetitionComponent } from './components/competition/competition.component';
 import { DelegationComponent } from './components/delegation/delegation.component';
 import { HomeComponent } from './components/home/home.component';
+import { InstitutionComponent } from './components/institution/institution.component';
 import { MainComponent } from './main.component';
+import { OccupationComponent } from './components/occupation/occupation.component';
 import { OccupationGroupComponent } from './components/occupation-group/occupation-group.component';
 
  /**
@@ -31,8 +33,10 @@ import { TextMaskModule } from 'angular2-text-mask';
     CompetitionComponent,
     DelegationComponent,
     HomeComponent,
+    InstitutionComponent,
     MainComponent,
-    OccupationGroupComponent
+    OccupationGroupComponent,
+    OccupationComponent
   ]
 })
 export class MainModule { }

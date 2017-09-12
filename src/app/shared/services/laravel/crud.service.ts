@@ -30,11 +30,22 @@ export class CrudService {
     .post(
       this.url+route,
       objectToCreate
-    ).subscribe(res => {
+    )
+    .subscribe(res => {
       resolve({
         cod: "c-02",
         message: "Cadastro feito com sucesso"//Cadastro feito com sucesso
       });
+    }, rej => {
+      if(rej['_body']) {
+        let json = JSON.parse(rej['_body']);
+        reject({
+          cod: "error-c-01",
+          message: JSON.stringify(json.message)
+        })
+      } else {
+        console.log(rej)
+      }
     })
   })
 
@@ -98,7 +109,6 @@ export class CrudService {
         if(params.search.length > 1) {
           search = "&search";
         }
-        console.log(search);
       }
 
       if(!params.page) {
@@ -124,7 +134,6 @@ export class CrudService {
       .subscribe(res => {
         obj = JSON.parse(res['_body']);
         objFiltered = obj.data;
-        objKeys = Object.keys(objFiltered);
         objFiltered.total = obj.total;
         
         if(params.show) {
