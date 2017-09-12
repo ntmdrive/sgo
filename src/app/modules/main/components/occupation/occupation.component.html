@@ -1,6 +1,9 @@
 <md-card class="mt10">
   <form (ngSubmit)="onOccupationSubmit()" [formGroup]="occupationForm">
     <div class="float-left mr10 div-form-pattern">
+      <div class="float-left">
+        <md-icon>person</md-icon>
+      </div>
       <md-input-container>
         <input mdInput type="text" placeholder="Nome"
         formControlName="occupation_name">
@@ -8,6 +11,9 @@
     </div>
 
     <div class="float-left mr10 div-form-pattern">
+      <div class="float-left">
+        <md-icon>filter_none</md-icon>
+      </div>
       <md-input-container>
         <input mdInput type="text"
         placeholder="Número da Ocupação"
@@ -17,6 +23,9 @@
     </div>
 
     <div class="float-left mr10 div-form-pattern">
+      <div class="float-left">
+        <md-icon>group</md-icon>
+      </div>
       <md-input-container>
         <input mdInput type="text"
         placeholder="Nº da Participantes por Equipe"
@@ -26,6 +35,9 @@
     </div>
 
     <div class="float-left mr10 div-form-pattern">
+      <div class="float-left">
+        <md-icon>streetview</md-icon>
+      </div>
       <md-input-container>
         <input mdInput type="text"
         placeholder="Idade Limite"
@@ -35,12 +47,18 @@
     </div>
 
     <div class="float-left mr10 div-form-pattern">
+      <div class="float-left">
+        <md-icon>group_work</md-icon>
+      </div>
       <md-select class="font-pattern" placeholder="Grupo de Ocupação" formControlName="occupation_group_id">
         <md-option *ngFor="let occupationGroup of occupationGroupToSelect" [value]="occupationGroup.id">{{occupationGroup.occupation_group_name}}</md-option>
       </md-select>
     </div>
 
     <div class="float-left mr10 div-form-pattern">
+      <div class="float-left">
+        <md-icon>person_pin</md-icon>
+      </div>
       <md-input-container>
         <input mdInput type="text"
         placeholder="Apelido"

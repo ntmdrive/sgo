@@ -1,17 +1,28 @@
 <md-card class="mt10">
   <form (ngSubmit)="onDelegationSubmit()" [formGroup]="delegationForm">
-    <div class="float-left mr10 div-form-pattern">
+    <div class="float-left">
+      <div class="float-left div-form-pattern">
+        <md-icon class="md-18">gesture</md-icon>
+      </div>
+      <div class="float-left mr10 div-form-pattern">
       <md-input-container>
         <input mdInput type="text" placeholder="Sigla"
         formControlName="initials">
       </md-input-container>
+      </div>
     </div>
 
-    <div class="float-left mr10 div-form-pattern">
+
+    <div class="float-left" >
+      <div class="float-left div-form-pattern">
+        <md-icon class="">person</md-icon>
+      </div>
+      <div class="float-left mr10 div-form-pattern">
       <md-input-container>
         <input mdInput type="text" placeholder="Nome"
         formControlName="delegation_name">
       </md-input-container>
+      </div>
     </div>
 
     <div class="float-left mr10 div-form-pattern">
