@@ -50,7 +50,7 @@
           <div class="float-left mr10 div-form-pattern">
             <md-input-container>
               <input mdInput type="text" placeholder="Nome da Cidade Sede" 
-              formControlName="cityName">
+              formControlName="host_name">
             </md-input-container>
           </div>
         </div>
@@ -63,7 +63,7 @@
             <md-form-field>
               <input mdInput [mdDatepicker]="cityDateStartPicker" 
               placeholder="Data Inicial" 
-              formControlName="cityDateStart">
+              formControlName="initialDate">
               <md-datepicker-toggle mdSuffix [for]="cityDateStartPicker"></md-datepicker-toggle>
               <md-datepicker #cityDateStartPicker></md-datepicker>
             </md-form-field>
@@ -78,7 +78,7 @@
             <md-form-field>
               <input mdInput [mdDatepicker]="cityDateEndPicker" 
               placeholder="Data de Término" 
-              formControlName="cityDateEnd">
+              formControlName="endDate">
               <md-datepicker-toggle mdSuffix [for]="cityDateEndPicker"></md-datepicker-toggle>
               <md-datepicker #cityDateEndPicker></md-datepicker>
             </md-form-field>
@@ -88,12 +88,12 @@
         <div class="float-right mr10 div-form-pattern">
           <button md-mini-fab type="button" color="primary"
           (click)="onAddCity()"
-          [disabled]="competitionForm.get('cityName').value == null"><md-icon class="md-18">add</md-icon></button>
+          [disabled]="competitionForm.get('host_name').value == null"><md-icon class="md-18">add</md-icon></button>
         </div>
         <div class="clear-both"></div>
   
-        <div formGroupName="cities">
-          <div *ngFor="let city of competitionForm.get('cities').value; let i = index;">
+        <div formGroupName="hosts">
+          <div *ngFor="let city of competitionForm.get('hosts').value; let i = index;">
             <div [formGroupName]="i" [ngStyle]="{'background-color': city._backgroundColor}">
               <div class="float-left">
                 <div class="float-left div-form-pattern">
@@ -103,7 +103,7 @@
                 <div class="float-left mr10 div-form-pattern">
                   <md-input-container>
                     <input mdInput type="text" placeholder="Nome da Cidade Sede" 
-                    formControlName="cityName">
+                    formControlName="host_name">
                   </md-input-container>
                 </div>
               </div> 
@@ -116,7 +116,7 @@
                   <md-form-field>
                     <input mdInput [mdDatepicker]="city._mdDatePickerId1?.value" 
                     placeholder="Data Inicial" 
-                    formControlName="cityDateStart">
+                    formControlName="initialDate">
                     <!--<md-datepicker-toggle mdSuffix [for]="city._mdDatePickerId1?.value"></md-datepicker-toggle>
                     <md-datepicker #cityDateStartPicker = city._mdDatePickerId2.value></md-datepicker>-->
                   </md-form-field>
@@ -131,7 +131,7 @@
                   <md-form-field>
                     <input mdInput [mdDatepicker]="city._mdDatePickerId2?.value" 
                     placeholder="Data de Término" 
-                    formControlName="cityDateEnd">
+                    formControlName="endDate">
                     <!--<md-datepicker-toggle mdSuffix [for]="city._mdDatePickerId2"></md-datepicker-toggle>
                     <md-datepicker #{{city._mdDatePickerId2}}></md-datepicker>-->
                   </md-form-field>
@@ -158,7 +158,7 @@
               <div class="float-left mr10 div-form-pattern">
                 <md-input-container>
                   <input mdInput type="text" placeholder="Nome da Cidade Sede" 
-                  value="{{city.cityName}}">
+                  value="{{city.host_name}}">
                 </md-input-container>
               </div>
             </div>
@@ -171,7 +171,7 @@
                 <md-input-container>
                   <input mdInput type="text" placeholder="Data Inicial"
                   [textMask]="{mask: mask.date}"
-                  value="{{city.cityDateStart| date: 'dd/MM/yyyy'}}">
+                  value="{{city.initialDate| date: 'dd/MM/yyyy'}}">
                 </md-input-container>
               </div>
             </div>
@@ -184,7 +184,7 @@
                 <md-input-container>
                   <input mdInput type="text" placeholder="Data de Término" 
                   [textMask]="{mask: mask.date}"
-                  value="{{city.cityDateEnd | date: 'dd/MM/yyyy'}}">
+                  value="{{city.endDate | date: 'dd/MM/yyyy'}}">
                 </md-input-container>
               </div>
             </div>
