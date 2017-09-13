@@ -103,11 +103,11 @@ export class CrudService {
         setGet = "?";
 
         if(params.search.length == 1) {
-          search = "&search["+params.search[0].where+"]="+params.search[0].value;
+          search = "&where["+params.search[0].where+"]="+params.search[0].value;
         }
 
         if(params.search.length > 1) {
-          search = "&search";
+          search = "&where";
         }
       }
 
@@ -169,5 +169,47 @@ export class CrudService {
         message: "Definir parâmetros mínimos do serviço"
       })
     }
+  })
+
+  update = (params) => new Promise((resolve, reject) => {
+    let route: string = params.route;
+    let objectToUpdate: any = params.objectToUpdate;
+    let paramToUpdate: any = params.param;
+
+    if(!route) {
+      reject({
+        cod: "u-01",
+        message: "Informar erro u-01 ao administrador"
+      });
+    }
+
+    if(!paramToUpdate) {
+      reject({
+        cod: "u-02",
+        message: "Informar erro u-02 ao administrador"
+      });
+    }
+
+    this.http
+    .post(
+      this.url+route+"/"+paramToUpdate,
+      objectToUpdate
+    )
+    .subscribe(res => {
+      resolve({
+        cod: "u-02",
+        message: "Atualização feita com sucesso"
+      });
+    }, rej => {
+      if(rej['_body']) {
+        let json = JSON.parse(rej['_body']);
+        reject({
+          cod: "error-c-01",
+          message: JSON.stringify(json.message)
+        })
+      } else {
+        console.log(rej)
+      }
+    })
   })
 }

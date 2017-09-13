@@ -31,11 +31,14 @@ const routes: Routes = [{
       path: 'delegation',
       component: DelegationComponent
     }, {
+      path: 'delegation/:id',
+      component: DelegationComponent
+    }, {
       path: 'occupation-group',
       component: OccupationGroupComponent
     }, {
-      path: 'delegation/:id',
-      component: DelegationComponent
+      path: 'occupation-group/:id',
+      component: OccupationGroupComponent
     }, {
       path: 'institution',
       component: InstitutionComponent

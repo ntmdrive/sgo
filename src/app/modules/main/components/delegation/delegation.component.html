@@ -1,4 +1,8 @@
 <md-card class="mt10">
+  <h2><b>{{title}}</b></h2>
+  
+  <hr>
+  
   <form (ngSubmit)="onDelegationSubmit()" [formGroup]="delegationForm">
     <div class="float-left">
       <div class="float-left div-form-pattern">
@@ -26,7 +30,7 @@
     </div>
 
     <div class="float-left mr10 div-form-pattern">
-      <md-slide-toggle (change)="onChangeForeignDelegation($event)">Delegação Estrangeira</md-slide-toggle>
+      <md-slide-toggle [checked]="isForeign" (change)="onChangeForeignDelegation($event)" [checked]="isForeign">Delegação Estrangeira</md-slide-toggle>
     </div>
 
     <div class="clear-both"></div>

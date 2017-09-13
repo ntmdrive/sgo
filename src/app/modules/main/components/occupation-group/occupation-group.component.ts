@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
 
@@ -12,7 +12,7 @@ import { CrudService } from './../../../../shared/services/laravel/crud.service'
   templateUrl: './occupation-group.component.html',
   styleUrls: ['./occupation-group.component.css']
 })
-export class OccupationGroupComponent implements OnInit {
+export class OccupationGroupComponent implements OnInit, OnChanges {
   array: any;
   occupationsGroupsForm: FormGroup;
   paramsToTableData: any;
@@ -29,6 +29,9 @@ export class OccupationGroupComponent implements OnInit {
     });
 
     this.makeList();
+  }
+
+  ngOnChanges = () => {
   }
 
   makeList = () => {
@@ -76,5 +79,9 @@ export class OccupationGroupComponent implements OnInit {
     this.occupationsGroupsForm.get('occupation_group_name').setValue(null);
 
     this.makeList();
+  }
+
+  handleTableDataOutput = (e) => {
+    console.log(e);
   }
 }

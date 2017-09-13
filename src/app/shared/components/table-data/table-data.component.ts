@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -234,8 +234,6 @@ export class TableDataComponent implements OnInit {
         itensToDeleteIds.push(this.arraySource[i][fieldToUseInDelete]);
       }
     }
-
-    console.log(itensToDeleteIds);
   }
   
   /**
@@ -299,12 +297,11 @@ export class TableDataComponent implements OnInit {
     this.arrayNoFilter = noFilter;
     this.arraySourceFinal = filter; 
     this.arraySourceSearch = filter;
-
-    console.log(this.arraySource)
   }
 
   onClickEdit = (route, param) => {
     let finalRoute = [route+":"+param];
+    
     this.router.navigate(finalRoute);
   }
 
@@ -328,7 +325,6 @@ export class TableDataComponent implements OnInit {
   }
 
   onClickPage = (operation) => {
-    console.log(this.pageCurrent);
     if(operation == 'add') {
       this.pageCurrent += 1;
     }
@@ -402,8 +398,6 @@ export class TableDataComponent implements OnInit {
       } else {
         this.searchValue = [];
       }
-
-      console.log(this.searchValue);
 
       this.readData();
     }, 500)

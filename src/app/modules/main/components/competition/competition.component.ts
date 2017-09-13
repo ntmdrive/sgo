@@ -21,7 +21,6 @@ export class CompetitionComponent implements OnInit {
   cityCounting: any = [];
   cityObject: any = [];
   competitionForm: FormGroup;
-  competitionToUpdate: any;
   mask: any = {
     time: [/\d/, /\d/, ':', /\d/, /\d/],
     date: [/[0-3]/, /\d/, '/', /[0-1]/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/]
@@ -41,23 +40,6 @@ export class CompetitionComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      if(params.id) {
-        this.title = "Alterar Dados de Competição";
-
-        this.crud.read({
-          route: 'competitions',
-          order: ['id', 'desc'],
-          search: {
-            where: 'id',
-            value: params.id
-          }
-        }).then(res => {
-          this.competitionToUpdate = res['obj'][0];
-
-          this.fillUpdatedForm();
-        })
-      }
-
       this.competitionForm = new FormGroup({
         'hosts': new FormArray([]),
         'endDate': new FormControl(null),
@@ -74,10 +56,6 @@ export class CompetitionComponent implements OnInit {
 
   clearSetTimeout = (element) => {
     clearTimeout(element);
-  }
-
-  fillUpdatedForm = () => {
-    this.competitionForm.get('name').setValue(this.competitionToUpdate.name);
   }
 
   onAddCity = () => {
@@ -101,7 +79,6 @@ export class CompetitionComponent implements OnInit {
     });
     
     (<FormArray>this.competitionForm.get('hosts')).push(control);
-    console.log(this.competitionForm);
 
     this.competitionForm.get('host_name').setValue(null);
     this.competitionForm.get('initialDate').setValue(null);
@@ -158,9 +135,10 @@ export class CompetitionComponent implements OnInit {
       this.mdsnackbar.open(rej['message'], '', {
         duration: 3000
       })
-    })
 
-    this.competitionForm.reset();
+      this.competitionForm.get('hosts').setValue([]);
+      this.competitionForm.reset();
+    })
 
     this.makeList();
   }

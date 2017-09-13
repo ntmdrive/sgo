@@ -31,7 +31,6 @@ export class OccupationComponent implements OnInit {
     })
     .then(res => {
       this.occupationGroupToSelect = res['obj'];
-      console.log(this.occupationGroupToSelect);
     });
 
     this.occupationForm = new FormGroup({
