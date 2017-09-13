@@ -5,3 +5,7 @@ md-input-container {
 .spacer {
     flex: 1 1 auto;
 }
+md-card-actions>a,
+md-card-actions>button{
+    float: right;
+}
