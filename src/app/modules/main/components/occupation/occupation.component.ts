@@ -54,7 +54,7 @@ export class OccupationComponent implements OnInit {
   makeList = () => {
     this.paramsToTableData = {
       toolbar: {
-        title: "Lista de grupos de ocupações",
+        title: "Lista de ocupações",
         delete: "id",
         search: true
       },

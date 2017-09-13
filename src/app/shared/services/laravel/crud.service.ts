@@ -174,7 +174,7 @@ export class CrudService {
   update = (params) => new Promise((resolve, reject) => {
     let route: string = params.route;
     let objectToUpdate: any = params.objectToUpdate;
-    let paramToUpdate: any = params.param;
+    let paramToUpdate: any = params.paramToUpdate;
 
     if(!route) {
       reject({
@@ -191,13 +191,13 @@ export class CrudService {
     }
 
     this.http
-    .post(
+    .put(
       this.url+route+"/"+paramToUpdate,
       objectToUpdate
     )
     .subscribe(res => {
       resolve({
-        cod: "u-02",
+        cod: "u-03",
         message: "Atualização feita com sucesso"
       });
     }, rej => {
