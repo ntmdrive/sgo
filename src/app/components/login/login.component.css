@@ -1,13 +1,15 @@
+/deep/ ntm-login #ntm-login {
+    padding: 39px 38px
+} 
+
 .outer {
+    z-index: 999;
     display: table;
     position: absolute;
     height: 100%;
     width: 100%;
-    background: url('../../../assets/img/loggedout-background.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background: url("/assets/img/fk.png") repeat repeat, linear-gradient(180deg,transparent, rgba(0, 0, 0, 0.8)), url('/assets/img/loggedout-background.jpg') no-repeat center center fixed;
+    background-size: 4px 4px, cover, cover;
 }
 
 .middle {
@@ -16,6 +18,8 @@
 }
 
 .inner {
+    position: relative;
+    opacity: 1;
     margin-left: auto;
     margin-right: auto; 
     width: 400px;

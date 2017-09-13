@@ -1,4 +1,4 @@
-<md-card>
+<md-card id="ntm-login">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"
   *ngIf="errors.length < 1">
     <md-card-content>
@@ -7,8 +7,6 @@
           placeholder="E-mail">
       </md-input-container>
 
-      <hr>
-
       <md-input-container>
         <input mdInput formControlName="password" type="password"
         placeholder="Password">
@@ -16,15 +14,16 @@
     </md-card-content>
 
     <md-card-actions>
-      <button md-raised-button type="submit"
+
+      <button style="margin-right:16px;" md-raised-button type="submit"
       color="primary">
         Entrar
       </button>
 
-      <a md-raised-button (click)="onForgotPassword()"
-      color="warn"
+      <a md-button (click)="onForgotPassword()"
       *ngIf="params.forgotPasswordRoute">Esqueci a senha</a>
-    </md-card-actions>
+    </md-card-actions>  
+
   </form>
 
   <div *ngFor="let error of errors">
