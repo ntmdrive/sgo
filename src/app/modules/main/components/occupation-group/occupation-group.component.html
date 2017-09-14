@@ -1,4 +1,8 @@
 <md-card class="mt10">
+  <h2><b>{{title}}</b></h2>
+  
+  <hr>
+  
   <form (ngSubmit)="onOccupationsGroupsSubmit()" [formGroup]="occupationsGroupsForm">
     <div class="float-left mr10 div-form-pattern">
         <div class="float-left mr10">
@@ -13,8 +17,8 @@
     <div class="clear-both"></div>
 
     <md-card-actions>
-      <button md-raised-button type="submit" color="primary">Salvar</button>
-    </md-card-actions> 
+      <button md-raised-button type="submit" color="primary">{{submitButton}}</button>
+    </md-card-actions>
   </form>
 </md-card>
 

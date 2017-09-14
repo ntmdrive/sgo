@@ -55,7 +55,7 @@ export class AuthenticationService {
 
         resolve({
           cod: "l-01",
-          message: "Login successful"
+          message: "Login feito com sucesso"
         });
       }
     })

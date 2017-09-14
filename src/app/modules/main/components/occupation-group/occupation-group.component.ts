@@ -1,6 +1,7 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /**
  * Services
@@ -12,26 +13,61 @@ import { CrudService } from './../../../../shared/services/laravel/crud.service'
   templateUrl: './occupation-group.component.html',
   styleUrls: ['./occupation-group.component.css']
 })
-export class OccupationGroupComponent implements OnInit, OnChanges {
+export class OccupationGroupComponent implements OnInit {
   array: any;
   occupationsGroupsForm: FormGroup;
+  paramToSearch: any;
   paramsToTableData: any;
+  submitToCreate: boolean;
+  submitToUpdate: boolean;
+  submitButton: string;
+  title: string;
 
   constructor(
     private crud: CrudService,
-    private mdsnackbar: MdSnackBar
+    private mdsnackbar: MdSnackBar,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    /*update start*/
+    this.route.params.subscribe(params => {
+      if(params.id) {
+        this.paramToSearch = params.id;
+        this.submitToCreate = false;
+        this.submitToUpdate = true;
+        this.title = "Alterar Dados de Grupo de Ocupação";
+        this.submitButton = "Atualizar";
+
+        this.crud.read({
+          route: 'occupations-groups',
+          order: ['id', 'desc'],
+          search: [{
+            where: 'id',
+            value: this.paramToSearch.replace(':', '')
+          }]
+        }).then(res => {
+          
+          let obj = res['obj'][0];
+
+          this.occupationsGroupsForm.get('occupation_group_name').setValue(obj.occupation_group_name);
+        })
+      } else {
+        this.submitToCreate = true;
+        this.submitToUpdate = false;
+        this.title = "Novo Grupo de Ocupação";
+        this.submitButton = "Salvar";
+      }
+    })
+    /*update end*/
+
     this.occupationsGroupsForm = new FormGroup({
       'competition_id': new FormControl(1),
       'occupation_group_name': new FormControl(null)
     });
 
     this.makeList();
-  }
-
-  ngOnChanges = () => {
   }
 
   makeList = () => {
@@ -54,34 +90,49 @@ export class OccupationGroupComponent implements OnInit, OnChanges {
       }
     };
   }
-
-  onChangeForeignDelegation = (events) => {
-    this.occupationsGroupsForm.get('foreignDelegation').setValue(events.checked);
-  }
-
+  
   onOccupationsGroupsSubmit = () => {
-    let params = {
-      route: 'occupations-groups',
-      objectToCreate: this.occupationsGroupsForm.value
-    };
-    
-    this.crud.create(params)
-    .then(res => {
-      this.mdsnackbar.open(res['message'], '', {
-        duration: 2000
+    if(this.submitToUpdate) {
+      let params = {
+        route: 'occupations-groups',
+        objectToUpdate: this.occupationsGroupsForm.value,
+        paramToUpdate: this.paramToSearch.replace(':', '')
+      };
+  
+      this.crud.update(params)
+      .then(res => {
+        this.mdsnackbar.open(res['message'], '', {
+          duration: 2000
+        })
+      }, rej => {
+        this.mdsnackbar.open(rej['message'], '', {
+          duration: 3000
+        })
       })
-    }, rej => {
-      this.mdsnackbar.open(rej['message'], '', {
-        duration: 3000
+  
+      this.router.navigate(['/main/occupation-group']);
+  
+      this.makeList();
+    } else {
+      let params = {
+        route: 'occupations-groups',
+        objectToCreate: this.occupationsGroupsForm.value
+      };
+
+      this.crud.create(params)
+      .then(res => {
+        this.mdsnackbar.open(res['message'], '', {
+          duration: 2000
+        })
+      }, rej => {
+        this.mdsnackbar.open(rej['message'], '', {
+          duration: 3000
+        })
       })
-    })
 
-    this.occupationsGroupsForm.get('occupation_group_name').setValue(null);
+      this.occupationsGroupsForm.get('occupation_group_name').setValue(null);
 
-    this.makeList();
-  }
-
-  handleTableDataOutput = (e) => {
-    console.log(e);
+      this.makeList();
+    }
   }
 }

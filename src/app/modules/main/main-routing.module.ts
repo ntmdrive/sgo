@@ -43,7 +43,13 @@ const routes: Routes = [{
       path: 'institution',
       component: InstitutionComponent
     }, {
+      path: 'institution/:id',
+      component: InstitutionComponent
+    }, {
       path: 'occupation',
+      component: OccupationComponent
+    }, {
+      path: 'occupation/:id',
       component: OccupationComponent
     }
   ]

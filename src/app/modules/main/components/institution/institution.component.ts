@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /**
  * Services
@@ -15,14 +16,52 @@ import { CrudService } from './../../../../shared/services/laravel/crud.service'
 export class InstitutionComponent implements OnInit {
   array: any;
   institutionForm: FormGroup;
+  paramToSearch: any;
   paramsToTableData: any;
+  submitToCreate: boolean;
+  submitToUpdate: boolean;
+  submitButton: string;
+  title: string;
 
   constructor(
     private crud: CrudService,
-    private mdsnackbar: MdSnackBar
+    private mdsnackbar: MdSnackBar,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    /*update start*/
+    this.route.params.subscribe(params => {
+      if(params.id) {
+        this.paramToSearch = params.id;
+        this.submitToCreate = false;
+        this.submitToUpdate = true;
+        this.title = "Alterar Dados de Instituição";
+        this.submitButton = "Atualizar";
+
+        this.crud.read({
+          route: 'institutions',
+          order: ['id', 'desc'],
+          search: [{
+            where: 'id',
+            value: this.paramToSearch.replace(':', '')
+          }]
+        }).then(res => {
+          
+          let obj = res['obj'][0];
+
+          this.institutionForm.get('institution_name').setValue(obj.institution_name);
+        })
+      } else {
+        this.submitToCreate = true;
+        this.submitToUpdate = false;
+        this.title = "Nova Instituição";
+        this.submitButton = "Salvar";
+      }
+    })
+    /*update end*/
+
     this.institutionForm = new FormGroup({
       'competition_id': new FormControl(1),
       'institution_name': new FormControl(null)
@@ -41,7 +80,7 @@ export class InstitutionComponent implements OnInit {
       list: {
         route: "institutions",
         show: ['institution_name'],
-        header: ['Grupo de ocupação'],
+        header: ['Instituição'],
         order: ['id', 'desc'],
         edit: {route: '/main/institution/', param: 'id'},
         source: true
@@ -51,30 +90,49 @@ export class InstitutionComponent implements OnInit {
       }
     };
   }
-
-  onChangeForeignDelegation = (events) => {
-    this.institutionForm.get('foreignDelegation').setValue(events.checked);
-  }
-
+  
   onInstitutionSubmit = () => {
-    let params = {
-      route: 'institutions',
-      objectToCreate: this.institutionForm.value
-    };
-    
-    this.crud.create(params)
-    .then(res => {
-      this.mdsnackbar.open(res['message'], '', {
-        duration: 2000
+    if(this.submitToUpdate) {
+      let params = {
+        route: 'institutions',
+        objectToUpdate: this.institutionForm.value,
+        paramToUpdate: this.paramToSearch.replace(':', '')
+      };
+  
+      this.crud.update(params)
+      .then(res => {
+        this.mdsnackbar.open(res['message'], '', {
+          duration: 2000
+        })
+      }, rej => {
+        this.mdsnackbar.open(rej['message'], '', {
+          duration: 3000
+        })
       })
-    }, rej => {
-      this.mdsnackbar.open(rej['message'], '', {
-        duration: 3000
+  
+      this.router.navigate(['/main/institution']);
+  
+      this.makeList();
+    } else {
+      let params = {
+        route: 'institutions',
+        objectToCreate: this.institutionForm.value
+      };
+
+      this.crud.create(params)
+      .then(res => {
+        this.mdsnackbar.open(res['message'], '', {
+          duration: 2000
+        })
+      }, rej => {
+        this.mdsnackbar.open(rej['message'], '', {
+          duration: 3000
+        })
       })
-    })
 
-    this.institutionForm.get('institution_name').setValue(null);
+      this.institutionForm.get('institution_name').setValue(null);
 
-    this.makeList();
+      this.makeList();
+    }
   }
 }
