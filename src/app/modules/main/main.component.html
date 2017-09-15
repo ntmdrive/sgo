@@ -1,13 +1,15 @@
 <md-toolbar>
   <div class="w70p">
-    <div class="float-left"><ntm-menu-sidenav [params]="paramsToMenuSideNav" ></ntm-menu-sidenav></div>
-    <a [routerLink]="['/main/home']"> <div class="float-left" style="color:white; height:24px;">SGO</div> </a>
+    <div class="float-left"><ntm-menu-sidenav [params]="paramsToMenuSideNav"></ntm-menu-sidenav></div>
+    <a [routerLink]="['/main/home']"> <div id="toolbar-title">{{title}}</div> </a>
   </div>
-<div class="clear-both"></div>
+  <div class="clear-both"></div>
   <div class="w30p">
     <div class="float-right vertical-align-m"> <ntm-logout [params]="{route: ['/login']}"></ntm-logout></div>
     <div class="clear-both"></div>
   </div>
 </md-toolbar>
 
-<router-outlet></router-outlet>
+<div id="router-outlet">
+  <router-outlet></router-outlet>
+</div>

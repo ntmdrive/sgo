@@ -50,8 +50,7 @@ export class OccupationComponent implements OnInit {
             where: 'id',
             value: this.paramToSearch.replace(':', '')
           }]
-        }).then(res => {
-          
+        }).then(res => {          
           let obj = res['obj'][0];
 
           this.occupationForm.get('occupation_name').setValue(obj.occupation_name);
@@ -60,13 +59,13 @@ export class OccupationComponent implements OnInit {
           this.occupationForm.get('occupation_number').setValue(obj.occupation_number);
           this.occupationForm.get('number_participants').setValue(obj.number_participants);
           this.occupationForm.get('age_limit').setValue(obj.age_limit);
-          this.occupationForm.get('occupation_group_id').setValue(obj.occupation_group_id, {selected: true});
+          this.occupationForm.get('occupation_group_id').setValue(obj.occupation_group_id);
           //this.occupationForm.get('group_code_forum').setValue(obj.group_code_forum);
           this.occupationForm.get('nickname').setValue(obj.nickname);
           this.occupationForm.get('is_demonstration').setValue(obj.is_demonstration);
           this.occupationForm.get('is_disability').setValue(obj.is_disability);
-          this.occupationForm.get('host_id').setValue(obj.host_id, {selected: true});
-          this.occupationForm.get('institution_id').setValue(obj.institution_id, {selected: true});
+          this.occupationForm.get('host_id').setValue(obj.host_id);
+          this.occupationForm.get('institution_id').setValue(obj.institution_id);
         })
       } else {
         this.submitToCreate = true;

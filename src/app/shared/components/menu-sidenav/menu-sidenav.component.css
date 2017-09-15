@@ -1,3 +1,10 @@
+#menu-icon {
+    position: absolute;
+    padding: 0;
+    margin: 4px 0 0 0;
+    z-index: 300;
+}
+
 #sidenav {
     background: #37474f;
     color: #fff;
@@ -5,19 +12,20 @@
     left: 0;
     margin: 0;
     padding: 0;
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 250px;
-    z-index: 999;
+    z-index: 200;
 }
 
 #transparent-back {
-    background: transparent;
+    background: #37474f;
     height: 100%;
     left: 0;
     margin: 0;
     padding: 0;
-    position: absolute;
+    position: fixed;
+    opacity: 0.6;
     top: 0;
     width: 100%;
     z-index: 100;

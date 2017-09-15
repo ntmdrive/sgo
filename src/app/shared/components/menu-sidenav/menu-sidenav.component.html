@@ -3,24 +3,19 @@
 <div id="sidenav"
 *ngIf="toggle"
 [@myAnimation]>
-  <div>
-    <a (click)="onToggle()" [ngStyle]="{ 'position': 'absolute', 'margin': '1px', 'padding' : '0', 'top': iconTopPosition, 'left': iconLeftPosition }">
-      <md-icon class="md-18">{{mdIconClose}}</md-icon>
-    </a>
-  </div>
-
-  <div 
+  <span 
   *ngFor="let menu of params.menuSettings; let i = index;"
-  [ngStyle]="{ 'position': 'absolute', 'margin': '1px', 'padding' : '0', 'top': menuTopPosition+40*i+'px', 'left': menuLeftPosition+'px' }">
+  [ngStyle]="{ 'position': 'absolute', 'top': 60*(i+1)+'px', 'left': '20px'}">
     <a (click)="onMenuRoute(menu.route)">{{menu.description}}</a>
-  </div>
+  </span>
 </div>
 
 
 
-<span *ngIf="errors.length < 1">
+<span *ngIf="errors.length < 1" id="menu-icon">
   <a (click)="onToggle($event)">
-    <md-icon class="md-18">{{mdIconOpen}}</md-icon>
+    <md-icon class="md-18" *ngIf="!toggle">{{mdIconOpen}}</md-icon>
+    <md-icon class="md-18" *ngIf="toggle">{{mdIconClose}}</md-icon>
   </a>
 </span>
 

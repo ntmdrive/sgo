@@ -10,13 +10,13 @@ import { Router } from '@angular/router';
         transition(
         ':enter', [
           style({transform: 'translateX(-100%)', opacity: 0}),
-          animate('500ms', style({transform: 'translateX(0)', 'opacity': 1}))
+          animate('200ms', style({transform: 'translateX(0)', 'opacity': 1}))
         ]
       ),
       transition(
         ':leave', [
           style({transform: 'translateX(0)', 'opacity': 1}),
-          animate('500ms', style({transform: 'translateX(-100%)', 'opacity': 0}),
+          animate('200ms', style({transform: 'translateX(-100%)', 'opacity': 0}),
           )]
       )]
     )
@@ -28,12 +28,8 @@ export class MenuSidenavComponent implements OnInit {
   @Input() params;
 
   errors = [];
-  iconLeftPosition = "0px";
-  iconTopPosition = "0px";
   mdIconClose: string;
   mdIconOpen: string;
-  menuLeftPosition = "0px";
-  menuTopPosition = "0px";
   toggle: boolean = false;
 
   constructor(
@@ -44,10 +40,14 @@ export class MenuSidenavComponent implements OnInit {
     if(this.params) {
       if(!this.params.mdIconOpen) {
         this.mdIconOpen = "menu";
+      } else {
+        this.mdIconOpen = this.params.mdIconOpen;
       }
 
       if(!this.params.mdIconClose) {
         this.mdIconClose = "close";
+      } else {
+        this.mdIconClose = this.params.mdIconClose;
       }
 
       if(!this.params.menuSettings) {
@@ -71,12 +71,5 @@ export class MenuSidenavComponent implements OnInit {
 
   onToggle = (event) => {
     this.toggle = !this.toggle;
-
-    if(event) {
-      this.iconLeftPosition = event.offsetX+"px";
-      this.iconTopPosition = event.offsetY+"px";
-      this.menuLeftPosition = event.offsetX+20;
-      this.menuTopPosition = event.offsetY+20;
-    }
   }
 }
