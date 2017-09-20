@@ -170,6 +170,8 @@ export class OccupationComponent implements OnInit {
           duration: 3000
         })
       })
+      
+      this.makeList();
   
       this.router.navigate(['/main/occupation']);
     } else {

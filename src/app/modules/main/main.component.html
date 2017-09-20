@@ -1,11 +1,32 @@
 <md-toolbar>
   <div class="w70p">
-    <div class="float-left"><ntm-menu-sidenav [params]="paramsToMenuSideNav"></ntm-menu-sidenav></div>
-    <a [routerLink]="['/main/home']"> <div id="toolbar-title">{{title}}</div> </a>
+    <div class="float-left div-form-pattern">
+      <ntm-menu-sidenav [params]="paramsToMenuSideNav"></ntm-menu-sidenav>
+    </div>
+
+    <div class="float-left div-form-pattern mr20 mt10">
+      <a [routerLink]="['/main/home']"> 
+        <div id="toolbar-title">{{title}}</div> 
+      </a>
+    </div>
+
+    <div class="float-left div-form-pattern">
+      <div class="float-left">
+        <md-icon class="md-18">filter_list</md-icon>
+      </div>
+
+      <md-select class="float-left div-form-pattern" placeholder="Competição">
+        <md-option *ngFor="let competition of competitionsObject" [value]="competition.id">{{competition.name}}</md-option>
+      </md-select>
+    </div>
   </div>
+
   <div class="clear-both"></div>
-  <div class="w30p">
-    <div class="float-right vertical-align-m"> <ntm-logout [params]="{route: ['/login']}"></ntm-logout></div>
+  <div class="w30p toolbar">
+    <div class="float-right div-form-pattern mr20">
+        <img src="./../assets/img/sesi-logo-toolbar.png" alt="" id="senai-icon">
+    </div>
+
     <div class="clear-both"></div>
   </div>
 </md-toolbar>

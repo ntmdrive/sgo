@@ -31,6 +31,46 @@ md-error {
     font-size: 10px;
 }
 
+/* When the input is not focused */
+md-toolbar md-input-container label {
+    color: #fff;
+}
+
+/* When the input is focused */
+md-toolbar md-input-container.md-input-focused label {
+    color: #C9CCCC;
+}
+
+/* When select is not focused on toolbar*/
+md-toolbar .mat-select-arrow,
+.mat-select-disabled .mat-select-value,
+.mat-select-trigger {
+    color:#fff;
+    font-size: 14px;
+}
+
+md-toolbar .mat-select-underline {
+    background: #fff;
+}
+
+md-toolbar .mat-select.mat-primary .mat-select-value {
+    color: #fff;
+}
+
+/* When select is focused on toolbar*/
+md-toolbar .mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-arrow,
+.mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-trigger {
+    color: #C9CCCC;
+}
+
+md-toolbar .mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-underline {
+    background: #C9CCCC;
+}
+
+md-toolbar .mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-value {
+    color:#fff;
+}
+
 .clear-both {
     clear: both;
 }
@@ -86,6 +126,7 @@ md-error {
 .lk {
     border: 1px solid red;
 }
+
 .overflow::after {
     content: "";
     clear: both;

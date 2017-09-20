@@ -5,18 +5,24 @@
 [@myAnimation]>
   <span 
   *ngFor="let menu of params.menuSettings; let i = index;"
-  [ngStyle]="{ 'position': 'absolute', 'top': 60*(i+1)+'px', 'left': '20px'}">
+  [ngStyle]="{ 'position': 'absolute', 'top': 60*(i+2)+'px', 'left': '20px'}">
     <a (click)="onMenuRoute(menu.route)">{{menu.description}}</a>
   </span>
 </div>
 
-
-
 <span *ngIf="errors.length < 1" id="menu-icon">
+  <div *ngIf="toggle">
+    <h2>Ryzzan Salman</h2>
+  </div>
+
   <a (click)="onToggle($event)">
-    <md-icon class="md-18" *ngIf="!toggle">{{mdIconOpen}}</md-icon>
-    <md-icon class="md-18" *ngIf="toggle">{{mdIconClose}}</md-icon>
+    <md-icon class="md-18" *ngIf="!toggle" class="mr20">{{mdIconOpen}}</md-icon>
+    <md-icon class="md-18" *ngIf="toggle" class="mr20">{{mdIconClose}}</md-icon>
   </a>
+  <md-icon class="md-18" *ngIf="toggle" class="mr20">settings</md-icon>
+  <md-icon class="md-18" *ngIf="toggle" class="mr20">person</md-icon>
+  <md-icon class="md-18" *ngIf="toggle" class="mr20">help</md-icon>
+  <ntm-logout [params]="{route: ['/login']}" *ngIf="toggle"></ntm-logout>
 </span>
 
 <span *ngIf="errors.length > 0">

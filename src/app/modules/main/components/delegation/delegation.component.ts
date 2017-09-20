@@ -89,8 +89,8 @@ export class DelegationComponent implements OnInit {
       },
       list: {
         route: "delegations",
-        show: ['delegation_name', 'initials'],
-        header: ['Delegação', 'Iniciais'],
+        show: ['delegation_name', 'initials', 'is_foreign'],
+        header: ['Delegação', 'Iniciais', 'Delegação Estrangeira'],
         order: ['id', 'desc'],
         edit: {route: '/main/delegation/', param: 'id'},
         source: true
