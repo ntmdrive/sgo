@@ -1,4 +1,5 @@
 #menu-icon {
+    background: #37474f;
     position: absolute;
     padding: 0;
     margin: 0;
@@ -11,6 +12,7 @@
     height: 100%;
     left: 0;
     margin: 0;
+    overflow: auto;
     padding: 0;
     position: fixed;
     top: 0;

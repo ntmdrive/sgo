@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MdSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 
 /**
@@ -47,6 +48,7 @@ export class TableDataComponent implements OnInit {
   
   constructor(
     private crud: CrudService,
+    private mdsnackbar: MdSnackBar,
     private router: Router
   ) {
     this.searchForm = new FormGroup({
@@ -62,7 +64,7 @@ export class TableDataComponent implements OnInit {
       'deleteField': new FormControl(null)
     })
   }
-
+  
   ngOnChanges() {
     /**
      * Parameters validation: start
@@ -228,12 +230,30 @@ export class TableDataComponent implements OnInit {
 
   delete = (fieldToUseInDelete) => {
     let itensToDeleteIds = [];
-
+    
     for(let lim = this.arraySource.length, i = 0; i < lim; i++) {
       if(this.arraySource[i]._checked){
         itensToDeleteIds.push(this.arraySource[i][fieldToUseInDelete]);
       }
     }
+
+    this.crud.delete({
+      route: this.params.list.route,
+      paramToDelete: itensToDeleteIds
+    })
+    .then(res => {
+      this.mdsnackbar.open(res['message'], '', {
+        duration: 2000
+      })
+
+      this.readData();
+    }, rej => {
+      this.mdsnackbar.open(rej['message'], '', {
+        duration: 3000
+      })
+
+      this.readData();
+    })
   }
   
   /**
@@ -315,26 +335,6 @@ export class TableDataComponent implements OnInit {
 
     this.readData();
   }
-  /**
-   * Action area
-   */
-  onChangeLimit = (event) => {
-    this.params.list.limit = event.value;
-
-    this.readData();
-  }
-
-  onClickPage = (operation) => {
-    if(operation == 'add') {
-      this.pageCurrent += 1;
-    }
-
-    if(operation == 'subtract') {
-      this.pageCurrent -= 1;
-    }
-    
-    this.readData();
-  }  
 
   readData = () => {
     let readParams = {
@@ -366,6 +366,26 @@ export class TableDataComponent implements OnInit {
       }
     })
   }
+  /**
+   * Action area
+   */
+  onChangeLimit = (event) => {
+    this.params.list.limit = event.value;
+
+    this.readData();
+  }
+
+  onClickPage = (operation) => {
+    if(operation == 'add') {
+      this.pageCurrent += 1;
+    }
+
+    if(operation == 'subtract') {
+      this.pageCurrent -= 1;
+    }
+    
+    this.readData();
+  }  
 
   search = () => {
     this.searchValue = [];

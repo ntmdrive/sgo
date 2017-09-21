@@ -50,7 +50,7 @@ export class CrudService {
   })
 
   read = (params) => new Promise ((resolve, reject) => {
-    let hide = "", limit = "", obj, objFiltered, objFilteredTemp, objKeys, order = "", page, setGet = "", search = "", show = "";
+    let hide = "", limit = "", obj, objFiltered, objFilteredTemp, objKeys, order = "", page = "", setGet = "", search = "", show = "";
 
     if(params) {
       if(!params.route) {
@@ -94,9 +94,11 @@ export class CrudService {
         limit = "&limit="+params.limit;
       }
 
-      if(params.order.length == 2) {
-        setGet = "?";
-        order = "&order="+params.order[0]+","+params.order[1];
+      if(params.order) {
+        if(params.order.length == 2) {
+          setGet = "?";
+          order = "&order="+params.order[0]+","+params.order[1];
+        }
       }
 
       if(params.search) {
@@ -111,12 +113,16 @@ export class CrudService {
         }
       }
 
-      if(!params.page) {
-        setGet = "?";
-        page = "page=1";
-      } else {
+      if(params.page) {
         setGet = "?";
         page = "page="+params.page;
+      } else {
+        if(params.route != "user") {
+          setGet = "?";
+          page = "page=1";
+        } else {
+          page = ""
+        }
       }
 
       this.headersToAuth = new Headers({
@@ -133,8 +139,15 @@ export class CrudService {
       )
       .subscribe(res => {
         obj = JSON.parse(res['_body']);
-        objFiltered = obj.data;
-        objFiltered.total = obj.total;
+        if(params.route != 'user') {
+          objFiltered = obj.data;
+        } else {
+          objFiltered = obj;
+        }
+
+        if(obj.total) {
+          objFiltered.total = obj.total;
+        }
         
         if(params.show) {
           objFilteredTemp = obj.data;
@@ -211,5 +224,49 @@ export class CrudService {
         console.log(rej)
       }
     })
+  })
+
+  delete = (params) => new Promise((resolve, reject) => {
+    let route: string = params.route;
+    let paramToDelete: any = params.paramToDelete;
+
+    if(!route) {
+      reject({
+        cod: "u-01",
+        message: "Informar erro u-01 ao administrador"
+      });
+    }
+
+    if(!paramToDelete) {
+      reject({
+        cod: "u-02",
+        message: "Informar erro u-02 ao administrador"
+      });
+    }
+
+    for(let lim = paramToDelete.length, i = 0; i < lim; i++) {
+      this.http
+      .delete(
+        this.url+route+"/"+paramToDelete[i]
+      )
+      .subscribe(res => {
+        if(i == (lim - 1)) {
+          resolve({
+            cod: "u-03",
+            message: "Ítens apagados com sucesso"
+          });
+        }
+      }, rej => {
+        if(rej['_body']) {
+          let json = JSON.parse(rej['_body']);
+          reject({
+            cod: "error-c-01",
+            message: JSON.stringify(json.message)
+          })
+        } else {
+          console.log(rej)
+        }
+      })
+    }
   })
 }

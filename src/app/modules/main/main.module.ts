@@ -12,6 +12,7 @@ import { InstitutionComponent } from './components/institution/institution.compo
 import { MainComponent } from './main.component';
 import { OccupationComponent } from './components/occupation/occupation.component';
 import { OccupationGroupComponent } from './components/occupation-group/occupation-group.component';
+import { ProfileGroupComponent } from './components/profile-group/profile-group.component';
 
  /**
   * Modules
@@ -36,7 +37,8 @@ import { TextMaskModule } from 'angular2-text-mask';
     InstitutionComponent,
     MainComponent,
     OccupationGroupComponent,
-    OccupationComponent
+    OccupationComponent,
+    ProfileGroupComponent
   ]
 })
 export class MainModule { }

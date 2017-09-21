@@ -28,7 +28,7 @@ export class MainComponent implements OnInit {
         description: "Delegações",
         route: ['/main/delegation']
       }, {
-        description: "Grupos de Ocupações",
+        description: "Áreas Tecnológicas",
         route: ['/main/occupation-group']
       }, {
         description: "Instituições",
@@ -36,6 +36,9 @@ export class MainComponent implements OnInit {
       }, {
         description: "Ocupações",
         route: ['/main/occupation']
+      }, {
+        description: "Grupos de Perfis",
+        route: ['/main/profile-group']
       }]
     }
 
@@ -50,7 +53,6 @@ export class MainComponent implements OnInit {
 
     this.crud.read(params)
     .then(res => {
-      console.log(res);
       this.competitionsObject = res['obj'];
     })
   }

@@ -42,32 +42,32 @@ md-toolbar md-input-container.md-input-focused label {
 }
 
 /* When select is not focused on toolbar*/
-md-toolbar .mat-select-arrow,
-.mat-select-disabled .mat-select-value,
-.mat-select-trigger {
+.md-select-alternative .mat-select-arrow,
+.md-select-alternative .mat-select-disabled .mat-select-value,
+.md-select-alternative .mat-select-trigger {
     color:#fff;
     font-size: 14px;
 }
 
-md-toolbar .mat-select-underline {
+.md-select-alternative .mat-select-underline {
     background: #fff;
 }
 
-md-toolbar .mat-select.mat-primary .mat-select-value {
+.md-select-alternative .mat-select.mat-primary .mat-select-value {
     color: #fff;
 }
 
 /* When select is focused on toolbar*/
-md-toolbar .mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-arrow,
-.mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-trigger {
+.md-select-alternative .mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-arrow,
+.md-select-alternative .mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-trigger {
     color: #C9CCCC;
 }
 
-md-toolbar .mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-underline {
+.md-select-alternative .mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-underline {
     background: #C9CCCC;
 }
 
-md-toolbar .mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-value {
+.md-select-alternative .mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-value {
     color:#fff;
 }
 
@@ -149,7 +149,7 @@ md-toolbar .mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-v
     border-bottom: 1px solid;
 }
 
-.w50 { width: 50px; } .w100 { width: 100px; } .w200 { width: 200px; } .w300 { width: 300px; } 
+.w20 { width: 20px; } .w30 { width: 30px; } .w40 { width: 40px; } .w50 { width: 50px; } .w100 { width: 100px; } .w200 { width: 200px; } .w300 { width: 300px; } 
 .w400 { width: 400px; } .w500 { width: 500px; } .w600 { width: 600px; }
 
 .w5p { width: 5%; } .w10p { width: 10%; } .w20p { width: 20%; } .w30p { width: 30%; } .w40p { width: 40%; } .w45p { width: 45%; }

@@ -11,48 +11,53 @@ import { InstitutionComponent } from './components/institution/institution.compo
 import { MainComponent } from './main.component';
 import { OccupationComponent } from './components/occupation/occupation.component';
 import { OccupationGroupComponent } from './components/occupation-group/occupation-group.component';
+import { ProfileGroupComponent } from './components/profile-group/profile-group.component';
 
 const routes: Routes = [{
-  path: '', component: MainComponent, children: [
-    {
-      path: '',
-      redirectTo: 'home',
-      pathMatch: 'full'
-    }, { 
-      path: 'home', 
-      component: HomeComponent 
-    }, {
-      path: 'competition',
-      component: CompetitionComponent
-    }, {
-      path: 'competition/:id',
-      component: CompetitionComponent
-    }, {
-      path: 'delegation',
-      component: DelegationComponent
-    }, {
-      path: 'delegation/:id',
-      component: DelegationComponent
-    }, {
-      path: 'occupation-group',
-      component: OccupationGroupComponent
-    }, {
-      path: 'occupation-group/:id',
-      component: OccupationGroupComponent
-    }, {
-      path: 'institution',
-      component: InstitutionComponent
-    }, {
-      path: 'institution/:id',
-      component: InstitutionComponent
-    }, {
-      path: 'occupation',
-      component: OccupationComponent
-    }, {
-      path: 'occupation/:id',
-      component: OccupationComponent
-    }
-  ]
+  path: '', component: MainComponent, children: [{
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  }, { 
+    path: 'home', 
+    component: HomeComponent 
+  }, {
+    path: 'competition',
+    component: CompetitionComponent
+  }, {
+    path: 'competition/:id',
+    component: CompetitionComponent
+  }, {
+    path: 'delegation',
+    component: DelegationComponent
+  }, {
+    path: 'delegation/:id',
+    component: DelegationComponent
+  }, {
+    path: 'occupation-group',
+    component: OccupationGroupComponent
+  }, {
+    path: 'occupation-group/:id',
+    component: OccupationGroupComponent
+  }, {
+    path: 'institution',
+    component: InstitutionComponent
+  }, {
+    path: 'institution/:id',
+    component: InstitutionComponent
+  }, {
+    path: 'occupation',
+    component: OccupationComponent
+  }, {
+    path: 'occupation/:id',
+    component: OccupationComponent
+  }, {
+    path: 'profile-group',
+    component: ProfileGroupComponent
+  }, {
+    path: 'profile-group/:id',
+    component: ProfileGroupComponent
+  }]
 }];
 
 @NgModule({
