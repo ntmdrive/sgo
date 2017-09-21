@@ -9,3 +9,12 @@ md-card-actions>a,
 md-card-actions>button{
     float: right;
 }
+
+.div-title{
+    margin-bottom: 70px;
+}
+
+.h2-title{
+    font-weight: bold;
+    line-height: 32px;
+}
