@@ -9,13 +9,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from './../../../../shared/services/laravel/crud.service';
 
 @Component({
-  selector: 'app-occupation-group',
-  templateUrl: './occupation-group.component.html',
-  styleUrls: ['./occupation-group.component.css']
+  selector: 'app-profile-group',
+  templateUrl: './profile-group.component.html',
+  styleUrls: ['./profile-group.component.css']
 })
-export class OccupationGroupComponent implements OnInit {
+export class ProfileGroupComponent implements OnInit {
   array: any;
-  occupationsGroupsForm: FormGroup;
+  profileGroupForm: FormGroup;
   paramToSearch: any;
   paramsToTableData: any;
   submitToCreate: boolean;
@@ -37,11 +37,11 @@ export class OccupationGroupComponent implements OnInit {
         this.paramToSearch = params.id;
         this.submitToCreate = false;
         this.submitToUpdate = true;
-        this.title = "Alterar Dados de Área Tecnológica";
+        this.title = "Alterar Dados de Grupo de Perfil";
         this.submitButton = "Atualizar";
 
         this.crud.read({
-          route: 'occupations-groups',
+          route: 'groups-profiles',
           order: ['id', 'desc'],
           search: [{
             where: 'id',
@@ -51,20 +51,20 @@ export class OccupationGroupComponent implements OnInit {
           
           let obj = res['obj'][0];
 
-          this.occupationsGroupsForm.get('occupation_group_name').setValue(obj.occupation_group_name);
+          this.profileGroupForm.get('profile_group_name').setValue(obj.profile_group_name);
         })
       } else {
         this.submitToCreate = true;
         this.submitToUpdate = false;
-        this.title = "Nova Área Tecnológica";
+        this.title = "Nova Grupo de Perfil";
         this.submitButton = "Salvar";
       }
     })
     /*update end*/
 
-    this.occupationsGroupsForm = new FormGroup({
+    this.profileGroupForm = new FormGroup({
       'competition_id': new FormControl(1),
-      'occupation_group_name': new FormControl(null)
+      'profile_group_name': new FormControl(null)
     });
 
     this.makeList();
@@ -73,16 +73,16 @@ export class OccupationGroupComponent implements OnInit {
   makeList = () => {
     this.paramsToTableData = {
       toolbar: {
-        title: "Lista de áreas tecnológicas",
+        title: "Lista de grupos de perfis",
         delete: "id",
         search: true
       },
       list: {
-        route: "occupations-groups",
-        show: ['occupation_group_name'],
-        header: ['Área tecnológica'],
+        route: "groups-profiles",
+        show: ['profile_group_name'],
+        header: ['Grupo de Perfil'],
         order: ['id', 'desc'],
-        edit: {route: '/main/occupation-group/', param: 'id'},
+        edit: {route: '/main/profile-group/', param: 'id'},
         source: true
       },
       actionToolbar: {
@@ -91,11 +91,11 @@ export class OccupationGroupComponent implements OnInit {
     };
   }
   
-  onOccupationsGroupsSubmit = () => {
+  onProfileGroupSubmit = () => {
     if(this.submitToUpdate) {
       let params = {
-        route: 'occupations-groups',
-        objectToUpdate: this.occupationsGroupsForm.value,
+        route: 'groups-profiles',
+        objectToUpdate: this.profileGroupForm.value,
         paramToUpdate: this.paramToSearch.replace(':', '')
       };
   
@@ -110,13 +110,13 @@ export class OccupationGroupComponent implements OnInit {
         })
       })
   
-      this.router.navigate(['/main/occupation-group']);
+      this.router.navigate(['/main/profile-group']);
   
       this.makeList();
     } else {
       let params = {
-        route: 'occupations-groups',
-        objectToCreate: this.occupationsGroupsForm.value
+        route: 'groups-profiles',
+        objectToCreate: this.profileGroupForm.value
       };
 
       this.crud.create(params)
@@ -130,7 +130,7 @@ export class OccupationGroupComponent implements OnInit {
         })
       })
 
-      this.occupationsGroupsForm.get('occupation_group_name').setValue(null);
+      this.profileGroupForm.get('profile_group_name').setValue(null);
 
       this.makeList();
     }
