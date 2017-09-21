@@ -41,7 +41,7 @@ export class ProfileGroupComponent implements OnInit {
         this.submitButton = "Atualizar";
 
         this.crud.read({
-          route: 'groups-profiles',
+          route: 'profiles-groups',
           order: ['id', 'desc'],
           search: [{
             where: 'id',
@@ -78,7 +78,7 @@ export class ProfileGroupComponent implements OnInit {
         search: true
       },
       list: {
-        route: "groups-profiles",
+        route: "profiles-groups",
         show: ['profile_group_name'],
         header: ['Grupo de Perfil'],
         order: ['id', 'desc'],
@@ -94,7 +94,7 @@ export class ProfileGroupComponent implements OnInit {
   onProfileGroupSubmit = () => {
     if(this.submitToUpdate) {
       let params = {
-        route: 'groups-profiles',
+        route: 'profiles-groups',
         objectToUpdate: this.profileGroupForm.value,
         paramToUpdate: this.paramToSearch.replace(':', '')
       };
@@ -115,7 +115,7 @@ export class ProfileGroupComponent implements OnInit {
       this.makeList();
     } else {
       let params = {
-        route: 'groups-profiles',
+        route: 'profiles-groups',
         objectToCreate: this.profileGroupForm.value
       };
 

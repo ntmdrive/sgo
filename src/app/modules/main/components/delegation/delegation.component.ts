@@ -47,7 +47,8 @@ export class DelegationComponent implements OnInit {
           search: [{
             where: 'id',
             value: this.paramToSearch.replace(':', '')
-          }]
+          }],
+          page: 1
         }).then(res => {
           
           let obj = res['obj'][0];
@@ -93,6 +94,7 @@ export class DelegationComponent implements OnInit {
         header: ['Delegação', 'Iniciais', 'Delegação Estrangeira'],
         order: ['id', 'desc'],
         edit: {route: '/main/delegation/', param: 'id'},
+        page: 1,
         source: true
       },
       actionToolbar: {
