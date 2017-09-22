@@ -13,8 +13,7 @@
 <span *ngIf="errors.length < 1" class="menu-icon">
   <a (click)="onToggle($event)">
     <md-icon class="md-18" *ngIf="!toggle" class="mr20">{{mdIconOpen}}</md-icon>
-  </a>
-  
+  </a>  
 </span>
 
 <span *ngIf="toggle" [@firstAnimation] class="menu-icon">

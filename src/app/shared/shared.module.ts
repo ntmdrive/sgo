@@ -7,6 +7,7 @@ import { Routes, RouterModule } from '@angular/router';
 /**
  * Components
  */
+import { DeleteConfirmComponent } from './components/delete-confirm/delete-confirm.component';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { MenuSidenavComponent } from './components/menu-sidenav/menu-sidenav.component';
@@ -37,6 +38,7 @@ import { CrudService } from './services/laravel/crud.service';
     ReactiveFormsModule
   ],
   exports:[
+    DeleteConfirmComponent,
     LoginComponent,
     LogoutComponent,
     MaterialModule,
@@ -47,6 +49,7 @@ import { CrudService } from './services/laravel/crud.service';
     ScheduleComponent
   ],
   declarations: [
+    DeleteConfirmComponent,
     LoginComponent,
     LogoutComponent,
     MenuSidenavComponent,
@@ -57,6 +60,9 @@ import { CrudService } from './services/laravel/crud.service';
     AuthenticationService,
     AuthGuard,
     CrudService
+  ],
+  entryComponents: [
+    DeleteConfirmComponent
   ]
 })
 export class SharedModule { }

@@ -1,6 +1,7 @@
+import { DeleteConfirmComponent } from './../delete-confirm/delete-confirm.component';
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MdSnackBar } from '@angular/material';
+import { MdSnackBar, MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
 /**
@@ -48,6 +49,7 @@ export class TableDataComponent implements OnInit {
   
   constructor(
     private crud: CrudService,
+    public dialog: MdDialog,
     private mdsnackbar: MdSnackBar,
     private router: Router
   ) {
@@ -228,7 +230,7 @@ export class TableDataComponent implements OnInit {
     }
   }
 
-  delete = (fieldToUseInDelete) => {
+  openDialogToDelete = (fieldToUseInDelete) => {
     let itensToDeleteIds = [];
     
     for(let lim = this.arraySource.length, i = 0; i < lim; i++) {
@@ -237,23 +239,22 @@ export class TableDataComponent implements OnInit {
       }
     }
 
-    this.crud.delete({
-      route: this.params.list.route,
-      paramToDelete: itensToDeleteIds
-    })
-    .then(res => {
-      this.mdsnackbar.open(res['message'], '', {
-        duration: 2000
-      })
+    let dialogRef = this.dialog.open(DeleteConfirmComponent, {
+      width: '250px',
+      data: { 
+        route: this.params.list.route,
+        paramToDelete: itensToDeleteIds
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
       this.readData();
-    }, rej => {
-      this.mdsnackbar.open(rej['message'], '', {
+
+      this.mdsnackbar.open(result, '', {
         duration: 3000
       })
-
-      this.readData();
-    })
+    });
   }
   
   /**
@@ -398,7 +399,7 @@ export class TableDataComponent implements OnInit {
     }
     
     this.readData();
-  }  
+  }
 
   search = () => {
     this.searchValue = [];
