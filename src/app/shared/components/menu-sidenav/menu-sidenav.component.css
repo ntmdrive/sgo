@@ -1,4 +1,4 @@
-#menu-icon {
+.menu-icon {
     background: #37474f;
     position: absolute;
     padding: 0;
@@ -31,4 +31,9 @@
     top: 0;
     width: 100%;
     z-index: 100;
+}
+
+#username {
+    font-size: 20px;
+    font-weight: bolder;
 }

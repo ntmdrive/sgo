@@ -6,7 +6,39 @@ import { Router } from '@angular/router';
   selector: 'ntm-menu-sidenav',
   animations: [
     trigger(
+      'firstAnimation',
+      [
+        transition(
+        ':enter', [
+          style({transform: 'translateX(-100%)', opacity: 0}),
+          animate('200ms', style({transform: 'translateX(0)', 'opacity': 1}))
+        ]
+      ),
+      transition(
+        ':leave', [
+          style({transform: 'translateX(0)', 'opacity': 1}),
+          animate('200ms', style({transform: 'translateX(-100%)', 'opacity': 0}),
+          )]
+      )]
+    ),
+    trigger(
       'myAnimation',
+      [
+        transition(
+        ':enter', [
+          style({transform: 'translateX(-100%)', opacity: 0}),
+          animate('200ms', style({transform: 'translateX(0)', 'opacity': 1}))
+        ]
+      ),
+      transition(
+        ':leave', [
+          style({transform: 'translateX(0)', 'opacity': 1}),
+          animate('200ms', style({transform: 'translateX(-100%)', 'opacity': 0}),
+          )]
+      )]
+    ),
+    trigger(
+      'buttonAnimation',
       [
         transition(
         ':enter', [
