@@ -16,12 +16,14 @@ import { CrudService } from './../../../../shared/services/laravel/crud.service'
 export class OccupationGroupComponent implements OnInit {
   array: any;
   occupationsGroupsForm: FormGroup;
+  paramsToTableData: any;  
+  title: string;
+  /*update properties no change start*/
   paramToSearch: any;
-  paramsToTableData: any;
   submitToCreate: boolean;
   submitToUpdate: boolean;
   submitButton: string;
-  title: string;
+  /*update properties no change end*/
 
   constructor(
     private crud: CrudService,
@@ -109,10 +111,10 @@ export class OccupationGroupComponent implements OnInit {
           duration: 3000
         })
       })
+
+      this.makeList();
   
       this.router.navigate(['/main/occupation-group']);
-  
-      this.makeList();
     } else {
       let params = {
         route: 'occupations-groups',

@@ -267,21 +267,23 @@ export class TableDataComponent implements OnInit {
     let noFilter = data.map((data) => {
       let backgroundColor;
       let color;
-      let field;
-      let fieldValue;
+      let colorByDataField;
+      let colorByDataFieldValue;
+      let changeValueField;
       let temp = [];
       
       for(let lim = Object.keys(data).length, i = 0; i < lim; i++) {
-        field = Object.keys(data)[i];
+        colorByDataField = Object.keys(data)[i];
+        changeValueField = Object.keys(data)[i];
         
         if(this.params.list.colorByData) {
           for(let lim = this.params.list.colorByData.length, j =0; j < lim; j++) {          
-            if(field == this.params.list.colorByData[j]['field']) {
-              fieldValue = Object.keys(data)[i];
+            if(colorByDataField == this.params.list.colorByData[j]['field']) {
+              colorByDataFieldValue = Object.keys(data)[i];
               backgroundColor = this.params.list.colorByData[j]['backgroundColor'];
               color = this.params.list.colorByData[j]['color'];
               
-              if(this.params.list.colorByData[j]['fieldValue'] == data[fieldValue]) {
+              if(this.params.list.colorByData[j]['fieldValue'] == data[colorByDataFieldValue]) {
                 temp.push(data['backgroundColor'] = backgroundColor);
                 temp.push(data['color'] = color);
               } else {
@@ -291,7 +293,18 @@ export class TableDataComponent implements OnInit {
             }
           }
         }
-        temp.push(data[field]);
+        
+        if(this.params.list.changeValue) {
+          for(let lim = this.params.list.changeValue.length, j =0; j < lim; j++) {
+            if(changeValueField == this.params.list.changeValue[j]['field']) {              
+              if(this.params.list.changeValue[j]['fieldValue'] == data[changeValueField]) {
+                data[changeValueField] = this.params.list.changeValue[j]['newValue']
+              }
+            }
+          }
+        }
+        
+        temp.push(data[colorByDataField]);
       }
       
       return temp;

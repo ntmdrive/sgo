@@ -16,13 +16,19 @@ import { CrudService } from './../../../../shared/services/laravel/crud.service'
 export class DelegationComponent implements OnInit {
   array: any;
   delegationForm: FormGroup;
-  isForeign: boolean = false;
-  paramToSearch: any;
   paramsToTableData: any;
+  title: string;
+
+  /*update properties no change start*/
+  paramToSearch: any;
   submitToCreate: boolean;
   submitToUpdate: boolean;
   submitButton: string;
-  title: string;
+  /*update properties no change end*/
+
+  /*update properties specific start*/
+  isForeign: boolean = false;
+  /*update properties specific end*/
 
   constructor(
     private crud: CrudService,
@@ -95,7 +101,16 @@ export class DelegationComponent implements OnInit {
         order: ['id', 'desc'],
         edit: {route: '/main/delegation/', param: 'id'},
         page: 1,
-        source: true
+        source: true,
+        changeValue: [{
+          field: 'is_foreign',
+          fieldValue: 0,
+          newValue: 'Não'
+        }, {
+          field: 'is_foreign',
+          fieldValue: 1,
+          newValue: 'Sim'
+        }]
       },
       actionToolbar: {
         language: 'pt-br'
@@ -126,9 +141,9 @@ export class DelegationComponent implements OnInit {
         })
       })
   
-      this.router.navigate(['/main/delegation']);
-  
       this.makeList();
+      
+      this.router.navigate(['/main/delegation']);
     } else {
       let params = {
         route: 'delegations',

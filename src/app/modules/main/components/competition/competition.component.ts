@@ -28,6 +28,18 @@ export class CompetitionComponent implements OnInit {
   paramsToTableData: any;
   title: string = "Nova Competição";
   updatedCity: any;
+
+  /*update properties no change start*/
+  paramToSearch: any;
+  submitToCreate: boolean;
+  submitToUpdate: boolean;
+  submitButton: string;
+  /*update properties no change end*/
+
+  /*update properties specific start*/
+  hasCountDownTimer: boolean = false;
+  hasMultipleTeams: boolean = false;
+  /*update properties specific end*/
   
   constructor(
     dateAdapter: DateAdapter<NativeDateAdapter>,
@@ -39,6 +51,49 @@ export class CompetitionComponent implements OnInit {
   }
 
   ngOnInit() {
+    /*update start*/
+    this.route.params.subscribe(params => {
+      if(params.id) {
+        this.paramToSearch = params.id;
+        this.submitToCreate = false;
+        this.submitToUpdate = true;
+        this.title = "Alterar Dados de Área Tecnológica";
+        this.submitButton = "Atualizar";
+
+        this.crud.read({
+          route: 'competitions',
+          order: ['id', 'desc'],
+          search: [{
+            where: 'id',
+            value: this.paramToSearch.replace(':', '')
+          }]
+        }).then(res => {
+          console.log(res);
+          let obj = res['obj'][0];
+
+          this.competitionForm.get('name').setValue(obj.name);
+
+          if(obj.hasCountDownTimer == 1) {
+            this.hasCountDownTimer = true;
+          } else { 
+            this.hasCountDownTimer = false;
+          }
+
+          if(obj.hasMultipleTeams == 1) {
+            this.hasMultipleTeams = true;
+          } else { 
+            this.hasMultipleTeams = false;
+          }
+        })
+      } else {
+        this.submitToCreate = true;
+        this.submitToUpdate = false;
+        this.title = "Nova Área Tecnológica";
+        this.submitButton = "Salvar";
+      }
+    })
+    /*update end*/
+
     this.route.params.subscribe(params => {
       this.competitionForm = new FormGroup({
         'hosts': new FormArray([]),

@@ -109,10 +109,10 @@ export class ProfileGroupComponent implements OnInit {
           duration: 3000
         })
       })
+
+      this.makeList();
   
       this.router.navigate(['/main/profile-group']);
-  
-      this.makeList();
     } else {
       let params = {
         route: 'profiles-groups',

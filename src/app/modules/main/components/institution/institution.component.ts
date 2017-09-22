@@ -109,10 +109,10 @@ export class InstitutionComponent implements OnInit {
           duration: 3000
         })
       })
+      
+      this.makeList();
   
       this.router.navigate(['/main/institution']);
-  
-      this.makeList();
     } else {
       let params = {
         route: 'institutions',

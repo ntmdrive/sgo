@@ -15,16 +15,14 @@
           </md-input-container>
         </div>
       </div>
-  
-      <div class="clear-both"></div>  
       
       <div class="float-left mr10 div-form-pattern">
-        <md-slide-toggle (change)="onEnableCountDown($event)"></md-slide-toggle>
+        <md-slide-toggle (change)="onEnableCountDown($event)" [checked]="hasCountDownTimer"></md-slide-toggle>
         Habilitar Contador Regressivo
       </div>
       
       <div class="float-left mr10 div-form-pattern">
-        <md-slide-toggle (change)="onAllowMultipleTeams($event)"></md-slide-toggle>
+        <md-slide-toggle (change)="onAllowMultipleTeams($event)" [checked]="hasMultipleTeams"></md-slide-toggle>
         Permitir Múltiplas Equipes da Mesma Delegação nas Ocupações
       </div>
   
@@ -192,7 +190,7 @@
       </fieldset>
   
       <md-card-actions>
-        <button type="submit" md-raised-button color="primary" [disabled]="competitionForm.invalid || !competitionForm.touched">Salvar</button>
+        <button md-raised-button type="submit" color="primary" [disabled]="competitionForm.invalid">{{submitButton}}</button>
       </md-card-actions>
     </form>
   </md-card>
