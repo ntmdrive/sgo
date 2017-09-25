@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule, MdDatepickerModule, MdNativeDateModule } from '@angular/material';
+import { MdDatepickerModule, MdNativeDateModule, MdCardModule, MdDialogModule, MdSelectModule, MdCheckboxModule,
+  MdInputModule,MatSnackBarModule, MdIconModule, MdButtonModule, MatSlideToggleModule,MdToolbarModule } from '@angular/material';
 import { Routes, RouterModule } from '@angular/router';
 
 /**
@@ -33,20 +34,39 @@ import { CrudService } from './services/laravel/crud.service';
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule,
     TextMaskModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MdCardModule,
+    MdDatepickerModule,
+    MdDialogModule,
+    MdSelectModule,
+    MdCheckboxModule,
+    MatSnackBarModule,
+    MdIconModule,
+    MdInputModule,
+    MdButtonModule,
+    MatSlideToggleModule,
+    MdToolbarModule
   ],
   exports:[
     DeleteConfirmComponent,
     LoginComponent,
     LogoutComponent,
-    MaterialModule,
-    MdNativeDateModule,
+    MdCardModule,
     MdDatepickerModule,
+    MdDialogModule,
+    MdSelectModule,
+    MdCheckboxModule,
+    MatSnackBarModule,
+    MdNativeDateModule,
+    MdIconModule,
+    MdInputModule,
+    MdButtonModule,
     MenuSidenavComponent,
     TableDataComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    MatSlideToggleModule,
+    MdToolbarModule
   ],
   declarations: [
     DeleteConfirmComponent,
