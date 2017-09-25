@@ -183,22 +183,30 @@ export class TableDataComponent implements OnInit {
     this.checkAllController = event.checked;
 
     if(event.checked) {
-      this.listForm.get('deleteField').setValue(true);
-      
-      for(let lim = this.arraySource.length, i = 0; i < lim; i++) {
-        this.arraySource[i]._checked = true;
-      }
-
-      this.checkedItem = true;
+      this.checkAll();
     } else {
-      this.listForm.get('deleteField').setValue(false);
-
-      for(let lim = this.arraySource.length, i = 0; i < lim; i++) {
-        this.arraySource[i]._checked = false;
-      }
-
-      this.checkedItem = false;
+      this.uncheckAll();
     }
+  }
+
+  checkAll = () => {
+    this.listForm.get('deleteField').setValue(true);
+    
+    for(let lim = this.arraySource.length, i = 0; i < lim; i++) {
+      this.arraySource[i]._checked = true;
+    }
+
+    this.checkedItem = true;
+  }
+
+  uncheckAll = () => {
+    this.listForm.get('deleteField').setValue(false);
+    
+    for(let lim = this.arraySource.length, i = 0; i < lim; i++) {
+      this.arraySource[i]._checked = false;
+    }
+
+    this.checkedItem = false;
   }
 
   checkItem = (index, e) => {
@@ -237,7 +245,7 @@ export class TableDataComponent implements OnInit {
       if(this.arraySource[i]._checked){
         itensToDeleteIds.push(this.arraySource[i][fieldToUseInDelete]);
       }
-    }
+    };
 
     let dialogRef = this.dialog.open(DeleteConfirmComponent, {
       width: '250px',
@@ -248,12 +256,24 @@ export class TableDataComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      this.readData();
+      console.log(itensToDeleteIds.length);
+      let array: any;
+      let string: string;
 
-      this.mdsnackbar.open(result, '', {
+      this.readData();
+      this.uncheckAll();
+
+      if(itensToDeleteIds.length < 2) { 
+        array= [1, "item", "apagado"];
+      } else {
+        array= [itensToDeleteIds.length, "itens", "apagados"];
+      };
+
+      string = array[0] + " " + array[1] + " " + array[2];
+
+      this.mdsnackbar.open(string, '', {
         duration: 3000
-      })
+      });
     });
   }
   

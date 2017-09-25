@@ -33,9 +33,9 @@ export class DeleteConfirmComponent implements OnInit {
       paramToDelete: this.data.paramToDelete
     })
     .then(() => {
-      console.log(36)
-      this.change.emit("vai rolar essa porra");
-    }); // deleta o product Class no banco
+      console.log('dc-01 - Delete successful')
+      this.change.emit('Shit done');
+    });
     
     this.dialogRef.close();
   }
