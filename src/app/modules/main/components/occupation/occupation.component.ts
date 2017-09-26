@@ -100,13 +100,13 @@ export class OccupationComponent implements OnInit {
 
     this.occupationForm = new FormGroup({
       'competition_id': new FormControl(1),
-      'occupation_name': new FormControl(null),
-      'occupation_number': new FormControl(null),
+      'occupation_name': new FormControl(null,[Validators.maxLength(191),Validators.required]),
+      'occupation_number': new FormControl(null,[Validators.maxLength(5),Validators.required]),
       'number_participants': new FormControl(null),
-      'age_limit': new FormControl(null),
-      'occupation_group_id': new FormControl(null),
+      'age_limit': new FormControl(null,Validators.required),
+      'occupation_group_id': new FormControl(null,Validators.required),
       //'group_code_forum': new FormControl(null),
-      'nickname': new FormControl(null),
+      'nickname': new FormControl(null,[Validators.maxLength(191)]),
       'is_demonstration': new FormControl(false),
       'is_disability': new FormControl(false),
       'host_id': new FormControl(null),

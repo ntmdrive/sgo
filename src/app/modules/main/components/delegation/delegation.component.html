@@ -11,7 +11,7 @@
       <div class="float-left mr10 div-form-pattern">
       <md-input-container>
         <input mdInput type="text" placeholder="Sigla"
-        formControlName="initials">
+        formControlName="initials" maxlength="5">
       </md-input-container>
       </div>
     </div>
@@ -24,7 +24,7 @@
       <div class="float-left mr10 div-form-pattern">
       <md-input-container>
         <input mdInput type="text" placeholder="Nome"
-        formControlName="delegation_name">
+        formControlName="delegation_name" maxlength="191">
       </md-input-container>
       </div>
     </div>
@@ -36,7 +36,7 @@
     <div class="clear-both"></div>
     
     <md-card-actions>
-      <button md-raised-button type="submit" color="primary">{{submitButton}}</button>
+      <button md-raised-button type="submit" color="primary" [disabled]="!delegationForm.valid">{{submitButton}}</button>
     </md-card-actions>
   </form>
 </md-card>
