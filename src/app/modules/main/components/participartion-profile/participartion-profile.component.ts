@@ -9,13 +9,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from './../../../../shared/services/laravel/crud.service';
 
 @Component({
-  selector: 'app-institution',
-  templateUrl: './institution.component.html',
-  styleUrls: ['./institution.component.css']
+  selector: 'app-participartion-profile',
+  templateUrl: './participartion-profile.component.html',
+  styleUrls: ['./participartion-profile.component.css']
 })
-export class InstitutionComponent implements OnInit {
+export class ParticipartionProfileComponent implements OnInit {
   array: any;
-  institutionForm: FormGroup;
+  participationProfileForm: FormGroup;
   paramToSearch: any;
   paramsToTableData: any;
   submitToCreate: boolean;
@@ -37,11 +37,11 @@ export class InstitutionComponent implements OnInit {
         this.paramToSearch = params.id;
         this.submitToCreate = false;
         this.submitToUpdate = true;
-        this.title = "Alterar Dados de Instituição";
+        this.title = "Alterar Dados de Perfil de Participação";
         this.submitButton = "Atualizar";
 
         this.crud.read({
-          route: 'institutions',
+          route: 'profiles',
           order: ['id', 'desc'],
           search: [{
             where: 'id',
@@ -51,20 +51,20 @@ export class InstitutionComponent implements OnInit {
           
           let obj = res['obj'][0];
 
-          this.institutionForm.get('institution_name').setValue(obj.institution_name);
+          this.participationProfileForm.get('profile_name').setValue(obj.profile_name);
         })
       } else {
         this.submitToCreate = true;
         this.submitToUpdate = false;
-        this.title = "Nova Instituição";
+        this.title = "Nova Perfil de Participação";
         this.submitButton = "Salvar";
       }
     })
     /*update end*/
 
-    this.institutionForm = new FormGroup({
+    this.participationProfileForm = new FormGroup({
       'competition_id': new FormControl(1),
-      'institution_name': new FormControl(null)
+      'profile_name': new FormControl(null)
     });
 
     this.makeList();
@@ -73,19 +73,19 @@ export class InstitutionComponent implements OnInit {
   makeList = () => {
     this.paramsToTableData = {
       toolbar: {
-        title: "Lista de instituições",
+        title: "Lista de perfis de participantes",
         delete: [{
-          route: '/main/institution',
+          route: '/main/participation-profile',
           param: 'id'
         }],
         search: true
       },
       list: {
-        route: "institutions",
-        show: ['institution_name'],
-        header: ['Instituição'],
+        route: "profiles",
+        show: ['profile_name'],
+        header: ['Perfil de Participação'],
         order: ['id', 'desc'],
-        edit: {route: '/main/institution/', param: 'id'},
+        edit: {route: '/main/participation-profile/', param: 'id'},
         source: true
       },
       actionToolbar: {
@@ -94,11 +94,11 @@ export class InstitutionComponent implements OnInit {
     };
   }
   
-  onInstitutionSubmit = () => {
+  onParticipationProfileSubmit = () => {
     if(this.submitToUpdate) {
       let params = {
-        route: 'institutions',
-        objectToUpdate: this.institutionForm.value,
+        route: 'profiles',
+        objectToUpdate: this.participationProfileForm.value,
         paramToUpdate: this.paramToSearch.replace(':', '')
       };
   
@@ -115,11 +115,11 @@ export class InstitutionComponent implements OnInit {
       
       this.makeList();
   
-      this.router.navigate(['/main/institution']);
+      this.router.navigate(['/main/participation-profile']);
     } else {
       let params = {
-        route: 'institutions',
-        objectToCreate: this.institutionForm.value
+        route: 'profiles',
+        objectToCreate: this.participationProfileForm.value
       };
 
       this.crud.create(params)
@@ -133,7 +133,7 @@ export class InstitutionComponent implements OnInit {
         })
       })
 
-      this.institutionForm.get('institution_name').setValue(null);
+      this.participationProfileForm.get('profile_name').setValue(null);
 
       this.makeList();
     }

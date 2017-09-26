@@ -39,6 +39,9 @@ export class MainComponent implements OnInit {
       }, {
         description: "Grupos de Perfis",
         route: ['/main/profile-group']
+      }, {
+        description: "Perfis de Participação",
+        route: ['/main/participation-profile']
       }]
     }
 

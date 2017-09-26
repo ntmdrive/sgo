@@ -11,6 +11,7 @@ import { InstitutionComponent } from './components/institution/institution.compo
 import { MainComponent } from './main.component';
 import { OccupationComponent } from './components/occupation/occupation.component';
 import { OccupationGroupComponent } from './components/occupation-group/occupation-group.component';
+import { ParticipartionProfileComponent } from './components/participartion-profile/participartion-profile.component';
 import { ProfileGroupComponent } from './components/profile-group/profile-group.component';
 
 const routes: Routes = [{
@@ -57,6 +58,12 @@ const routes: Routes = [{
   }, {
     path: 'profile-group/:id',
     component: ProfileGroupComponent
+  }, {
+    path: 'participation-profile',
+    component: ParticipartionProfileComponent
+  }, {
+    path: 'participation-profile/:id',
+    component: ParticipartionProfileComponent
   }]
 }];
 

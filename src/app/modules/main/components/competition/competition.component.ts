@@ -68,10 +68,9 @@ export class CompetitionComponent implements OnInit {
             value: this.paramToSearch.replace(':', '')
           }]
         }).then(res => {
-          console.log(res);
           let obj = res['obj'][0];
 
-          this.competitionForm.get('name').setValue(obj.name);
+          this.competitionForm.patchValue(obj);
 
           if(obj.hasCountDownTimer == 1) {
             this.hasCountDownTimer = true;
