@@ -64,7 +64,7 @@ export class InstitutionComponent implements OnInit {
 
     this.institutionForm = new FormGroup({
       'competition_id': new FormControl(1),
-      'institution_name': new FormControl(null)
+      'institution_name': new FormControl(null,Validators.required)
     });
 
     this.makeList();

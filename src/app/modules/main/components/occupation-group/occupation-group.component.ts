@@ -66,7 +66,7 @@ export class OccupationGroupComponent implements OnInit {
 
     this.occupationsGroupsForm = new FormGroup({
       'competition_id': new FormControl(1),
-      'occupation_group_name': new FormControl(null)
+      'occupation_group_name': new FormControl(null,[Validators.maxLength(191),Validators.required])
     });
 
     this.makeList();

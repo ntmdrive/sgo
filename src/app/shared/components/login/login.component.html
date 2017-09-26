@@ -21,7 +21,7 @@
         <div class="float-left mr10 div-form-pattern w290">
           <md-input-container>
               <input mdInput formControlName="email" type="text"
-              placeholder="E-mail">
+              placeholder="E-mail" maxlength="191">
           </md-input-container>
         </div>
       </div>
@@ -33,7 +33,7 @@
         <div class="float-left  div-form-pattern w290">
           <md-input-container>
             <input mdInput formControlName="password" type="password"
-            placeholder="Password">
+            placeholder="Password" maxlength="191">
           </md-input-container>
         </div>
       </div>
@@ -43,7 +43,7 @@
     <md-card-actions>
 
       <button style="margin-right:16px;" md-raised-button type="submit"
-      color="primary">
+      color="primary" [disabled]="!loginForm.valid">
         Entrar
       </button>
 

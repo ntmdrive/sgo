@@ -79,8 +79,8 @@ export class DelegationComponent implements OnInit {
 
     this.delegationForm = new FormGroup({
       'competition_id': new FormControl(1),
-      'initials': new FormControl(null),
-      'delegation_name': new FormControl(null),
+      'initials': new FormControl(null,[Validators.maxLength(5),Validators.required]),
+      'delegation_name': new FormControl(null,[Validators.maxLength(191),Validators.required]),
       'is_foreign': new FormControl(false)
     });
 

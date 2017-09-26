@@ -10,14 +10,14 @@
       </div>
       <md-input-container>
         <input mdInput type="text" placeholder="Nome"
-        formControlName="institution_name">
+        formControlName="institution_name" maxlength="191">
       </md-input-container>
     </div>
 
     <div class="clear-both"></div>
 
     <md-card-actions>
-      <button md-raised-button type="submit" color="primary">{{submitButton}}</button>
+      <button md-raised-button type="submit" color="primary" [disabled]="!institutionForm.valid">{{submitButton}}</button>
     </md-card-actions>
   </form>
 </md-card>

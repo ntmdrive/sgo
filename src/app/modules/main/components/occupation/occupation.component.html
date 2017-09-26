@@ -10,7 +10,7 @@
       </div>
       <md-input-container>
         <input mdInput type="text" placeholder="Nome"
-        formControlName="occupation_name">
+        formControlName="occupation_name" maxlength="191">
       </md-input-container>
     </div>
 
@@ -22,7 +22,7 @@
         <input mdInput type="text"
         placeholder="Número da Ocupação"
         formControlName="occupation_number"
-        maxlength="3">
+        maxlength="5">
       </md-input-container>
     </div>
 
@@ -34,7 +34,7 @@
         <input mdInput type="text"
         placeholder="Nº da Participantes por Equipe"
         formControlName="number_participants"
-        maxlength="3">
+        maxlength="5">
       </md-input-container>
     </div>
 
@@ -80,6 +80,8 @@
       </md-select>
     </div>
 
+      <div class="clear-both"></div>
+      
     <div class="float-left mr10 div-form-pattern">
       <div class="float-left">
         <md-icon>person_pin</md-icon>
@@ -87,7 +89,7 @@
       <md-input-container>
         <input mdInput type="text"
         placeholder="Apelido"
-        formControlName="nickname">
+        formControlName="nickname" maxlength="191">
       </md-input-container>
     </div>
 
@@ -102,7 +104,7 @@
     <div class="clear-both"></div>
 
     <md-card-actions>
-      <button md-raised-button type="submit" color="primary">{{submitButton}}</button>
+      <button md-raised-button type="submit" color="primary" [disabled]="!occupationForm.valid">{{submitButton}}</button>
     </md-card-actions>
   </form>
 </md-card>

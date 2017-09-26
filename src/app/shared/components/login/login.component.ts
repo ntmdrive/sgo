@@ -40,8 +40,8 @@ export class LoginComponent implements OnInit {
     }
 
     this.loginForm = new FormGroup({
-      'email': new FormControl(null, [Validators.required, Validators.email]),
-      'password': new FormControl(null, [Validators.required])
+      'email': new FormControl(null, [Validators.required, Validators.email,Validators.maxLength(191)]),
+      'password': new FormControl(null, [Validators.required,Validators.maxLength(191)])
     })
   }
 

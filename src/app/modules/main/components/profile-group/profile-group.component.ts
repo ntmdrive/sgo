@@ -64,7 +64,7 @@ export class ProfileGroupComponent implements OnInit {
 
     this.profileGroupForm = new FormGroup({
       'competition_id': new FormControl(1),
-      'group_profile_name': new FormControl(null)
+      'group_profile_name': new FormControl(null,[Validators.maxLength(191),Validators.required])
     });
 
     this.makeList();
