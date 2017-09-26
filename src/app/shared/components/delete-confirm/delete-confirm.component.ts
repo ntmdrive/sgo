@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
-import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MdDialogRef, MD_DIALOG_DATA, MdSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 /*Services*/
 import { CrudService } from './../../services/laravel/crud.service';
@@ -19,6 +20,8 @@ export class DeleteConfirmComponent implements OnInit {
   constructor(
     public dialogRef: MdDialogRef<DeleteConfirmComponent>,
     private crud: CrudService,
+    private router: Router,
+    private mdsnackbar: MdSnackBar,
     @Inject(MD_DIALOG_DATA) public data: any
   ) {
   }
@@ -27,14 +30,29 @@ export class DeleteConfirmComponent implements OnInit {
   }
    
   delete() {
+    console.log(this.data.paramToDelete)
     this.crud
     .delete({
       route: this.data.route,
       paramToDelete: this.data.paramToDelete
     })
     .then(() => {
-      console.log('dc-01 - Delete successful')
-      this.change.emit('Shit done');
+      let array: any;
+      let string: string;
+
+      this.router.navigate(this.data.route);
+
+      if(this.data.paramToDelete.length < 2) { 
+        array= [1, "item", "apagado"];
+      } else {
+        array= [this.data.paramToDelete.length, "itens", "apagados"];
+      };
+
+      string = array[0] + " " + array[1] + " " + array[2];
+
+      this.mdsnackbar.open(string, '', {
+        duration: 3000
+      });
     });
     
     this.dialogRef.close();

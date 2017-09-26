@@ -50,7 +50,7 @@ export class CrudService {
   })
 
   read = (params) => new Promise ((resolve, reject) => {
-    let hide = "", limit = "", obj, objFiltered, objFilteredTemp, objKeys, order = "", page = "", setGet = "", search = "", show = "";
+    let hide = "", limit = "", obj, objFiltered, objFilteredTemp, objKeys, order = "", page = "", setGet = "", search = "", where = "", show = "";
 
     if(params) {
       if(!params.route) {
@@ -102,14 +102,29 @@ export class CrudService {
       }
 
       if(params.search) {
-        setGet = "?";
+        if(params.search[0]) {
+          console.log(params.search[0].where)          
+          setGet = "?";
 
-        if(params.search.length == 1) {
-          search = "&where["+params.search[0].where+"]="+params.search[0].value;
+          if(params.search.length == 1) {
+            search = "&like="+params.search[0].where+","+params.search[0].value;
+          }
+
+          if(params.search.length > 1) {
+            search = "&like";
+          }
         }
 
-        if(params.search.length > 1) {
-          search = "&where";
+        if(params.where) {
+          setGet = "?";
+          
+          if(params.where.length == 1) {
+            where = "&where["+params.where[0].where+"]="+params.where[0].value;
+          };
+
+          if(params.where.length > 1) {
+            where = "&where";
+          };
         }
       }
 

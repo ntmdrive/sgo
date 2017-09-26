@@ -26,6 +26,11 @@ export class OccupationComponent implements OnInit {
   submitToUpdate: boolean;
   title: string;
 
+  /**
+   * Update related properties
+   */
+  institutionId;
+
   constructor(
     private crud: CrudService,
     private mdsnackbar: MdSnackBar,
@@ -50,22 +55,10 @@ export class OccupationComponent implements OnInit {
             where: 'id',
             value: this.paramToSearch.replace(':', '')
           }]
-        }).then(res => {          
+        }).then(res => {
           let obj = res['obj'][0];
-
-          this.occupationForm.get('occupation_name').setValue(obj.occupation_name);
-
-          this.occupationForm.get('occupation_name').setValue(obj.occupation_name);
-          this.occupationForm.get('occupation_number').setValue(obj.occupation_number);
-          this.occupationForm.get('number_participants').setValue(obj.number_participants);
-          this.occupationForm.get('age_limit').setValue(obj.age_limit);
-          this.occupationForm.get('occupation_group_id').setValue(obj.occupation_group_id);
-          //this.occupationForm.get('group_code_forum').setValue(obj.group_code_forum);
-          this.occupationForm.get('nickname').setValue(obj.nickname);
-          this.occupationForm.get('is_demonstration').setValue(obj.is_demonstration);
-          this.occupationForm.get('is_disability').setValue(obj.is_disability);
-          this.occupationForm.get('host_id').setValue(obj.host_id);
-          this.occupationForm.get('institution_id').setValue(obj.institution_id);
+          
+          this.occupationForm.patchValue(obj);
         })
       } else {
         this.submitToCreate = true;
@@ -127,7 +120,10 @@ export class OccupationComponent implements OnInit {
     this.paramsToTableData = {
       toolbar: {
         title: "Lista de ocupações",
-        delete: "id",
+        delete: [{
+          route: '/main/occupation',
+          param: 'id'
+        }],
         search: true
       },
       list: {

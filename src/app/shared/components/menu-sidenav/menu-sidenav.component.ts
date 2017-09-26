@@ -109,7 +109,7 @@ export class MenuSidenavComponent implements OnInit {
       
       if(this.userData.name) {
         nameArray = this.userData.name.split(" ");
-        this.userName = nameArray[0] + " " + nameArray[nameArray.length - 1];
+        this.userName = nameArray[0] //+ " " + nameArray[nameArray.length - 1];
       } else {
         this.userName = "Sem nome cadastrado"
       }

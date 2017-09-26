@@ -51,7 +51,7 @@ export class ProfileGroupComponent implements OnInit {
           
           let obj = res['obj'][0];
 
-          this.profileGroupForm.get('profile_group_name').setValue(obj.profile_group_name);
+          this.profileGroupForm.get('group_profile_name').setValue(obj.group_profile_name);
         })
       } else {
         this.submitToCreate = true;
@@ -64,7 +64,7 @@ export class ProfileGroupComponent implements OnInit {
 
     this.profileGroupForm = new FormGroup({
       'competition_id': new FormControl(1),
-      'profile_group_name': new FormControl(null)
+      'group_profile_name': new FormControl(null)
     });
 
     this.makeList();
@@ -74,12 +74,15 @@ export class ProfileGroupComponent implements OnInit {
     this.paramsToTableData = {
       toolbar: {
         title: "Lista de grupos de perfis",
-        delete: "id",
+        delete: [{
+          route: '/main/profile-group',
+          param: 'id'
+        }],
         search: true
       },
       list: {
         route: "profiles-groups",
-        show: ['profile_group_name'],
+        show: ['group_profile_name'],
         header: ['Grupo de Perfil'],
         order: ['id', 'desc'],
         edit: {route: '/main/profile-group/', param: 'id'},
@@ -130,7 +133,7 @@ export class ProfileGroupComponent implements OnInit {
         })
       })
 
-      this.profileGroupForm.get('profile_group_name').setValue(null);
+      this.profileGroupForm.get('group_profile_name').setValue(null);
 
       this.makeList();
     }

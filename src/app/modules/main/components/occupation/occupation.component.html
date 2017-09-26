@@ -73,7 +73,10 @@
         <md-icon>group_work</md-icon>
       </div>
       <md-select class="font-pattern" placeholder="Instituição" formControlName="institution_id">
-        <md-option *ngFor="let institution of institutionToSelect" [value]="institution.id">{{institution.institution_name}}</md-option>
+        <md-option *ngFor="let institution of institutionToSelect" 
+        [value]="institution.id"> 
+          {{institution.institution_name}}
+        </md-option>
       </md-select>
     </div>
 
@@ -89,11 +92,11 @@
     </div>
 
     <div class="float-left mr10 div-form-pattern">
-      <md-slide-toggle (change)="onChangeDemonstrationOccupation($event)">Ocupação de Demonstração</md-slide-toggle>
+      <md-slide-toggle [checked]="occupationForm.get('is_demonstration').value" (change)="onChangeDemonstrationOccupation($event)">Ocupação de Demonstração</md-slide-toggle>
     </div>
     
     <div class="float-left mr10 div-form-pattern">
-      <md-slide-toggle (change)="onChangePCDOccupation($event)">Ocupação de PCD</md-slide-toggle>
+      <md-slide-toggle [checked]="occupationForm.get('is_disability').value" (change)="onChangePCDOccupation($event)">Ocupação de PCD</md-slide-toggle>
     </div>
 
     <div class="clear-both"></div>

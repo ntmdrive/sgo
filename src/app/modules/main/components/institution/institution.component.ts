@@ -74,7 +74,10 @@ export class InstitutionComponent implements OnInit {
     this.paramsToTableData = {
       toolbar: {
         title: "Lista de instituições",
-        delete: "id",
+        delete: [{
+          route: '/main/delegation',
+          param: 'id'
+        }],
         search: true
       },
       list: {

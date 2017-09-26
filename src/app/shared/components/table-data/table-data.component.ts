@@ -178,6 +178,62 @@ export class TableDataComponent implements OnInit {
       this.isMobile = false;
     }
   }
+
+  /**
+   * Toolbar
+   */
+  //Over search
+  search = () => {
+    this.searchValue = [];
+    
+    this.clearSearch();
+
+    this.searchString = setTimeout(() => {
+      let checkLoop = -1;
+      let count;
+      let data = this.arraySourceFinal;
+      let dataAny;
+      let dataString;
+      let temp = [];
+      let test;
+
+      if(this.searchForm.get('search').value) {
+        if(this.searchForm.get('searchSelect').value) {
+          this.searchValue.push({
+            where: this.searchForm.get('searchSelect').value,
+            value: this.searchForm.get('search').value
+          })
+
+          console.log(this.searchValue)
+        } else {
+          for(let lim = this.params.list.show.length, i = 0; i < lim; i++) {
+            this.searchValue.push({
+              where: this.params.list.show[i],
+              value: this.searchForm.get('search').value
+            })
+          }
+        }
+      } else {
+        this.searchValue = [];
+      }
+
+      this.readData();
+    }, 500)
+  }
+
+  clearSearch = () => {
+    clearTimeout(this.searchString);
+  }
+
+  searchInputToggle = () => {
+    this.searchInput = !this.searchInput;
+    this.searchForm.reset();
+
+    if(!this.searchInput) {
+      this.search();
+    }
+  }
+
   //Over delete
   checkAllToggle = (event) => {
     this.checkAllController = event.checked;
@@ -243,10 +299,10 @@ export class TableDataComponent implements OnInit {
     
     for(let lim = this.arraySource.length, i = 0; i < lim; i++) {
       if(this.arraySource[i]._checked){
-        itensToDeleteIds.push(this.arraySource[i][fieldToUseInDelete]);
+        itensToDeleteIds.push(this.arraySource[i][fieldToUseInDelete[0].param]);
       }
     };
-
+    
     let dialogRef = this.dialog.open(DeleteConfirmComponent, {
       width: '250px',
       data: { 
@@ -256,24 +312,11 @@ export class TableDataComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(itensToDeleteIds.length);
       let array: any;
       let string: string;
 
       this.readData();
       this.uncheckAll();
-
-      if(itensToDeleteIds.length < 2) { 
-        array= [1, "item", "apagado"];
-      } else {
-        array= [itensToDeleteIds.length, "itens", "apagados"];
-      };
-
-      string = array[0] + " " + array[1] + " " + array[2];
-
-      this.mdsnackbar.open(string, '', {
-        duration: 3000
-      });
     });
   }
   
@@ -420,55 +463,4 @@ export class TableDataComponent implements OnInit {
     
     this.readData();
   }
-
-  search = () => {
-    this.searchValue = [];
-    
-    this.clearSearch();
-
-    this.searchString = setTimeout(() => {
-      let checkLoop = -1;
-      let count;
-      let data = this.arraySourceFinal;
-      let dataAny;
-      let dataString;
-      let temp = [];
-      let test;
-
-      if(this.searchForm.get('search').value) {
-        if(this.searchForm.get('searchSelect').value) {
-          this.searchValue.push({
-            where: this.searchForm.get('searchSelect').value,
-            value: this.searchForm.get('search').value
-          })
-        } else {
-          for(let lim = this.params.list.show.length, i = 0; i < lim; i++) {
-            this.searchValue.push({
-              where: this.params.list.show[i],
-              value: this.searchForm.get('search').value
-            })
-          }
-        }
-      } else {
-        this.searchValue = [];
-      }
-
-      this.readData();
-    }, 500)
-  }
-
-  clearSearch = () => {
-    clearTimeout(this.searchString);
-  }
-
-  searchInputToggle = () => {
-    this.searchInput = !this.searchInput;
-    this.searchForm.reset();
-
-    if(!this.searchInput) {
-      this.search();
-    }
-  }  
-  
-
 }

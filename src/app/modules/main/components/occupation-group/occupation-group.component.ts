@@ -45,7 +45,7 @@ export class OccupationGroupComponent implements OnInit {
         this.crud.read({
           route: 'occupations-groups',
           order: ['id', 'desc'],
-          search: [{
+          where: [{
             where: 'id',
             value: this.paramToSearch.replace(':', '')
           }]
@@ -76,7 +76,10 @@ export class OccupationGroupComponent implements OnInit {
     this.paramsToTableData = {
       toolbar: {
         title: "Lista de áreas tecnológicas",
-        delete: "id",
+        delete: [{
+          route: '/main/occupation-group',
+          param: 'id'
+        }],
         search: true
       },
       list: {

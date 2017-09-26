@@ -9,7 +9,7 @@
       <div  id="toolbar-action">
         <form [formGroup]="searchForm">
           <a><md-icon *ngIf="params.toolbar && params.toolbar.delete && (checkAllController || checkedItem)" (click)="openDialogToDelete(params.toolbar.delete)">delete</md-icon></a>
-
+          
           <a><md-icon class="vertical-align-m" *ngIf="params.toolbar && params.toolbar.search" (click)="searchInputToggle()">search</md-icon></a>
           
           <md-select class="font-pattern" placeholder="{{placeholderToSearch}}" formControlName="searchSelect" *ngIf="searchInput">

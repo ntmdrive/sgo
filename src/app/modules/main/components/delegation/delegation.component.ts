@@ -91,7 +91,10 @@ export class DelegationComponent implements OnInit {
     this.paramsToTableData = {
       toolbar: {
         title: "Lista de delegações",
-        delete: "id",
+        delete: [{
+          route: '/main/delegation',
+          param: 'id'
+        }],
         search: true
       },
       list: {
