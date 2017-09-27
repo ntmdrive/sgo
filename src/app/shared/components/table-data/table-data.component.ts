@@ -156,7 +156,7 @@ export class TableDataComponent implements OnInit {
       if(this.params.actionToolbar.language == 'pt-br') {
         this.placeholderToRowsPerPage = "Linhas por página";
         this.placeholderToPage = "de";
-        this.placeholderToSearch = "Campo para pesquisar";
+        this.placeholderToSearch = "Campo";
       }
     } 
     

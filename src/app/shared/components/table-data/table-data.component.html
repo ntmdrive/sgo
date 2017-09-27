@@ -4,11 +4,11 @@
     <md-toolbar *ngIf="params.toolbar">
       <div id="toolbar-title" *ngIf="!searchInput">{{params.toolbar.title}}</div> 
       
-      <div id="toolbar-spacer"></div>
+      <div id="toolbar-spacer" *ngIf="!searchInput"></div>
 
       <div  id="toolbar-action">
         <form [formGroup]="searchForm">
-          <a><md-icon *ngIf="params.toolbar && params.toolbar.delete && (checkAllController || checkedItem)" (click)="openDialogToDelete(params.toolbar.delete)">delete</md-icon></a>
+          <a><md-icon *ngIf="params.toolbar && params.toolbar.delete && (checkAllController || checkedItem)" (click)="openDialogToDelete(params.toolbar.delete)" class="vertical-align-m">delete</md-icon></a>
           
           <a><md-icon class="vertical-align-m" *ngIf="params.toolbar && params.toolbar.search" (click)="searchInputToggle()">search</md-icon></a>
           
@@ -16,7 +16,7 @@
             <md-option *ngFor="let header of arrayHeader; let i = index;" [value]="params.list.show[i]">{{header}}</md-option>
           </md-select>
           
-          <md-input-container class="search-pattern" *ngIf="searchInput">
+          <md-input-container class="search-pattern" *ngIf="searchInput" style="margin-top:2px;">
             <input type="text" mdInput placeholder="Pesquisar" formControlName="search" (keyup)="search()">
           </md-input-container>
           
