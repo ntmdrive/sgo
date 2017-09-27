@@ -10,6 +10,7 @@ import { environment } from './../../../../environments/environment';
  * Others libraries
  */
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
 
 
 @Injectable()
@@ -46,8 +47,7 @@ export class AuthenticationService {
         "password": params.password
       },
       this.optionsToAuth
-    )
-    .subscribe(res => {
+    ).subscribe(res => {
       if(res.ok) {
         temp = JSON.parse(res['_body']);
         
@@ -58,6 +58,15 @@ export class AuthenticationService {
           message: "Login feito com sucesso"
         });
       }
+    }, err => {
+      if(err.statusText == "Unauthorized") {
+        resolve({
+          cod:"le-01",
+          message: "O e-mail ou senha informado(s) não foi(ram) encontrado(s). Dica: Caso seja do DN, basta informar o login e senha da rede interna. Caso contrário, devem ser informados E-mail e Senha cadastrados através do convite recebido."
+        })
+      }
+    }, () => {
+      console.log("Nada")
     })
   })
 }

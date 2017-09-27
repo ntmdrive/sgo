@@ -54,14 +54,25 @@ export class LoginComponent implements OnInit {
     this.params.password = this.loginForm.get('password');
 
     this.authentication.login(this.loginForm.value)
+    .catch(error => {
+      console.log(error)
+    })
     .then(res => {
       let string = JSON.stringify(res);
       let json = JSON.parse(string);
-      this.mdsnackbar.open(json.message, '', {
-        duration: 2000
-      })
+      if(json.cod == "l-01") {
+        this.mdsnackbar.open(json.message, '', {
+          duration: 2000
+        });
 
-      this.router.navigate(this.params.route);
+        this.router.navigate(this.params.route);
+      }
+
+      if(json.cod == "le-01") {
+        this.mdsnackbar.open(json.message, '', {
+          duration: 12000
+        });
+      }
     });
   }
 }

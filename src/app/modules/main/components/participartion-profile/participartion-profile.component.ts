@@ -70,6 +70,7 @@ export class ParticipartionProfileComponent implements OnInit {
     /*update end*/
 
     this.participationProfileForm = new FormGroup({
+      'invites': new FormArray([]),
       'competition_id': new FormControl(1),
       'profile_name': new FormControl(null),
       'profile_group_id': new FormControl(null),
@@ -148,6 +149,34 @@ export class ParticipartionProfileComponent implements OnInit {
     this.participationProfileForm.get('intentional_management').setValue(event.checked);
   }
   //Slide Toggle related methods end
+
+  //Related to invites array start
+  onAddInvitationPermission = () => {
+    let backgroundColor;
+    let mdDatePickerId1 = this.participationProfileForm.get('invites').value.length + "id1";
+    let mdDatePickerId2 = this.participationProfileForm.get('invites').value.length + "id2";
+
+    if((this.participationProfileForm.get('invites').value.length % 2 == 0)) {
+      backgroundColor = '#cfd8dc';
+    } else {
+      backgroundColor = '#fff';
+    }
+
+    let control = new FormGroup({
+      'profile_id': new FormControl(this.participationProfileForm.get('profile_id').value),
+      'invited_profile_id': new FormControl(this.participationProfileForm.get('invited_profile_id').value), 
+      '_backgroundColor': new FormControl(backgroundColor),
+      '_mdDatePickerId1': new FormControl(mdDatePickerId1),
+      '_mdDatePickerId2': new FormControl(mdDatePickerId2)
+    });
+    
+    (<FormArray>this.participationProfileForm.get('invites')).push(control);
+
+    this.participationProfileForm.get('profile_id').setValue(null);
+    this.participationProfileForm.get('invited_profile_id').setValue(null);
+  }
+  //Related to invites array end
+  
   
   onParticipationProfileSubmit = () => {
     if(this.submitToUpdate) {
@@ -188,7 +217,7 @@ export class ParticipartionProfileComponent implements OnInit {
         })
       })
 
-      this.participationProfileForm.get('profile_name').setValue(null);
+      this.participationProfileForm.reset();
 
       this.makeList();
     }
