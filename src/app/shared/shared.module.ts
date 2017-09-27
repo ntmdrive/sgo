@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MdDatepickerModule, MdNativeDateModule, MdCardModule, MdDialogModule, MdSelectModule, MdCheckboxModule,
-  MdInputModule,MatSnackBarModule, MdIconModule, MdButtonModule, MatSlideToggleModule,MdToolbarModule } from '@angular/material';
+  MdInputModule,MatSnackBarModule, MdIconModule, MdButtonModule, MatSlideToggleModule,MdToolbarModule, MdProgressBarModule } from '@angular/material';
 import { Routes, RouterModule } from '@angular/router';
 
 /**
@@ -44,6 +44,7 @@ import { CrudService } from './services/laravel/crud.service';
     MatSnackBarModule,
     MdIconModule,
     MdInputModule,
+    MdProgressBarModule,
     MdButtonModule,
     MatSlideToggleModule,
     MdToolbarModule
@@ -61,6 +62,7 @@ import { CrudService } from './services/laravel/crud.service';
     MdNativeDateModule,
     MdIconModule,
     MdInputModule,
+    MdProgressBarModule,
     MdButtonModule,
     MenuSidenavComponent,
     TableDataComponent,

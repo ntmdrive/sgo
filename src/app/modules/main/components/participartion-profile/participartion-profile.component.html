@@ -13,9 +13,52 @@
           formControlName="profile_name">
         </md-input-container>
       </div>
+
+      <div class="float-left mr10 div-form-pattern">
+        <div class="float-left">
+          <md-icon>group_work</md-icon>
+        </div>
+        <md-select class="font-pattern" placeholder="Grupo de Perfil" formControlName="profile_group_id">
+          <md-option *ngFor="let profileGroup of profileGroupToSelect" [value]="profileGroup.id">{{profileGroup.group_profile_name}}</md-option>
+        </md-select>
+      </div>
+
+      <div class="clear-both"></div>
+
+      <div class="float-left mr10 div-form-pattern">
+        <md-slide-toggle [checked]="participationProfileForm.get('show_percentage_preparation').value" (change)="onChangePercentageDemonstration($event)">Apresentar percentual de preparação</md-slide-toggle>
+      </div>
+
+      <div class="float-left mr10 div-form-pattern">
+        <md-slide-toggle [checked]="participationProfileForm.get('require_participant_association_occupation').value" (change)="onChangePaticipantAssociationOccupation($event)">Associação do participante na ocupação</md-slide-toggle>
+      </div>
+
+      <div class="float-left mr10 div-form-pattern">
+        <md-slide-toggle [checked]="participationProfileForm.get('require_participant_association_delegation').value" (change)="onChangePaticipantAssociationDelegation($event)">Associação do participante na delegação</md-slide-toggle>
+      </div>
+
+      <div class="float-left mr10 div-form-pattern">
+        <md-slide-toggle [checked]="participationProfileForm.get('intentional_management').value" (change)="onChangeIntentionalManagement($event)"></md-slide-toggle>
+        Permitir gerenciamento de intenções de participação
+      </div>
   
       <div class="clear-both"></div>
-  
+
+      <fieldset *ngIf="participationProfileCheckLength">
+        <legend>Permissões para Convites</legend>
+
+        <div class="float-left mr10 div-form-pattern">
+          <div class="float-left">
+            <md-icon>group_work</md-icon>
+          </div>
+          <md-select class="font-pattern" placeholder="Perfil de Participação" formControlName="profile_group_id">
+            <md-option *ngFor="let participationProfile of participationProfileToSelect" [value]="participationProfile.id">{{participationProfile.profile_name}}</md-option>
+          </md-select>
+        </div>
+      </fieldset>
+
+      <div class="clear-both"></div>
+
       <md-card-actions>
         <button md-raised-button type="submit" color="primary">{{submitButton}}</button>
       </md-card-actions>

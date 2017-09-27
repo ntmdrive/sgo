@@ -23,6 +23,13 @@ export class ParticipartionProfileComponent implements OnInit {
   submitButton: string;
   title: string;
 
+  //Selects
+  profileGroupToSelect: any;
+  participationProfileToSelect: any;
+
+  participationProfileCheckLength: boolean = false;
+
+
   constructor(
     private crud: CrudService,
     private mdsnackbar: MdSnackBar,
@@ -56,7 +63,7 @@ export class ParticipartionProfileComponent implements OnInit {
       } else {
         this.submitToCreate = true;
         this.submitToUpdate = false;
-        this.title = "Nova Perfil de Participação";
+        this.title = "Novo Perfil de Participação";
         this.submitButton = "Salvar";
       }
     })
@@ -64,8 +71,39 @@ export class ParticipartionProfileComponent implements OnInit {
 
     this.participationProfileForm = new FormGroup({
       'competition_id': new FormControl(1),
-      'profile_name': new FormControl(null)
+      'profile_name': new FormControl(null),
+      'profile_group_id': new FormControl(null),
+      'show_percentage_preparation': new FormControl(false),
+      'require_participant_association_occupation': new FormControl(false),
+      'require_participant_association_delegation': new FormControl(false),
+      'intentional_management': new FormControl(false)
     });
+
+    //Selects start
+    this.crud.read({
+      route: 'profiles-groups',
+      show: ['id', 'group_profile_name'],
+
+      order: ['group_profile_name', 'asc']
+    })
+    .then(res => {
+      this.profileGroupToSelect = res['obj'];
+    });
+
+    this.crud.read({
+      route: 'profiles',
+      show: ['id', 'profile_name'],
+
+      order: ['profile_name', 'asc']
+    })
+    .then(res => {
+      if(res['obj'].length > 0) {
+        this.participationProfileCheckLength = true;
+      }
+
+      this.participationProfileToSelect = res['obj'];
+    });
+    //Selects End
 
     this.makeList();
   }
@@ -93,6 +131,23 @@ export class ParticipartionProfileComponent implements OnInit {
       }
     };
   }
+  //Slide Toggle related methods start
+  onChangePercentageDemonstration = (event) => {
+    this.participationProfileForm.get('show_percentage_preparation').setValue(event.checked);
+  }
+
+  onChangePaticipantAssociationOccupation = (event) => {
+    this.participationProfileForm.get('require_participant_association_occupation').setValue(event.checked);
+  }
+
+  onChangePaticipantAssociationDelegation = (event) => {
+    this.participationProfileForm.get('require_participant_association_delegation').setValue(event.checked);
+  }
+
+  onChangeIntentionalManagement = (event) => {
+    this.participationProfileForm.get('intentional_management').setValue(event.checked);
+  }
+  //Slide Toggle related methods end
   
   onParticipationProfileSubmit = () => {
     if(this.submitToUpdate) {

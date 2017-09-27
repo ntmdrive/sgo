@@ -2,7 +2,7 @@
   <!--Toolbar area: start -->
   <md-card>
     <md-toolbar *ngIf="params.toolbar">
-      <div id="toolbar-title">{{params.toolbar.title}}</div> 
+      <div id="toolbar-title" *ngIf="!searchInput">{{params.toolbar.title}}</div> 
       
       <div id="toolbar-spacer"></div>
 

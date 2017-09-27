@@ -56,7 +56,7 @@ export class ProfileGroupComponent implements OnInit {
       } else {
         this.submitToCreate = true;
         this.submitToUpdate = false;
-        this.title = "Nova Grupo de Perfil";
+        this.title = "Novo Grupo de Perfil";
         this.submitButton = "Salvar";
       }
     })
