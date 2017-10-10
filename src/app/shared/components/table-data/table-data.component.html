@@ -66,7 +66,7 @@
     <div class="clear-both"></div>
      <md-toolbar class="w100p" *ngIf="!isLoadingList && params.actionToolbar">
       <form [formGroup]="listController" class="w100p">
-        <div class="div-form-pattern float-left">
+        <div class="div-form-pattern float-left page-list">
           <!-- Select the limit view page -->
           <md-select placeholder="{{placeholderToRowsPerPage}}" formControlName="row"
           (change)="onChangeLimit($event)" *ngIf="arraySourceSearch.length > 0">
@@ -85,7 +85,7 @@
             <a><md-icon (click)="onClickPage('add')" *ngIf="pageCurrent < pageTotal">keyboard_arrow_right</md-icon></a>
           </div>
 
-          <div class="div-form-pattern float-left mt10" *ngIf="arraySourceSearch.length > 0">
+          <div class="div-form-pattern float-left mt10" style="padding:9px 0 0 0" *ngIf="arraySourceSearch.length > 0">
             <span *ngIf="!isMobile">{{pageCurrent}} {{placeholderToPage}} {{pageTotal}}</span>
           </div>
         </div>

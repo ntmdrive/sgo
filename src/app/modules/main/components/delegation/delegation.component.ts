@@ -67,6 +67,7 @@ export class DelegationComponent implements OnInit {
           } else { 
             this.isForeign = false;
           }
+          this.delegationForm.get('is_foreign').setValue(this.isForeign);
         })
       } else {
         this.submitToCreate = true;
@@ -99,8 +100,8 @@ export class DelegationComponent implements OnInit {
       },
       list: {
         route: "delegations",
-        show: ['delegation_name', 'initials', 'is_foreign'],
-        header: ['Delegação', 'Iniciais', 'Delegação Estrangeira'],
+        show: ['initials', 'delegation_name', 'is_foreign'],
+        header: ['Sigla', 'Delegação', 'Delegação Estrangeira'],
         order: ['id', 'desc'],
         edit: {route: '/main/delegation/', param: 'id'},
         page: 1,

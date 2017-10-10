@@ -75,7 +75,7 @@ export class OccupationGroupComponent implements OnInit {
   makeList = () => {
     this.paramsToTableData = {
       toolbar: {
-        title: "Lista de áreas tecnológicas",
+        title: "Lista de Áreas Tecnológicas",
         delete: [{
           route: '/main/occupation-group',
           param: 'id'
@@ -85,7 +85,7 @@ export class OccupationGroupComponent implements OnInit {
       list: {
         route: "occupations-groups",
         show: ['occupation_group_name'],
-        header: ['Área tecnológica'],
+        header: ['Área Tecnológica'],
         order: ['id', 'desc'],
         edit: {route: '/main/occupation-group/', param: 'id'},
         source: true
@@ -116,7 +116,6 @@ export class OccupationGroupComponent implements OnInit {
       })
 
       this.makeList();
-  
       this.router.navigate(['/main/occupation-group']);
     } else {
       let params = {
@@ -138,6 +137,8 @@ export class OccupationGroupComponent implements OnInit {
       this.occupationsGroupsForm.get('occupation_group_name').setValue(null);
 
       this.makeList();
+      
+      this.router.navigate(['/main/occupation-group']);
     }
   }
 }

@@ -154,7 +154,7 @@ export class TableDataComponent implements OnInit {
       }
 
       if(this.params.actionToolbar.language == 'pt-br') {
-        this.placeholderToRowsPerPage = "Linhas por página";
+        this.placeholderToRowsPerPage = "Registros por página";
         this.placeholderToPage = "de";
         this.placeholderToSearch = "Campo";
       }
@@ -317,6 +317,7 @@ export class TableDataComponent implements OnInit {
 
       this.readData();
       this.uncheckAll();
+      this.checkAllController = false;
     });
   }
   
