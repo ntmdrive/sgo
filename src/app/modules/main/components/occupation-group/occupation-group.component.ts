@@ -85,7 +85,7 @@ export class OccupationGroupComponent implements OnInit {
       list: {
         route: "occupations-groups",
         show: ['occupation_group_name'],
-        header: ['Área Tecnológica'],
+        header: ['Nome'],
         order: ['id', 'desc'],
         edit: {route: '/main/occupation-group/', param: 'id'},
         source: true

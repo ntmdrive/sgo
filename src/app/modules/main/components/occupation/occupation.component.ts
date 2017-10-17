@@ -128,11 +128,28 @@ export class OccupationComponent implements OnInit {
       },
       list: {
         route: "occupations",
-        show: ['occupation_name'],
-        header: ['Ocupação'],
+        show: ['occupation_name','occupation_number','number_participants','age_limit','is_disability','is_demonstration'],
+        header: ['Ocupação','Número','Participantes por equipe','Idade limite','PCDs','Demonstração'],
         order: ['id', 'desc'],
         edit: {route: '/main/occupation/', param: 'id'},
-        source: true
+        source: true,
+        changeValue: [{
+          field: 'is_disability',
+          fieldValue: 0,
+          newValue: 'Não'
+        }, {
+          field: 'is_disability',
+          fieldValue: 1,
+          newValue: 'Sim'
+        },{
+          field: 'is_demonstration',
+          fieldValue: 0,
+          newValue: 'Não'
+        },{
+          field: 'is_demonstration',
+          fieldValue: 1,
+          newValue: 'Sim'
+        }]
       },
       actionToolbar: {
         language: 'pt-br'
@@ -168,7 +185,7 @@ export class OccupationComponent implements OnInit {
       })
       
       this.makeList();
-  
+      
       this.router.navigate(['/main/occupation']);
     } else {
       let params = {
